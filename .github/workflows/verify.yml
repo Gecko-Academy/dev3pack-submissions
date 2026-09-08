@@ -66,8 +66,10 @@ jobs:
 
       - name: No workflow here may run untrusted code with a token
         run: |
-          if grep -rl "pull_request_target" .github/workflows/; then
+          # Matches the TRIGGER, not the word: this file explains why the trigger
+          # is forbidden, so a plain grep finds its own comment and fails itself.
+          if grep -rlE "^[[:space:]]*pull_request_target:" .github/workflows/; then
             echo "::error::pull_request_target hands a secret and a write token to submitted code"
             exit 1
           fi
-          echo "ok: no workflow uses pull_request_target"
+          echo "ok: no workflow is triggered by pull_request_target"
