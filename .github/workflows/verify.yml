@@ -1,0 +1,117 @@
+# What CI can enforce on a pull request from a fork, and nothing it cannot.
+#
+# READ THIS BEFORE ADDING A SECRET TO THIS WORKFLOW.
+#
+# GitHub does not pass secrets to a workflow triggered by `pull_request` from a
+# fork, and gives it a read-only token. That is deliberate, and it exists for
+# exactly our situation: verification means EXECUTING THE STUDENT'S NOTEBOOK,
+# which is arbitrary code we did not write.
+#
+# So the rule this file lives by: the job that runs a submitted notebook must
+# never hold a secret or a write token. Switching this to
+# `pull_request_target` would hand both to submitted code. Do not do it.
+#
+# The path rule below needs neither, so it works on every fork pull request
+# today. Verification needs the course, which is private, and that decision is
+# in SETUP-THIS-REPO.md.
+
+name: check submissions
+
+on:
+  pull_request:
+    paths: ["submissions/**"]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  own-folder-only:
+    name: a pull request may only touch its author's folder
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check the paths
+        env:
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          changed=$(git diff --name-only "$BASE"...HEAD)
+          echo "changed files:"; echo "$changed" | sed 's/^/  /'
+          stray=$(echo "$changed" | grep -v "^submissions/$AUTHOR/" || true)
+          if [ -n "$stray" ]; then
+            echo "::error::a pull request may only touch submissions/$AUTHOR/"
+            echo "$stray" | sed 's/^/  /'
+            exit 1
+          fi
+          echo "ok: every changed file is under submissions/$AUTHOR/"
+
+  shape:
+    name: the bundle is the shape a submission has to be
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check each submitted folder
+        env:
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          dirs=$(git diff --name-only "$BASE"...HEAD \
+                 | grep "^submissions/$AUTHOR/" \
+                 | xargs -r -n1 dirname | sort -u)
+          [ -z "$dirs" ] && { echo "nothing submitted"; exit 0; }
+          failed=0
+          for dir in $dirs; do
+            echo "::group::$dir"
+            python3 - "$dir" <<'PY' || failed=1
+          import hashlib, json, re, sys
+          from pathlib import Path
+
+          directory = Path(sys.argv[1])
+          claim_path = directory / "submission.json"
+          notebook = directory / "notebook.ipynb"
+
+          if not claim_path.is_file() or not notebook.is_file():
+              print(f"::error::{directory} needs both submission.json and notebook.ipynb")
+              raise SystemExit(1)
+
+          claim = json.loads(claim_path.read_text())
+          if claim.get("schema") != "dev3pack.submission.v1":
+              print(f"::error::unknown schema {claim.get('schema')!r}")
+              raise SystemExit(1)
+
+          expected = claim.get("evidence", {}).get("notebook_sha256")
+          actual = hashlib.sha256(notebook.read_bytes()).hexdigest()
+          if expected != actual:
+              print("::error::the notebook is not the one this score was claimed for")
+              print("re-run `uv run bootcamp submit` and commit what it writes")
+              raise SystemExit(1)
+
+          owner = directory.parts[1]
+          if claim.get("student", {}).get("github") != owner:
+              print(f"::error::the claim names a different student than its folder ({owner})")
+              raise SystemExit(1)
+
+          if not re.fullmatch(r"ch\d{2}", str(claim.get("chapter", ""))):
+              print(f"::error::bad chapter id {claim.get('chapter')!r}")
+              raise SystemExit(1)
+
+          print(f"ok: {claim['chapter']} for {owner}, notebook matches its claim")
+          PY
+            echo "::endgroup::"
+          done
+          exit $failed
+
+  # Verification, which RE-RUNS the notebook, is deliberately not here. It needs
+  # the private course repository, and a fork pull request cannot be given a
+  # secret to reach it without handing that secret to submitted code.
+  # SETUP-THIS-REPO.md sets out the three ways to close that, and which one to
+  # pick for a first cohort.
