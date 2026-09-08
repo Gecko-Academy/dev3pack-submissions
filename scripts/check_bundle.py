@@ -28,6 +28,13 @@ from pathlib import Path
 #: Must match `bootcamp_agent.submission.SCHEMA` in the course repository.
 SCHEMA = "dev3pack.submission.v2"
 
+#: Must match FULL_MARKS / HINT_COST / REVEAL_COST in `bootcamp_agent.hints`.
+#: Duplicated for the same reason as SCHEMA: this repository is public and must
+#: never need the private course to check a submission.
+FULL_MARKS = 100
+HINT_COST = 30
+REVEAL_COST = 70
+
 ITEM = re.compile(r"^(?:ch|w)\d{2}$")
 
 
@@ -64,6 +71,31 @@ def problems_with(directory: Path) -> list[str]:
         found.append(f"{claim_path}: {item!r} is not a chapter or unit id")
     elif directory.name != item:
         found.append(f"{claim_path}: claims {item} but sits in a folder called {directory.name}")
+
+    # The score, checked against the claim's own numbers. This needs no course
+    # checkout, and under the manual-merge route it is the ONLY automated check
+    # on the one number a gradebook consumes: the notebook's hash covers the
+    # notebook, not the claim, so an edited score leaves the hash intact.
+    result = claim.get("result", {})
+    if result.get("scored"):
+        passed = result.get("passed") or []
+        help_block = claim.get("help") or {}
+        hinted = help_block.get("hinted", 0)
+        revealed = help_block.get("revealed", 0)
+        if not all(isinstance(v, int) and v >= 0 for v in (hinted, revealed)):
+            found.append(f"{claim_path}: help must be counts, not {help_block!r}")
+        else:
+            expected_score = max(
+                len(passed) * FULL_MARKS - revealed * REVEAL_COST - hinted * HINT_COST, 0
+            )
+            if result.get("score") != expected_score:
+                found.append(
+                    f"{claim_path}: score is {result.get('score')}, but "
+                    f"{len(passed)} passed with {hinted} hint(s) and {revealed} reveal(s) "
+                    f"makes {expected_score}. Re-run `uv run bootcamp submit`"
+                )
+    elif result.get("score") is not None:
+        found.append(f"{claim_path}: {item} is not marked, so score must be null")
 
     if notebook.is_file():
         expected = claim.get("evidence", {}).get("notebook_sha256")
