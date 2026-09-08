@@ -8,12 +8,15 @@
 # which is arbitrary code we did not write.
 #
 # So the rule this file lives by: the job that runs a submitted notebook must
-# never hold a secret or a write token. Switching this to
-# `pull_request_target` would hand both to submitted code. Do not do it.
+# never hold a secret or a write token. Switching this to `pull_request_target`
+# would hand it both. Do not do it.
 #
-# The path rule below needs neither, so it works on every fork pull request
-# today. Verification needs the course, which is private, and that decision is
-# in SETUP-THIS-REPO.md.
+# THE CHANGED FILES COME FROM THE API, NOT FROM GIT. A fork pull request is
+# checked out as a merge ref whose base may have moved since the pull request
+# was opened, and `git diff base...HEAD` then fails outright rather than
+# returning nothing. Asking the API removes that whole class of failure: it
+# answers the question we actually have, which is "what does this pull request
+# change", and it needs only the read-only token.
 
 name: check submissions
 
@@ -26,23 +29,28 @@ permissions:
   pull-requests: read
 
 jobs:
-  own-folder-only:
-    name: a pull request may only touch its author's folder
+  check:
+    name: submissions
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           persist-credentials: false
 
-      - name: Check the paths
+      - name: What this pull request changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh api "repos/$REPO/pulls/$NUMBER/files" --paginate --jq '.[].filename' > changed.txt
+          echo "changed files:"; sed 's/^/  /' changed.txt
+
+      - name: A pull request may only touch its author's folder
         env:
           AUTHOR: ${{ github.event.pull_request.user.login }}
-          BASE: ${{ github.event.pull_request.base.sha }}
         run: |
-          changed=$(git diff --name-only "$BASE"...HEAD)
-          echo "changed files:"; echo "$changed" | sed 's/^/  /'
-          stray=$(echo "$changed" | grep -v "^submissions/$AUTHOR/" || true)
+          stray=$(grep -v "^submissions/$AUTHOR/" changed.txt || true)
           if [ -n "$stray" ]; then
             echo "::error::a pull request may only touch submissions/$AUTHOR/"
             echo "$stray" | sed 's/^/  /'
@@ -50,28 +58,16 @@ jobs:
           fi
           echo "ok: every changed file is under submissions/$AUTHOR/"
 
-  shape:
-    name: the bundle is the shape a submission has to be
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Check each submitted folder
-        env:
-          AUTHOR: ${{ github.event.pull_request.user.login }}
-          BASE: ${{ github.event.pull_request.base.sha }}
+      - name: The bundle is the shape a submission has to be
         run: |
-          dirs=$(git diff --name-only "$BASE"...HEAD \
-                 | grep "^submissions/$AUTHOR/" \
-                 | xargs -r -n1 dirname | sort -u)
+          dirs=$(xargs -r -n1 dirname < changed.txt | sort -u)
           [ -z "$dirs" ] && { echo "nothing submitted"; exit 0; }
           python3 scripts/check_bundle.py $dirs
 
-  # Verification, which RE-RUNS the notebook, is deliberately not here. It needs
-  # the private course repository, and a fork pull request cannot be given a
-  # secret to reach it without handing that secret to submitted code.
-  # SETUP-THIS-REPO.md sets out the three ways to close that, and which one to
-  # pick for a first cohort.
+      - name: No workflow here may run untrusted code with a token
+        run: |
+          if grep -rl "pull_request_target" .github/workflows/; then
+            echo "::error::pull_request_target hands a secret and a write token to submitted code"
+            exit 1
+          fi
+          echo "ok: no workflow uses pull_request_target"
