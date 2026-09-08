@@ -1,0 +1,25 @@
+{
+  "schema": "dev3pack.track.v1",
+  "cohort": "2026-09",
+  "entries": [
+    {
+      "github": "ernanibmurtinho",
+      "item": "ch03",
+      "submitted_at": "2026-09-08T15:19:03Z",
+      "ran": true,
+      "passed": [
+        "ch03-e3"
+      ],
+      "failed": [
+        "ch03-e1",
+        "ch03-e2"
+      ],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 300,
+      "tier": "claimed"
+    }
+  ],
+  "problems": []
+}
