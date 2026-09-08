@@ -68,47 +68,7 @@ jobs:
                  | grep "^submissions/$AUTHOR/" \
                  | xargs -r -n1 dirname | sort -u)
           [ -z "$dirs" ] && { echo "nothing submitted"; exit 0; }
-          failed=0
-          for dir in $dirs; do
-            echo "::group::$dir"
-            python3 - "$dir" <<'PY' || failed=1
-          import hashlib, json, re, sys
-          from pathlib import Path
-
-          directory = Path(sys.argv[1])
-          claim_path = directory / "submission.json"
-          notebook = directory / "notebook.ipynb"
-
-          if not claim_path.is_file() or not notebook.is_file():
-              print(f"::error::{directory} needs both submission.json and notebook.ipynb")
-              raise SystemExit(1)
-
-          claim = json.loads(claim_path.read_text())
-          if claim.get("schema") != "dev3pack.submission.v1":
-              print(f"::error::unknown schema {claim.get('schema')!r}")
-              raise SystemExit(1)
-
-          expected = claim.get("evidence", {}).get("notebook_sha256")
-          actual = hashlib.sha256(notebook.read_bytes()).hexdigest()
-          if expected != actual:
-              print("::error::the notebook is not the one this score was claimed for")
-              print("re-run `uv run bootcamp submit` and commit what it writes")
-              raise SystemExit(1)
-
-          owner = directory.parts[1]
-          if claim.get("student", {}).get("github") != owner:
-              print(f"::error::the claim names a different student than its folder ({owner})")
-              raise SystemExit(1)
-
-          if not re.fullmatch(r"ch\d{2}", str(claim.get("chapter", ""))):
-              print(f"::error::bad chapter id {claim.get('chapter')!r}")
-              raise SystemExit(1)
-
-          print(f"ok: {claim['chapter']} for {owner}, notebook matches its claim")
-          PY
-            echo "::endgroup::"
-          done
-          exit $failed
+          python3 scripts/check_bundle.py $dirs
 
   # Verification, which RE-RUNS the notebook, is deliberately not here. It needs
   # the private course repository, and a fork pull request cannot be given a

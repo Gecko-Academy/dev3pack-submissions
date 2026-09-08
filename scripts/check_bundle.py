@@ -1,0 +1,99 @@
+"""Check one submitted bundle, with no credentials and no course checkout.
+
+    python3 scripts/check_bundle.py submissions/octocat/ch03
+
+This is everything CI can honestly say about a submission without re-running the
+notebook, which a fork pull request may never do, because that job holds no
+secret and no write token by design.
+
+WHY THIS IS A FILE AND NOT A HEREDOC IN THE WORKFLOW. It was a heredoc for about
+an hour, and in that hour the schema moved from v1 to v2 and the copy inside the
+YAML did not. Every submission failed on a string nobody could see in a diff. A
+file can be read, tested, and grepped.
+
+WHY THE SCHEMA IS DUPLICATED HERE AT ALL. This repository is public and must
+never need the private course to check a submission. That duplication is
+deliberate, and it is why SCHEMA sits alone at the top with a comment: when the
+course bumps it, this is the one line to follow.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+import sys
+from pathlib import Path
+
+#: Must match `bootcamp_agent.submission.SCHEMA` in the course repository.
+SCHEMA = "dev3pack.submission.v2"
+
+ITEM = re.compile(r"^(?:ch|w)\d{2}$")
+
+
+def problems_with(directory: Path) -> list[str]:
+    """Everything wrong with this bundle. Empty means it is well-formed."""
+    found: list[str] = []
+    claim_path = directory / "submission.json"
+    notebook = directory / "notebook.ipynb"
+
+    if not claim_path.is_file():
+        return [f"{directory}: no submission.json"]
+    if not notebook.is_file():
+        found.append(f"{directory}: no notebook.ipynb beside the claim")
+
+    try:
+        claim = json.loads(claim_path.read_text())
+    except json.JSONDecodeError as error:
+        return [f"{claim_path}: not valid JSON ({error})"]
+
+    if claim.get("schema") != SCHEMA:
+        found.append(
+            f"{claim_path}: schema {claim.get('schema')!r}, expected {SCHEMA!r}. "
+            "Re-run `uv run bootcamp submit` with an up-to-date course checkout"
+        )
+
+    owner = directory.parent.name
+    if claim.get("student", {}).get("github") != owner:
+        found.append(
+            f"{claim_path}: claims {claim.get('student', {}).get('github')!r} but sits in {owner!r}"
+        )
+
+    item = str(claim.get("chapter", ""))
+    if not ITEM.match(item):
+        found.append(f"{claim_path}: {item!r} is not a chapter or unit id")
+    elif directory.name != item:
+        found.append(f"{claim_path}: claims {item} but sits in a folder called {directory.name}")
+
+    if notebook.is_file():
+        expected = claim.get("evidence", {}).get("notebook_sha256")
+        actual = hashlib.sha256(notebook.read_bytes()).hexdigest()
+        if expected != actual:
+            found.append(
+                f"{claim_path}: the notebook is not the one this score was claimed for. "
+                "Hand-editing submission.json is the usual cause; re-run `bootcamp submit`"
+            )
+
+    return found
+
+
+def main(argv: list[str] | None = None) -> int:
+    directories = [Path(a) for a in (argv if argv is not None else sys.argv[1:])]
+    if not directories:
+        print("usage: check_bundle.py <submissions/user/chapter> ...")
+        return 2
+
+    failed = False
+    for directory in directories:
+        found = problems_with(directory)
+        if found:
+            failed = True
+            for problem in found:
+                print(f"::error::{problem}")
+        else:
+            print(f"ok: {directory}")
+    return 1 if failed else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
