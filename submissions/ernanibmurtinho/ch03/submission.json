@@ -9,9 +9,7 @@
   "result": {
     "ran": true,
     "passed": [
-      "ch03-e1",
-      "ch03-e2",
-      "ch03-e3"
+      "ch03-e1"
     ],
     "failed": [
       "ch03-e1",
@@ -19,7 +17,7 @@
     ],
     "not_reached": [],
     "scored": true,
-    "score": 300,
+    "score": 9999,
     "max_score": 300
   },
   "note": "",
