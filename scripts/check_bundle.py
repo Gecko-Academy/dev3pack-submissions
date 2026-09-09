@@ -37,6 +37,17 @@ REVEAL_COST = 70
 
 ITEM = re.compile(r"^(?:ch|w|cap)\d{2}$")
 
+#: A bundle is exactly two files, and this refuses anything else rather than
+#: ignoring it: a check that silently skips what it does not understand is how a
+#: payload rides along beside an honest claim.
+ALLOWED_FILES = {"submission.json", "notebook.ipynb"}
+
+#: Ceilings, not targets. A claim is a few hundred bytes and a teaching notebook
+#: is well under a megabyte. At 250 learners handing in 28 items each, an
+#: unbounded notebook is also how a repository becomes unclonable.
+MAX_CLAIM_BYTES = 64 * 1024
+MAX_NOTEBOOK_BYTES = 8 * 1024 * 1024
+
 
 def submission_id_for(claim: dict) -> str:
     """The id this claim should carry, recomputed from the claim itself.
@@ -61,6 +72,17 @@ def problems_with(directory: Path) -> list[str]:
         return [f"{directory}: no submission.json"]
     if not notebook.is_file():
         found.append(f"{directory}: no notebook.ipynb beside the claim")
+
+    for entry in sorted(directory.iterdir()):
+        if entry.name not in ALLOWED_FILES:
+            found.append(f"{directory}: unexpected file in the bundle: {entry.name}")
+        elif entry.is_symlink() or not entry.is_file():
+            found.append(f"{directory}: {entry.name} must be a regular file")
+    for name, cap in ((claim_path.name, MAX_CLAIM_BYTES), (notebook.name, MAX_NOTEBOOK_BYTES)):
+        path = directory / name
+        if path.is_file() and path.stat().st_size > cap:
+            size = path.stat().st_size
+            found.append(f"{directory}: {name} is {size} bytes, over the {cap}-byte cap")
 
     try:
         claim = json.loads(claim_path.read_text())

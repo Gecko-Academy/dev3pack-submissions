@@ -1,0 +1,61 @@
+# Merge every submission that passed its checks, and rebuild the track.
+#
+# WHY THIS JOB MAY HOLD A WRITE TOKEN when the pull-request check may not: it
+# runs on a schedule from `main`, on reviewed code. It never checks out a fork,
+# never executes a submitted notebook, and only ever parses JSON. The check that
+# DOES see unmerged content from a fork holds nothing at all, and `verify.yml`
+# fails the build if anybody adds `pull_request_target`.
+name: collect
+
+on:
+  schedule:
+    # Every half hour. A cohort of 250 hands in through the evening, and a
+    # learner who fixed a red check should not wait until tomorrow to see it
+    # merge. Cron is UTC.
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      merge:
+        description: "Actually merge (unchecked = dry run)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Merge what passed, and rebuild the track
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # A scheduled run always merges. A manual run merges only when asked,
+          # so it can be used to see what WOULD happen.
+          MERGE: ${{ github.event_name == 'schedule' && 'yes' || inputs.merge && 'yes' || '' }}
+        run: |
+          if [ -n "$MERGE" ]; then
+            python3 scripts/collect.py --merge
+          else
+            python3 scripts/collect.py
+          fi
+
+      - name: Commit the track if it changed
+        run: |
+          git config user.name "dev3pack-bot"
+          git config user.email "noreply@github.com"
+          git add TRACK.md track.json
+          if git diff --cached --quiet; then
+            echo "the track is unchanged"
+          else
+            git commit -m "track: after the latest merges"
+            git push
+          fi

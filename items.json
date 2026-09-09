@@ -1,215 +1,290 @@
 {
-  "schema": "dev3pack.track.v1",
+  "schema": "dev3pack.items.v1",
+  "release": "2026.09.1",
   "items": [
     {
       "id": "w01",
       "title": "The environment",
+      "kind": "unit",
+      "track": "The fast lane",
       "scored": false,
       "verifiable": true,
+      "exercises": 3,
       "max_score": null
     },
     {
       "id": "w02",
       "title": "Packages and documentation",
+      "kind": "unit",
+      "track": "The fast lane",
       "scored": false,
       "verifiable": true,
+      "exercises": 3,
       "max_score": null
     },
     {
       "id": "w03",
       "title": "Classes and contracts",
+      "kind": "unit",
+      "track": "The fast lane",
       "scored": false,
       "verifiable": true,
+      "exercises": 3,
       "max_score": null
     },
     {
       "id": "w04",
       "title": "Calling a real API",
+      "kind": "unit",
+      "track": "The fast lane",
       "scored": false,
       "verifiable": true,
+      "exercises": 4,
       "max_score": null
     },
     {
       "id": "w05",
       "title": "Packages, PyPI and PEP 8",
+      "kind": "unit",
+      "track": "Course A \u2014 Software engineering foundations",
       "scored": false,
       "verifiable": true,
+      "exercises": 3,
       "max_score": null
     },
     {
       "id": "w06",
       "title": "A portable package",
+      "kind": "unit",
+      "track": "Course A \u2014 Software engineering foundations",
       "scored": false,
       "verifiable": true,
+      "exercises": 3,
       "max_score": null
     },
     {
       "id": "w07",
       "title": "Classes in a package",
+      "kind": "unit",
+      "track": "Course A \u2014 Software engineering foundations",
       "scored": false,
       "verifiable": true,
+      "exercises": 4,
       "max_score": null
     },
     {
       "id": "w08",
       "title": "Documentation, tests and readability",
+      "kind": "unit",
+      "track": "Course A \u2014 Software engineering foundations",
       "scored": false,
       "verifiable": true,
+      "exercises": 3,
       "max_score": null
     },
     {
       "id": "w09",
       "title": "Your first MCP server",
+      "kind": "unit",
+      "track": "Course B \u2014 MCP: AI apps as easy as 1, 2, 3",
       "scored": false,
       "verifiable": true,
+      "exercises": 3,
       "max_score": null
     },
     {
       "id": "w10",
       "title": "Resources, prompts, and the LLM",
+      "kind": "unit",
+      "track": "Course B \u2014 MCP: AI apps as easy as 1, 2, 3",
       "scored": false,
       "verifiable": true,
+      "exercises": 4,
       "max_score": null
     },
     {
       "id": "w11",
       "title": "Databases, APIs, and third-party servers",
+      "kind": "unit",
+      "track": "Course B \u2014 MCP: AI apps as easy as 1, 2, 3",
       "scored": false,
       "verifiable": true,
+      "exercises": 3,
       "max_score": null
     },
     {
       "id": "w12",
       "title": "Data structures for agents",
+      "kind": "unit",
+      "track": "Course C \u2014 Data structures for agents",
       "scored": false,
       "verifiable": true,
+      "exercises": 4,
       "max_score": null
     },
     {
       "id": "ch01",
       "title": "Configure the assistant and the repository instructions",
+      "kind": "session",
+      "week": 1,
+      "date": "2026-09-14",
       "scored": false,
       "verifiable": false,
+      "exercises": 1,
       "max_score": null
     },
     {
       "id": "ch02",
       "title": "Call a model through the adapter",
+      "kind": "session",
+      "week": 1,
+      "date": "2026-09-15",
       "scored": true,
       "verifiable": true,
+      "exercises": 4,
       "max_score": 400
     },
     {
       "id": "ch03",
       "title": "Structured outputs",
+      "kind": "session",
+      "week": 1,
+      "date": "2026-09-16",
       "scored": true,
       "verifiable": true,
+      "exercises": 3,
       "max_score": 300
     },
     {
       "id": "ch04",
       "title": "Bounded tools",
+      "kind": "session",
+      "week": 1,
+      "date": "2026-09-17",
       "scored": true,
       "verifiable": true,
+      "exercises": 3,
       "max_score": 300
     },
     {
       "id": "ch05",
       "title": "A deterministic mini-agent",
+      "kind": "session",
+      "week": 1,
+      "date": "2026-09-18",
       "scored": true,
       "verifiable": true,
+      "exercises": 2,
       "max_score": 200
     },
     {
       "id": "ch06",
       "title": "A retrieval baseline",
+      "kind": "session",
+      "week": 2,
+      "date": "2026-09-21",
       "scored": true,
       "verifiable": true,
+      "exercises": 3,
       "max_score": 300
     },
     {
       "id": "ch07",
       "title": "Retrieval and grounding metrics",
+      "kind": "session",
+      "week": 2,
+      "date": "2026-09-22",
       "scored": true,
       "verifiable": true,
+      "exercises": 3,
       "max_score": 300
     },
     {
       "id": "ch08",
       "title": "Loops and graphs",
+      "kind": "session",
+      "week": 2,
+      "date": "2026-09-23",
       "scored": true,
       "verifiable": true,
+      "exercises": 3,
       "max_score": 300
     },
     {
       "id": "ch09",
       "title": "Trace and evaluate an agent",
+      "kind": "session",
+      "week": 2,
+      "date": "2026-09-24",
       "scored": true,
       "verifiable": true,
+      "exercises": 2,
       "max_score": 200
     },
     {
       "id": "ch10",
       "title": "Skills and an architecture decision record",
+      "kind": "session",
+      "week": 2,
+      "date": "2026-09-25",
       "scored": false,
       "verifiable": false,
+      "exercises": 2,
       "max_score": null
     },
     {
       "id": "ch11",
       "title": "State and memory",
+      "kind": "session",
+      "week": 3,
+      "date": "2026-09-28",
       "scored": true,
       "verifiable": true,
+      "exercises": 3,
       "max_score": 300
     },
     {
       "id": "ch12",
       "title": "MCP architecture and primitives",
+      "kind": "session",
+      "week": 3,
+      "date": "2026-09-29",
       "scored": true,
       "verifiable": true,
+      "exercises": 3,
       "max_score": 300
     },
     {
       "id": "ch13",
       "title": "Build and secure an MCP server",
+      "kind": "session",
+      "week": 3,
+      "date": "2026-09-30",
       "scored": true,
       "verifiable": true,
+      "exercises": 3,
       "max_score": 300
     },
     {
       "id": "ch14",
       "title": "Deploy and operate the capstone",
+      "kind": "session",
+      "week": 3,
+      "date": "2026-10-01",
       "scored": true,
       "verifiable": true,
+      "exercises": 1,
       "max_score": 100
     },
     {
       "id": "cap01",
       "title": "Capstone: the source-grounded research assistant",
+      "kind": "project",
+      "opens_in_week": 2,
       "scored": true,
       "verifiable": true,
+      "exercises": 5,
       "max_score": 500
     }
-  ],
-  "entries": [
-    {
-      "github": "ernanibmurtinho",
-      "item": "ch03",
-      "submitted_at": "2026-09-08T15:19:03Z",
-      "ran": true,
-      "passed": [
-        "ch03-e3"
-      ],
-      "failed": [
-        "ch03-e1",
-        "ch03-e2"
-      ],
-      "not_reached": [],
-      "scored": true,
-      "score": 100,
-      "max_score": 300,
-      "tier": "claimed"
-    }
-  ],
-  "problems": []
+  ]
 }

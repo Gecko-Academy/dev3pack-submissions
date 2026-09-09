@@ -1,0 +1,99 @@
+# Post a merged final assignment's ANSWERS to the course API, and record the
+# score it returns.
+#
+# WHY THIS JOB MAY HOLD A SECRET WHEN THE PULL-REQUEST JOB MAY NOT. This runs on
+# push to main, which means the content was already merged by a human. It never
+# executes a learner's notebook: it reads one JSON file and posts it. The
+# pull-request job, by contrast, sees unmerged content from a fork, so it holds
+# nothing — and `verify.yml` fails the build if anybody ever adds
+# `pull_request_target`, which would hand this token to exactly that content.
+#
+# WHAT TRAVELS: the answers a learner's agent produced on their own machine.
+# Not their notebook, not their code. The API grades and discards them.
+name: finals
+
+on:
+  push:
+    branches: [main]
+    paths: ["submissions/*/final/answers.json"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: finals
+  cancel-in-progress: false
+
+jobs:
+  score:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Which finals arrived in this push
+        id: changed
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          # A first push to a branch has no usable `before`; fall back to the
+          # commit itself rather than scoring the whole repository.
+          if git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            range="$BEFORE..$AFTER"
+          else
+            range="$AFTER^..$AFTER"
+          fi
+          git diff --name-only --diff-filter=AM "$range" \
+            | grep -E '^submissions/[^/]+/final/answers\.json$' > finals.txt || true
+          echo "count=$(wc -l < finals.txt)" >> "$GITHUB_OUTPUT"
+          cat finals.txt
+
+      - name: Score each one and record what came back
+        if: steps.changed.outputs.count != '0'
+        env:
+          API: ${{ vars.DEV3PACK_API_BASE }}
+          KEY: ${{ secrets.DEV3PACK_SERVER_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${KEY:-}" ]; then
+            echo "::error::DEV3PACK_SERVER_KEY is not set; nothing was scored"
+            exit 1
+          fi
+          while read -r path; do
+            [ -n "$path" ] || continue
+            learner="$(echo "$path" | cut -d/ -f2)"
+            echo "scoring $learner"
+            # The learner is the folder the file sits in, which GitHub already
+            # checked when the pull request was opened. The API takes it from
+            # here rather than from anything inside the file.
+            payload="$(jq -c --arg g "$learner" \
+              '{github: $g, set: "final", cohort: (.cohort // "2026-09"),
+                course_release: (.course_release // "unknown"), answers: .answers}' "$path")"
+            code="$(curl -sS -o response.json -w '%{http_code}' \
+              -X POST "$API/api/dev3pack/submit" \
+              -H "authorization: Bearer $KEY" \
+              -H "content-type: application/json" \
+              --data "$payload")"
+            if [ "$code" != "200" ]; then
+              echo "::error::$learner scored HTTP $code"
+              cat response.json
+              exit 1
+            fi
+            mkdir -p "finals/$learner"
+            # The recorded result carries no answer text: the API returns
+            # per-case verdicts, and that is what lands in the repository.
+            jq '{github, question_set_id, score, gates, passed, certificate_eligible, results}' \
+              response.json > "finals/$learner/result.json"
+            jq -r '"  \(.github): \(.score.percent)% — passed=\(.passed) — certificate=\(.certificate_eligible)"' \
+              response.json
+          done < finals.txt
+
+      - name: Commit the results
+        if: steps.changed.outputs.count != '0'
+        run: |
+          git config user.name "dev3pack-bot"
+          git config user.email "noreply@github.com"
+          git add finals/
+          git diff --cached --quiet || git commit -m "finals: record scores for this push"
+          git push

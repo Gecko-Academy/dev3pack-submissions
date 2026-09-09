@@ -80,6 +80,30 @@ Read what it says, fix the exercise, and run `bootcamp submit` again. The
 commonest cause is hand-editing `submission.json`, which is generated and should
 be committed exactly as written.
 
+## The final assignment
+
+The final is handed in like anything else, with one extra file:
+
+```
+submissions/<your-github>/final/
+├── answers.json     what your agent answered, and nothing else
+└── notebook.ipynb   the run that produced it
+```
+
+`answers.json` holds your agent's answers to the published final questions. Your
+agent runs on your machine; only the answers travel. Nothing you wrote is
+executed by the course.
+
+When a pull request carrying one is merged, the course scores the answers
+against the private key set and writes the result to `finals/<your-github>/`.
+That file records the score, both gates and a verdict per question. It does not
+record what you answered.
+
+Two gates decide a pass, and the second is the one that matters: 30% of
+questions, and **every** question marked critical. Refusing everything reaches
+the first and fails the second. Above both, the course issues a signed receipt
+and you render your certificate from it.
+
 ## Consuming the track
 
 `track.json` at the root of this repository is the machine-readable record, and
