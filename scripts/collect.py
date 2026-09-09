@@ -147,6 +147,19 @@ def merge(number: int, head: str) -> None:
     )
 
 
+def refresh() -> None:
+    """Bring the checkout up to the merges that just happened.
+
+    The merges go through the API, so `main` moves while this checkout stays
+    where it started. Rendering the track without this reads the tree from
+    BEFORE the merges and writes a track that is missing exactly the
+    submissions this run just accepted — which looked, in testing, like the
+    merge had silently failed.
+    """
+    subprocess.run(["git", "fetch", "origin", "main"], cwd=ROOT, check=True, timeout=180)
+    subprocess.run(["git", "reset", "--hard", "origin/main"], cwd=ROOT, check=True, timeout=180)
+
+
 def render_track() -> None:
     result = subprocess.run(
         [sys.executable, str(ROOT / "scripts" / "render_track.py")],
@@ -198,6 +211,8 @@ def main(argv: list[str] | None = None) -> int:
             print(f"  #{pull['number']} did not merge: {str(error)[:120]}", file=sys.stderr)
     print(f"\nmerged {merged} of {len(mergeable)}")
 
+    if merged:
+        refresh()
     render_track()
     return 0
 

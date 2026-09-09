@@ -209,6 +209,22 @@
       "score": 100,
       "max_score": 300,
       "tier": "claimed"
+    },
+    {
+      "github": "ernanibmurtinho",
+      "item": "ch05",
+      "submitted_at": "2026-09-09T06:40:37Z",
+      "ran": true,
+      "passed": [
+        "ch05-e1",
+        "ch05-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 200,
+      "max_score": 200,
+      "tier": "claimed"
     }
   ],
   "problems": []
