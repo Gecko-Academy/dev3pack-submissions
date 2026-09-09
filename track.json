@@ -1,6 +1,106 @@
 {
   "schema": "dev3pack.track.v1",
   "cohort": "2026-09",
+  "items": [
+    {
+      "id": "ch01",
+      "title": "Orientation: from LLM calls to agentic systems",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 300
+    },
+    {
+      "id": "ch02",
+      "title": "Python for AI engineers",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 200
+    },
+    {
+      "id": "ch03",
+      "title": "Prompts and structured outputs",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 300
+    },
+    {
+      "id": "ch04",
+      "title": "Claude Code 101 and assistant configuration",
+      "scored": false,
+      "verifiable": false,
+      "max_score": null
+    },
+    {
+      "id": "ch05",
+      "title": "Tools: controlled capabilities",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 300
+    },
+    {
+      "id": "ch06",
+      "title": "RAG fundamentals",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 100
+    },
+    {
+      "id": "ch07",
+      "title": "Retrieval quality and query optimization",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 200
+    },
+    {
+      "id": "ch08",
+      "title": "Agentic design patterns",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 100
+    },
+    {
+      "id": "ch09",
+      "title": "Reliability: tracing, evaluation, error analysis",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 200
+    },
+    {
+      "id": "ch10",
+      "title": "Agent skills, MCP, and subagents",
+      "scored": false,
+      "verifiable": false,
+      "max_score": null
+    },
+    {
+      "id": "ch11",
+      "title": "Memory and long-running agents",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 200
+    },
+    {
+      "id": "ch12",
+      "title": "Capstone build sprint I",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 500
+    },
+    {
+      "id": "ch13",
+      "title": "Orquestra + Gecko: verified API interaction",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 300
+    },
+    {
+      "id": "ch14",
+      "title": "Capstone build sprint II: hardening",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 200
+    }
+  ],
   "entries": [
     {
       "github": "ernanibmurtinho",

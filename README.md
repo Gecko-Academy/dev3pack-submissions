@@ -16,9 +16,12 @@ submissions/
 ```
 
 Your score is a claim and your notebook is the proof. When you open the pull
-request, CI re-runs your notebook and compares what its checks actually print
-against what your `submission.json` says. A claim that does not survive that is
-refused by a bot, so nobody has to take anyone's word for anything.
+request, CI checks that the bundle is the right shape, that it sits in your own
+folder, that the notebook is the exact file the claim was written against, and
+that the score follows from the passes and help the claim itself lists. It does
+**not** re-run your notebook yet: that arrives in week 2, and until then every
+score in this repository is marked `claimed`, which means self-reported and
+shape-checked. A human merges, and the merge is what records the score.
 
 ## How to submit
 
@@ -54,8 +57,7 @@ and re-submitting replaces the earlier attempt.
 
 ## Check it yourself before you open the pull request
 
-The same re-run the instructors do, on your own machine, from your course
-repository:
+The re-run CI cannot do yet, on your own machine, from your course repository:
 
 ```bash
 uv run python scripts/verify_submission.py submissions/your-username/ch03
@@ -77,3 +79,41 @@ overstating it.
 Read what it says, fix the exercise, and run `bootcamp submit` again. The
 commonest cause is hand-editing `submission.json`, which is generated and should
 be committed exactly as written.
+
+## Consuming the track
+
+`track.json` at the root of this repository is the machine-readable record, and
+the raw URL is the API:
+
+```
+https://raw.githubusercontent.com/Gecko-Academy/dev3pack-submissions/main/track.json
+```
+
+No key, because everything in it is already public here. Poll it with
+`If-None-Match`; it changes at most once per session day, when the instructors
+merge and push. Pin a commit in the path instead of `main` if you need the
+exact document a reading was taken from.
+
+The rules a consumer must follow, because the document cannot enforce them:
+
+- **`schema` is `dev3pack.track.v1`.** Refuse any other value. Additive fields
+  never bump it; a break ships as a new file.
+- **Render `tier` beside every score.** `claimed` is self-reported and
+  shape-checked, `verified` means a re-run agreed, `unverifiable` means it can
+  never be re-run, `handed in` means the item is not marked. A score without
+  its tier is a misreading.
+- **A missing `(github, item)` row means not submitted**, never zero. `score: 0`
+  is a submission where nothing passed.
+- **`scored: false` means no arithmetic.** `score` and `max_score` are `null`;
+  render the word, and leave the row out of totals.
+- **One row per `(github, item)`.** A resubmission replaces the row and drops
+  its `verified` tier, on purpose. Upsert on that key; never append.
+- **`items[]` is the denominator.** It lists every chapter that can be handed
+  in, with `max_score` and whether it is scored, so a blank cell has a shape.
+- **`submitted_at` is the student's clock.** For "changed since", use the
+  commit, not that field.
+- **Non-empty `problems[]` means the document is partial**, and each entry
+  names the file that could not be read.
+
+Grades, certificates and the final assignment are not in this file and never
+will be. They are decided at demo day and delivered separately.
