@@ -35,7 +35,20 @@ FULL_MARKS = 100
 HINT_COST = 30
 REVEAL_COST = 70
 
-ITEM = re.compile(r"^(?:ch|w)\d{2}$")
+ITEM = re.compile(r"^(?:ch|w|cap)\d{2}$")
+
+
+def submission_id_for(claim: dict) -> str:
+    """The id this claim should carry, recomputed from the claim itself.
+
+    Must match `bootcamp_agent.submission.submission_id_for`. Sorted keys, no
+    incidental whitespace, UTF-8, taken over everything except the id. Editing
+    any field after `bootcamp submit` wrote the file changes this, which is the
+    point: the id is the claim's own fingerprint.
+    """
+    body = {key: value for key, value in claim.items() if key != "submission_id"}
+    canonical = json.dumps(body, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return f"sub_{hashlib.sha256(canonical.encode('utf-8')).hexdigest()[:24]}"
 
 
 def problems_with(directory: Path) -> list[str]:
@@ -53,6 +66,19 @@ def problems_with(directory: Path) -> list[str]:
         claim = json.loads(claim_path.read_text())
     except json.JSONDecodeError as error:
         return [f"{claim_path}: not valid JSON ({error})"]
+    if not isinstance(claim, dict):
+        return [f"{claim_path}: the claim must be a JSON object"]
+
+    # Additive since 2026-09-09. A bundle written before ids existed carries
+    # none and is still valid; one that carries a WRONG id was edited.
+    stated = claim.get("submission_id")
+    if stated is not None:
+        expected = submission_id_for(claim)
+        if stated != expected:
+            found.append(
+                f"{claim_path}: submission_id is {stated}, but this claim hashes to "
+                f"{expected}. Re-run `uv run bootcamp submit` rather than editing the file"
+            )
 
     if claim.get("schema") != SCHEMA:
         found.append(
