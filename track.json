@@ -194,6 +194,21 @@
   "entries": [
     {
       "github": "ernanibmurtinho",
+      "item": "ch01",
+      "submitted_at": "2026-09-10T20:10:45Z",
+      "ran": false,
+      "passed": [],
+      "failed": [],
+      "not_reached": [
+        "ch01-e1"
+      ],
+      "scored": false,
+      "score": null,
+      "max_score": null,
+      "tier": "handed in"
+    },
+    {
+      "github": "ernanibmurtinho",
       "item": "ch02",
       "submitted_at": "2026-09-10T20:10:46Z",
       "ran": true,
@@ -208,6 +223,56 @@
       "scored": true,
       "score": 400,
       "max_score": 400,
+      "tier": "claimed"
+    },
+    {
+      "github": "ernanibmurtinho",
+      "item": "ch03",
+      "submitted_at": "2026-09-10T20:10:46Z",
+      "ran": true,
+      "passed": [
+        "ch03-e1",
+        "ch03-e2",
+        "ch03-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "ernanibmurtinho",
+      "item": "ch04",
+      "submitted_at": "2026-09-10T20:10:47Z",
+      "ran": true,
+      "passed": [
+        "ch04-e1",
+        "ch04-e2",
+        "ch04-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "ernanibmurtinho",
+      "item": "ch05",
+      "submitted_at": "2026-09-10T20:10:48Z",
+      "ran": true,
+      "passed": [
+        "ch05-e1",
+        "ch05-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 200,
+      "max_score": 200,
       "tier": "claimed"
     }
   ],

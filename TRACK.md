@@ -11,7 +11,7 @@ nothing has been submitted yet, which is not the same as a zero.
 
 | Student | ch01 | ch02 | ch03 | ch04 | ch05 | ch06 | ch07 | ch08 | ch09 | ch10 | ch11 | ch12 | ch13 | ch14 | cap01 | Total |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| ernanibmurtinho |  | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 400/400 |
+| ernanibmurtinho | handed in | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1200/1200 |
 
 ## Week 0
 
