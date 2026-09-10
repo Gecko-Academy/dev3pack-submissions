@@ -1,0 +1,36 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch01",
+  "student": {
+    "github": "ernanibmurtinho"
+  },
+  "submitted_at": "2026-09-10T20:10:45Z",
+  "result": {
+    "ran": false,
+    "passed": [],
+    "failed": [],
+    "not_reached": [
+      "ch01-e1"
+    ],
+    "scored": false,
+    "score": null,
+    "max_score": null
+  },
+  "note": "assistant-driven, so it cannot be re-run; handed in rather than marked",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "linux"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "4714a128f0a1fbc755eec85a0a9e066f1cbc3d6cc2d1d9621a513d224fa3216c"
+  },
+  "verified": null,
+  "submission_id": "sub_68cdae37643601ef6b93e705"
+}
