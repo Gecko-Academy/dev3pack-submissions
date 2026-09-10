@@ -29,7 +29,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      # FULL HISTORY, and this is not optional. `actions/checkout` clones one
+      # commit by default, so neither `github.event.before` nor `HEAD^` exists
+      # in the working copy and the diff below cannot be computed. On
+      # 2026-09-10 that made this job green while it scored nothing at all.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Which finals arrived in this push
         id: changed
@@ -37,6 +43,7 @@ jobs:
           BEFORE: ${{ github.event.before }}
           AFTER: ${{ github.sha }}
         run: |
+          set -euo pipefail
           # A first push to a branch has no usable `before`; fall back to the
           # commit itself rather than scoring the whole repository.
           if git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
@@ -44,8 +51,11 @@ jobs:
           else
             range="$AFTER^..$AFTER"
           fi
-          git diff --name-only --diff-filter=AM "$range" \
-            | grep -E '^submissions/[^/]+/final/answers\.json$' > finals.txt || true
+          # `|| true` belongs on the grep, which exits 1 when a push touches no
+          # final, and NEVER on the diff: swallowing git's failure is what let
+          # this job report success while scoring nobody.
+          git diff --name-only --diff-filter=AM "$range" > changed.txt
+          grep -E '^submissions/[^/]+/final/answers\.json$' changed.txt > finals.txt || true
           echo "count=$(wc -l < finals.txt)" >> "$GITHUB_OUTPUT"
           cat finals.txt
 
