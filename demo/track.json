@@ -1,0 +1,420 @@
+{
+  "schema": "dev3pack.track.v1",
+  "items": [
+    {
+      "id": "w01",
+      "title": "The environment",
+      "scored": false,
+      "verifiable": true,
+      "max_score": null
+    },
+    {
+      "id": "w02",
+      "title": "Packages and documentation",
+      "scored": false,
+      "verifiable": true,
+      "max_score": null
+    },
+    {
+      "id": "w03",
+      "title": "Classes and contracts",
+      "scored": false,
+      "verifiable": true,
+      "max_score": null
+    },
+    {
+      "id": "w04",
+      "title": "Calling a real API",
+      "scored": false,
+      "verifiable": true,
+      "max_score": null
+    },
+    {
+      "id": "w05",
+      "title": "Packages, PyPI and PEP 8",
+      "scored": false,
+      "verifiable": true,
+      "max_score": null
+    },
+    {
+      "id": "w06",
+      "title": "A portable package",
+      "scored": false,
+      "verifiable": true,
+      "max_score": null
+    },
+    {
+      "id": "w07",
+      "title": "Classes in a package",
+      "scored": false,
+      "verifiable": true,
+      "max_score": null
+    },
+    {
+      "id": "w08",
+      "title": "Documentation, tests and readability",
+      "scored": false,
+      "verifiable": true,
+      "max_score": null
+    },
+    {
+      "id": "w09",
+      "title": "Your first MCP server",
+      "scored": false,
+      "verifiable": true,
+      "max_score": null
+    },
+    {
+      "id": "w10",
+      "title": "Resources, prompts, and the LLM",
+      "scored": false,
+      "verifiable": true,
+      "max_score": null
+    },
+    {
+      "id": "w11",
+      "title": "Databases, APIs, and third-party servers",
+      "scored": false,
+      "verifiable": true,
+      "max_score": null
+    },
+    {
+      "id": "w12",
+      "title": "Data structures for agents",
+      "scored": false,
+      "verifiable": true,
+      "max_score": null
+    },
+    {
+      "id": "ch01",
+      "title": "Configure the assistant and the repository instructions",
+      "scored": false,
+      "verifiable": false,
+      "max_score": null
+    },
+    {
+      "id": "ch02",
+      "title": "Call a model through the adapter",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 400
+    },
+    {
+      "id": "ch03",
+      "title": "Structured outputs",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 300
+    },
+    {
+      "id": "ch04",
+      "title": "Bounded tools",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 300
+    },
+    {
+      "id": "ch05",
+      "title": "A deterministic mini-agent",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 200
+    },
+    {
+      "id": "ch06",
+      "title": "A retrieval baseline",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 300
+    },
+    {
+      "id": "ch07",
+      "title": "Retrieval and grounding metrics",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 300
+    },
+    {
+      "id": "ch08",
+      "title": "Loops and graphs",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 300
+    },
+    {
+      "id": "ch09",
+      "title": "Trace and evaluate an agent",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 200
+    },
+    {
+      "id": "ch10",
+      "title": "Skills and an architecture decision record",
+      "scored": false,
+      "verifiable": false,
+      "max_score": null
+    },
+    {
+      "id": "ch11",
+      "title": "State and memory",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 300
+    },
+    {
+      "id": "ch12",
+      "title": "MCP architecture and primitives",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 300
+    },
+    {
+      "id": "ch13",
+      "title": "Build and secure an MCP server",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 300
+    },
+    {
+      "id": "ch14",
+      "title": "Deploy and operate the capstone",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 100
+    },
+    {
+      "id": "cap01",
+      "title": "Capstone: the source-grounded research assistant",
+      "scored": true,
+      "verifiable": true,
+      "max_score": 500
+    }
+  ],
+  "entries": [
+    {
+      "github": "dev3pack-demo-full",
+      "item": "ch01",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1",
+        "ch01-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": false,
+      "score": null,
+      "max_score": null,
+      "tier": "handed in"
+    },
+    {
+      "github": "dev3pack-demo-full",
+      "item": "ch02",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch02-e1",
+        "ch02-e2",
+        "ch02-e3",
+        "ch02-e4"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 400,
+      "max_score": 400,
+      "tier": "claimed"
+    },
+    {
+      "github": "dev3pack-demo-full",
+      "item": "ch03",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch03-e1",
+        "ch03-e2",
+        "ch03-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "dev3pack-demo-hinted",
+      "item": "ch04",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch04-e1",
+        "ch04-e2",
+        "ch04-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 270,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "dev3pack-demo-hinted",
+      "item": "ch05",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch05-e1",
+        "ch05-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 200,
+      "max_score": 200,
+      "tier": "claimed"
+    },
+    {
+      "github": "dev3pack-demo-partial",
+      "item": "ch01",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1",
+        "ch01-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": false,
+      "score": null,
+      "max_score": null,
+      "tier": "handed in"
+    },
+    {
+      "github": "dev3pack-demo-partial",
+      "item": "ch02",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch02-e1",
+        "ch02-e2",
+        "ch02-e3"
+      ],
+      "failed": [
+        "ch02-e4"
+      ],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 400,
+      "tier": "claimed"
+    },
+    {
+      "github": "dev3pack-demo-partial",
+      "item": "ch05",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [],
+      "failed": [
+        "ch05-e1"
+      ],
+      "not_reached": [
+        "ch05-e2"
+      ],
+      "scored": true,
+      "score": 0,
+      "max_score": 200,
+      "tier": "claimed"
+    },
+    {
+      "github": "dev3pack-demo-units",
+      "item": "w01",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [
+        "w01-e1",
+        "w01-e2",
+        "w01-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": false,
+      "score": null,
+      "max_score": null,
+      "tier": "handed in"
+    },
+    {
+      "github": "dev3pack-demo-units",
+      "item": "w02",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [
+        "w02-e1",
+        "w02-e2",
+        "w02-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": false,
+      "score": null,
+      "max_score": null,
+      "tier": "handed in"
+    },
+    {
+      "github": "dev3pack-demo-units",
+      "item": "w03",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [
+        "w03-e1",
+        "w03-e2",
+        "w03-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": false,
+      "score": null,
+      "max_score": null,
+      "tier": "handed in"
+    },
+    {
+      "github": "dev3pack-demo-verified",
+      "item": "ch03",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch03-e1",
+        "ch03-e2",
+        "ch03-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "verified"
+    },
+    {
+      "github": "dev3pack-demo-verified",
+      "item": "ch04",
+      "submitted_at": "2026-09-11T12:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch04-e1",
+        "ch04-e2",
+        "ch04-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    }
+  ],
+  "problems": [
+    "submissions/dev3pack-demo-broken/ch03/submission.json: schema 'dev3pack.submission.v1', expected 'dev3pack.submission.v2'"
+  ]
+}
