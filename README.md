@@ -114,9 +114,22 @@ https://raw.githubusercontent.com/Gecko-Academy/dev3pack-submissions/main/track.
 ```
 
 No key, because everything in it is already public here. Poll it with
-`If-None-Match`; the collect job merges what passed and rebuilds the track every
-half hour, so that is the fastest it can move. Pin a commit in the path instead
-of `main` if you need the exact document a reading was taken from.
+`If-None-Match`. Pin a commit in the path instead of `main` if you need the
+exact document a reading was taken from.
+
+**The track only moves when the collect job runs.** Its cron asks for every half
+hour, and GitHub does not honour that on a quiet repository: on 2026-09-11 the
+scheduled runs were two to five hours apart. So do not build a reading on
+half-hourly. The webhook below is the signal that is actually prompt, because it
+is sent by the run that changed the track.
+
+## A note for whoever merges
+
+**Let the collect job do it.** Merging a submission by hand puts the files on
+`main` without rebuilding the track, so `track.json` keeps saying the work is not
+there and nothing is delivered to anybody watching. The track catches up only on
+the next collect run. This is easy to miss, because the merge itself looks
+completely normal.
 
 ## Being told instead of asking
 
