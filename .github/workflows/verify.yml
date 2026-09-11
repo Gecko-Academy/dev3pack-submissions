@@ -60,9 +60,31 @@ jobs:
 
       - name: The bundle is the shape a submission has to be
         run: |
+          # A WITHDRAWAL IS NOT A MALFORMED SUBMISSION. A pull request that
+          # deletes a bundle still lists those paths as changed, and handing the
+          # checker a directory that no longer exists made it answer
+          # `no submission.json` and fail the build. Nobody could take work back:
+          # collect merges only what this check passed, so a withdrawal could
+          # never merge, and the failure named a missing file rather than the
+          # reason.
+          #
+          # THIS WEAKENS NOTHING. The folder rule above has already run across
+          # EVERY changed path, deletions included, so a pull request still
+          # cannot touch somebody else's folder whether it writes or deletes.
           dirs=$(xargs -r -n1 dirname < changed.txt | sort -u)
-          [ -z "$dirs" ] && { echo "nothing submitted"; exit 0; }
-          python3 scripts/check_bundle.py $dirs
+          present=""
+          for dir in $dirs; do
+            if [ -d "$dir" ]; then
+              present="$present $dir"
+            else
+              echo "withdrawn: $dir"
+            fi
+          done
+          if [ -z "$present" ]; then
+            echo "nothing to check: this pull request only withdraws work"
+            exit 0
+          fi
+          python3 scripts/check_bundle.py $present
 
       - name: No workflow here may run untrusted code with a token
         run: |
