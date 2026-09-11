@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch04",
+  "student": {
+    "github": "leticiaalmeida-prod"
+  },
+  "submitted_at": "2026-09-11T21:00:00Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch04-e1",
+      "ch04-e2",
+      "ch04-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 270,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 1,
+    "revealed": 0,
+    "cost": 30
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "linux"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "9a400d5291c8e0e2e36d376fe9da41d4b613e3a2b173e8fe820055fa74da7d1b"
+  },
+  "verified": null,
+  "submission_id": "sub_aaa904381d767b493cece690"
+}
