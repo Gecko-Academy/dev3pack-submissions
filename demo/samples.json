@@ -1,0 +1,27 @@
+{
+  "note": "Bodies are the real deliveries the course made on 2026-09-11. The signatures and timestamps are recomputed with the published demo secret so they can be verified without a private key.",
+  "demo_secret": "dev3pack-demo-secret",
+  "samples": [
+    {
+      "file": "demo/webhook-track-updated.json",
+      "x-dev3pack-event": "track.updated",
+      "x-dev3pack-delivery": "6d441fc98b495d62ef610f27f8f8f0a1",
+      "x-dev3pack-timestamp": "1789166400",
+      "x-dev3pack-signature": "v1=cccd0a36a81a29aea27ad9c0c66d30f250c53743b92619f05fd5d75af6d56c63"
+    },
+    {
+      "file": "demo/webhook-track-removed.json",
+      "x-dev3pack-event": "track.updated",
+      "x-dev3pack-delivery": "32d39c47ad4816d4658ae8817ed956c6",
+      "x-dev3pack-timestamp": "1789166400",
+      "x-dev3pack-signature": "v1=0b11d959710c05a33d6df32219da0c1dbe0cd3e24a3497ad0d5d97943fa92f1e"
+    },
+    {
+      "file": "demo/webhook-ping.json",
+      "x-dev3pack-event": "ping",
+      "x-dev3pack-delivery": "5fd081e56220b267346b7bf977a65e3e",
+      "x-dev3pack-timestamp": "1789166400",
+      "x-dev3pack-signature": "v1=885f718d3e8896c9fb77c7bc08a635ad46614cd97770ea112d6072518e8e72ec"
+    }
+  ]
+}

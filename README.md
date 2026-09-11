@@ -123,6 +123,16 @@ scheduled runs were two to five hours apart. So do not build a reading on
 half-hourly. The webhook below is the signal that is actually prompt, because it
 is sent by the run that changed the track.
 
+## Test data
+
+`demo/` holds a track shaped exactly like the real one, three signed webhook
+bodies, and the secret to verify them with. It is for building a receiver and a
+gradebook view before the cohort starts, without asking us for anything.
+
+Nothing there is reachable from the real track: `render_track.py` writes
+`track.json` at the root and never touches that directory. `demo/README.md`
+explains what each fixture is there to catch.
+
 ## A note for whoever merges
 
 **Let the collect job do it.** Merging a submission by hand puts the files on
