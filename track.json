@@ -191,6 +191,91 @@
       "max_score": 500
     }
   ],
-  "entries": [],
+  "entries": [
+    {
+      "github": "leticiaalmeida-prod",
+      "item": "ch01",
+      "submitted_at": "2026-09-11T21:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1",
+        "ch01-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": false,
+      "score": null,
+      "max_score": null,
+      "tier": "handed in"
+    },
+    {
+      "github": "leticiaalmeida-prod",
+      "item": "ch02",
+      "submitted_at": "2026-09-11T21:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch02-e1",
+        "ch02-e2",
+        "ch02-e3",
+        "ch02-e4"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 400,
+      "max_score": 400,
+      "tier": "claimed"
+    },
+    {
+      "github": "leticiaalmeida-prod",
+      "item": "ch03",
+      "submitted_at": "2026-09-11T21:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch03-e1",
+        "ch03-e2",
+        "ch03-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "leticiaalmeida-prod",
+      "item": "ch04",
+      "submitted_at": "2026-09-11T21:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch04-e1",
+        "ch04-e2",
+        "ch04-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 270,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "leticiaalmeida-prod",
+      "item": "ch05",
+      "submitted_at": "2026-09-11T21:00:00Z",
+      "ran": true,
+      "passed": [
+        "ch05-e1",
+        "ch05-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 200,
+      "max_score": 200,
+      "tier": "claimed"
+    }
+  ],
   "problems": []
 }
