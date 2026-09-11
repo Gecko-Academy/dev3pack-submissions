@@ -1,0 +1,74 @@
+# Send a notification by hand: prove a subscriber's endpoint works, or replay a
+# delivery that did not land.
+#
+# WHY THIS EXISTS AS A SEPARATE WORKFLOW. Delivery from `collect.yml` is
+# at-least-once with three attempts and then it stops, deliberately: a
+# subscriber being down must not make a cohort's merges look broken. That leaves
+# exactly two things a person still needs, and both are manual by nature.
+#
+#   ping    — a subscriber wiring up their receiver wants a signed body to
+#             verify against, without waiting for somebody to submit a chapter.
+#   resend  — a delivery failed, and the change it announced is already merged,
+#             so nothing will announce it again. Give it the same two commits
+#             the failed run used and it sends the identical summary.
+#
+# It holds the same secret as `collect.yml` and for the same reason: it runs on
+# `main`, on reviewed code, from a button only somebody with write access can
+# press. It never checks out a fork and never executes a submitted notebook.
+name: notify
+
+on:
+  workflow_dispatch:
+    inputs:
+      event:
+        description: "What to send"
+        type: choice
+        options: [ping, resend]
+        default: ping
+      commit:
+        description: "The commit to announce (default: the head of main)"
+        type: string
+        default: ""
+      previous:
+        description: "resend only: the commit it replaced"
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notify
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # FULL HISTORY. A resend diffs two commits, and a one-commit clone holds
+      # neither of them.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Send it
+        env:
+          DEV3PACK_WEBHOOK_URL: ${{ vars.DEV3PACK_WEBHOOK_URL }}
+          DEV3PACK_WEBHOOK_SECRET: ${{ secrets.DEV3PACK_WEBHOOK_SECRET }}
+          EVENT: ${{ inputs.event }}
+          COMMIT: ${{ inputs.commit }}
+          PREVIOUS: ${{ inputs.previous }}
+        run: |
+          set -euo pipefail
+          commit="${COMMIT:-$(git rev-parse HEAD)}"
+          if [ "$EVENT" = "ping" ]; then
+            python3 scripts/notify.py --ping --commit "$commit"
+          else
+            if [ -z "$PREVIOUS" ]; then
+              echo "::error::a resend needs the commit it replaced"
+              exit 1
+            fi
+            python3 scripts/notify.py --previous "$PREVIOUS" --commit "$commit"
+          fi

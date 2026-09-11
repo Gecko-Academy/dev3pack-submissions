@@ -114,9 +114,73 @@ https://raw.githubusercontent.com/Gecko-Academy/dev3pack-submissions/main/track.
 ```
 
 No key, because everything in it is already public here. Poll it with
-`If-None-Match`; it changes at most once per session day, when the instructors
-merge and push. Pin a commit in the path instead of `main` if you need the
-exact document a reading was taken from.
+`If-None-Match`; the collect job merges what passed and rebuilds the track every
+half hour, so that is the fastest it can move. Pin a commit in the path instead
+of `main` if you need the exact document a reading was taken from.
+
+## Being told instead of asking
+
+Polling still works and is not going away. But a consumer that keys its own rows
+by its own user ids would rather be told, so the collect job can POST a short
+notification whenever a merge actually changed somebody's score.
+
+```json
+{
+  "schema": "dev3pack.webhook.v1",
+  "event": "track.updated",
+  "repository": "Gecko-Academy/dev3pack-submissions",
+  "commit": "b133b8b…",
+  "track_url": "https://raw.githubusercontent.com/Gecko-Academy/dev3pack-submissions/b133b8b…/track.json",
+  "sent_at": "2026-09-11T21:33:40Z",
+  "counts": { "added": 4, "updated": 0, "removed": 0 },
+  "truncated": false,
+  "changed": [
+    { "change": "added", "github": "ernanibmurtinho", "item": "ch03",
+      "scored": true, "score": 300, "max_score": 300, "tier": "claimed",
+      "submitted_at": "2026-09-10T20:10:46Z" }
+  ]
+}
+```
+
+**The body is a hint and `track_url` is the truth.** That URL is pinned to the
+commit, so it cannot change after the fact: a retry, a redelivery or a
+notification that overtakes another all resolve by reading it. `changed` is
+capped at 500 rows and `truncated` says when the cap was hit, which is why the
+summary is never the thing you store.
+
+`change` is `added`, `updated` or `removed`. A removal means the submission left
+the tree, and a consumer that only ever upserts would otherwise keep showing a
+score this repository no longer holds.
+
+Every request is signed:
+
+```
+x-dev3pack-event: track.updated
+x-dev3pack-delivery: 403496a5d6eeca3ac961c3afc8dd9593
+x-dev3pack-timestamp: 1789421620
+x-dev3pack-signature: v1=<hex hmac-sha256>
+```
+
+The signature is HMAC-SHA256 over `<timestamp>.<raw request body>` with the
+shared secret. **Verify it against the raw bytes**, not against a re-serialised
+copy of the parsed JSON, and reject a timestamp more than five minutes old.
+
+```python
+want = "v1=" + hmac.new(secret, f"{ts}.".encode() + raw, hashlib.sha256).hexdigest()
+ok = hmac.compare_digest(want, request.headers["x-dev3pack-signature"])
+```
+
+**Delivery is at-least-once and unordered.** Three attempts with backoff, then
+the step goes red and the run stays green, because a subscriber being down is
+not a reason to make a cohort's merges look broken. Nothing re-sends
+automatically: the `notify` workflow replays a delivery by hand, and it also
+sends a `ping`, which carries the same envelope with no `changed` list so a
+receiver can be verified before anybody has submitted anything.
+
+To turn it on, set `DEV3PACK_WEBHOOK_URL` as a repository variable and
+`DEV3PACK_WEBHOOK_SECRET` as a repository secret. With neither set, nothing is
+delivered and the build stays green, which is what should happen before a
+subscriber exists.
 
 The rules a consumer must follow, because the document cannot enforce them:
 

@@ -49,13 +49,39 @@ jobs:
           fi
 
       - name: Commit the track if it changed
+        id: track
         run: |
           git config user.name "dev3pack-bot"
           git config user.email "noreply@github.com"
           git add TRACK.md track.json
           if git diff --cached --quiet; then
             echo "the track is unchanged"
+            echo "changed=no" >> "$GITHUB_OUTPUT"
           else
+            # Read the commit being replaced BEFORE committing: it is what the
+            # notification below diffs against to say whose score moved.
+            echo "previous=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             git commit -m "track: after the latest merges"
             git push
+            echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            echo "changed=yes" >> "$GITHUB_OUTPUT"
           fi
+
+      # AFTER THE PUSH, NEVER BEFORE. The body names a commit and a raw URL
+      # built from it, so announcing an unpushed commit gives the subscriber a
+      # URL that 404s.
+      #
+      # `continue-on-error` is the whole point of this step's design: a
+      # subscriber being down is not a reason to make a cohort's merges look
+      # broken. The step goes red, the run stays green, and the two failures
+      # stay told apart.
+      - name: Tell the subscriber the track moved
+        if: steps.track.outputs.changed == 'yes'
+        continue-on-error: true
+        env:
+          DEV3PACK_WEBHOOK_URL: ${{ vars.DEV3PACK_WEBHOOK_URL }}
+          DEV3PACK_WEBHOOK_SECRET: ${{ secrets.DEV3PACK_WEBHOOK_SECRET }}
+        run: |
+          python3 scripts/notify.py \
+            --previous "${{ steps.track.outputs.previous }}" \
+            --commit "${{ steps.track.outputs.commit }}"
