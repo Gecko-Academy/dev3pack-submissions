@@ -1,0 +1,32 @@
+# Keep the test data describing the real thing.
+#
+# `demo/` is what a consumer builds against before the cohort starts, and it is
+# the one thing in this repository no learner ever touches, so nothing would
+# notice it going stale. The failure is quiet: the course adds an item,
+# `items.json` moves, `demo/track.json` does not, and a partner's gradebook is
+# built against a denominator we no longer use.
+#
+# THIS JOB HOLDS NOTHING. It reads two JSON files and recomputes signatures with
+# a secret that is published beside them. It needs no token and no secret, which
+# is why it can run on a pull request from a fork.
+name: check the test data
+
+on:
+  pull_request:
+    paths: ["demo/**", "items.json", "scripts/check_demo.py"]
+  push:
+    branches: [main]
+    paths: ["demo/**", "items.json", "scripts/check_demo.py"]
+
+permissions:
+  contents: read
+
+jobs:
+  demo:
+    name: test data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: python3 scripts/check_demo.py

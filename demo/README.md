@@ -173,6 +173,28 @@ production.
   Nothing re-runs a notebook yet.
 - `items[]` is your denominator, not the rows you happened to receive.
 
+## If a delivery is missed
+
+It will happen. Your endpoint redeploys, or something times out, and we stop
+after three attempts rather than queue.
+
+**You do not lose anything, as long as you read `track_url` rather than treating
+`changed` as a delta.** The next successful notification names a newer commit,
+and that commit's pinned document holds the complete current track, including
+whatever the missed one carried. Replace your rows from it and you are correct
+again, with no reconciliation and nothing for us to replay.
+
+This is the whole reason the body is a hint and the URL is the truth. A
+consumer that applies `changed` incrementally, and only that consumer, can
+drift.
+
+Two smaller consequences of the same rule. A duplicate delivery is harmless,
+because reading the same pinned URL twice gives the same answer. And two
+notifications arriving out of order are harmless too, provided you ignore a
+`commit` older than the last one you applied.
+
+If you do want a specific delivery sent again, ask. It is a button on our side.
+
 ## When you are ready for real deliveries
 
 Send us an HTTPS endpoint and we will send you the real secret. Ask for a `ping`
