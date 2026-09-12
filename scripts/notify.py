@@ -280,6 +280,16 @@ def main(argv: list[str] | None = None) -> int:
 
     url = os.environ.get("DEV3PACK_WEBHOOK_URL", "").strip()
     secret = os.environ.get("DEV3PACK_WEBHOOK_SECRET", "").strip()
+    if url and not url.startswith("https://"):
+        # The body is signed, not encrypted, and the signature proves only that
+        # we sent it. Over `http://` anyone on the path reads which students
+        # scored what and can replay the delivery; `file://` would make
+        # `urlopen` read a local path and deliver nothing at all. Neither is a
+        # subscriber, so neither is worth guessing at. Refuse loudly, because a
+        # typo here is silent in every other direction.
+        raise NotifyError(
+            f"DEV3PACK_WEBHOOK_URL must be https://, not {url.split(':', 1)[0]}://"
+        )
     if not args.dry_run and not (url and secret):
         # NOT AN ERROR. The course has to keep running before a subscriber
         # exists, and a red build every half hour would teach everyone to
