@@ -276,10 +276,32 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--cohort", default="2026-09", help="the cohort a final belongs to")
     parser.add_argument("--ping", action="store_true", help="send a ping, diff nothing")
     parser.add_argument("--dry-run", action="store_true", help="print the body, send nothing")
+    parser.add_argument(
+        "--fingerprint",
+        action="store_true",
+        help="print a hash of the configured secret, so two sides can be compared",
+    )
     args = parser.parse_args(argv)
 
     url = os.environ.get("DEV3PACK_WEBHOOK_URL", "").strip()
     secret = os.environ.get("DEV3PACK_WEBHOOK_SECRET", "").strip()
+    if args.fingerprint:
+        # WHY A HASH AND NOT THE VALUE. Two deployments disagreeing about a
+        # shared secret is the commonest cause of a 401, and the obvious way to
+        # check — read both and compare — means the secret travels through a
+        # chat window, a terminal history and a CI log. SHA-256 of a 64-character
+        # random value is not reversible, so the fingerprint proves sameness and
+        # discloses nothing. Truncated because a full digest invites someone to
+        # try a dictionary against it.
+        if not secret:
+            print("DEV3PACK_WEBHOOK_SECRET is not set here")
+            return 1
+        digest = hashlib.sha256(secret.encode("utf-8")).hexdigest()[:16]
+        print(f"length {len(secret)} · sha256[:16] {digest}")
+        if secret != secret.strip():
+            print("WARNING: the value has surrounding whitespace; the other side may not strip it")
+        return 0
+
     if url and not url.startswith("https://"):
         # The body is signed, not encrypted, and the signature proves only that
         # we sent it. Over `http://` anyone on the path reads which students

@@ -23,7 +23,7 @@ on:
       event:
         description: "What to send"
         type: choice
-        options: [ping, resend]
+        options: [ping, resend, fingerprint]
         default: ping
       commit:
         description: "The commit to announce (default: the head of main)"
@@ -65,6 +65,11 @@ jobs:
           commit="${COMMIT:-$(git rev-parse HEAD)}"
           if [ "$EVENT" = "ping" ]; then
             python3 scripts/notify.py --ping --commit "$commit"
+          elif [ "$EVENT" = "fingerprint" ]; then
+            # Prints a hash of the configured secret and nothing else, so this
+            # side can be compared with a subscriber's without either value
+            # being read aloud. See `--fingerprint` in notify.py.
+            python3 scripts/notify.py --fingerprint --commit "$commit"
           else
             if [ -z "$PREVIOUS" ]; then
               echo "::error::a resend needs the commit it replaced"
