@@ -134,6 +134,11 @@ jobs:
         if: steps.record.outputs.recorded == 'yes'
         continue-on-error: true
         env:
+          # The gateway. Once the two below are deleted from this repository,
+          # these are the only way out and the subscriber's credential lives
+          # only on the app. See `hand_to_gateway` in scripts/notify.py.
+          DEV3PACK_API_BASE: ${{ vars.DEV3PACK_API_BASE }}
+          DEV3PACK_SERVER_KEY: ${{ secrets.DEV3PACK_SERVER_KEY }}
           DEV3PACK_WEBHOOK_URL: ${{ vars.DEV3PACK_WEBHOOK_URL }}
           DEV3PACK_WEBHOOK_SECRET: ${{ secrets.DEV3PACK_WEBHOOK_SECRET }}
         run: |

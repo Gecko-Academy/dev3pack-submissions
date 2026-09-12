@@ -219,6 +219,67 @@ def envelope(event: str, commit: str, moved: list[dict] | None) -> dict:
     return body
 
 
+def hand_to_gateway(api: str, key: str, body: dict) -> None:
+    """Ask the course API to tell the subscriber, and let it decide how.
+
+    WHY THIS REPOSITORY NO LONGER TALKS TO THE SUBSCRIBER. It is public. Its
+    Actions secrets are reachable by every workflow in it and by everyone with
+    write access — and the subscriber's check today accepts a FIXED string
+    rather than a per-request signature, so anything that learned that string
+    could forge a delivery of any content: invented scores, invented finals,
+    invented withdrawals. A credential like that does not belong here.
+
+    So we say what happened, with the server key this repository ALREADY holds
+    for `/submit`, and the API holds the address and the credential. It is the
+    same shape `finals.yml` has used since the 10th, one route further.
+
+    RETRIES STAY HERE, because the thing worth retrying is reaching our own API.
+    Whether the subscriber was reachable is the API's problem and it reports it.
+    """
+    raw = json.dumps(body, separators=(",", ":"), sort_keys=True).encode("utf-8")
+    delivery = hashlib.sha256(raw).hexdigest()[:32]
+    request = urllib.request.Request(
+        f"{api.rstrip('/')}/api/dev3pack/notify",
+        data=raw,
+        method="POST",
+        headers={
+            "content-type": "application/json",
+            "authorization": f"Bearer {key}",
+            "user-agent": f"dev3pack-notify ({REPO})",
+        },
+    )
+
+    last = ""
+    for attempt, pause in enumerate(BACKOFF, start=1):
+        try:
+            with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
+                answer = json.loads(response.read().decode("utf-8") or "{}")
+                if answer.get("delivered"):
+                    print(f"delivered {delivery} — subscriber returned {answer.get('status')}")
+                else:
+                    # Reaching us worked; reaching the subscriber did not. Say
+                    # so and stop: repeating it cannot change their answer.
+                    print(
+                        f"the API accepted {delivery} but did not deliver it: "
+                        f"{answer.get('reason') or answer.get('status')}"
+                    )
+                return
+        except urllib.error.HTTPError as error:
+            last = f"HTTP {error.code}"
+            if error.code == 502:
+                # Our API is up and the subscriber refused. Its body names why.
+                detail = error.read().decode("utf-8", "replace")[:200]
+                raise NotifyError(f"the subscriber refused {delivery}: {detail}") from None
+            if error.code != 429 and 400 <= error.code < 500:
+                raise NotifyError(f"the course API refused {delivery}: {last}") from None
+        except (urllib.error.URLError, TimeoutError, OSError) as error:
+            last = str(error)
+        if attempt < len(BACKOFF):
+            print(f"attempt {attempt} failed ({last}); retrying in {pause}s", file=sys.stderr)
+            time.sleep(pause)
+    raise NotifyError(f"could not reach the course API for {delivery}: {last}")
+
+
 def deliver(url: str, secret: str, body: dict) -> None:
     """POST it, signed, retrying only what retrying can fix.
 
@@ -285,6 +346,11 @@ def main(argv: list[str] | None = None) -> int:
 
     url = os.environ.get("DEV3PACK_WEBHOOK_URL", "").strip()
     secret = os.environ.get("DEV3PACK_WEBHOOK_SECRET", "").strip()
+    # THE GATEWAY IS PREFERRED, and once the two values above are deleted from
+    # this repository it is the only path left. See `hand_to_gateway`.
+    api = os.environ.get("DEV3PACK_API_BASE", "").strip()
+    server_key = os.environ.get("DEV3PACK_SERVER_KEY", "").strip()
+    via_gateway = bool(api and server_key) and not (url and secret)
     if args.fingerprint:
         # WHY A HASH AND NOT THE VALUE. Two deployments disagreeing about a
         # shared secret is the commonest cause of a 401, and the obvious way to
@@ -312,7 +378,7 @@ def main(argv: list[str] | None = None) -> int:
         raise NotifyError(
             f"DEV3PACK_WEBHOOK_URL must be https://, not {url.split(':', 1)[0]}://"
         )
-    if not args.dry_run and not (url and secret):
+    if not args.dry_run and not via_gateway and not (url and secret):
         # NOT AN ERROR. The course has to keep running before a subscriber
         # exists, and a red build every half hour would teach everyone to
         # ignore this workflow.
@@ -347,7 +413,10 @@ def main(argv: list[str] | None = None) -> int:
     if args.dry_run:
         print(json.dumps(body, indent=2, sort_keys=True))
         return 0
-    deliver(url, secret, body)
+    if via_gateway:
+        hand_to_gateway(api, server_key, body)
+    else:
+        deliver(url, secret, body)
     return 0
 
 
