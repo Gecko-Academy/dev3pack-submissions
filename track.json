@@ -191,25 +191,6 @@
       "max_score": 500
     }
   ],
-  "entries": [
-    {
-      "github": "leticiaalmeida-prod",
-      "item": "ch02",
-      "submitted_at": "2026-09-12T00:40:00Z",
-      "ran": true,
-      "passed": [
-        "ch02-e1",
-        "ch02-e2",
-        "ch02-e3",
-        "ch02-e4"
-      ],
-      "failed": [],
-      "not_reached": [],
-      "scored": true,
-      "score": 400,
-      "max_score": 400,
-      "tier": "claimed"
-    }
-  ],
+  "entries": [],
   "problems": []
 }
