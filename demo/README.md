@@ -58,6 +58,38 @@ Change one byte of `raw` and it must stop matching. If it does not, your
 comparison is wrong, and the usual cause is verifying against a re-serialised
 copy of the parsed JSON rather than the bytes that arrived.
 
+### The same thing in JavaScript
+
+Web Crypto only, so this is the same in Convex, Cloudflare Workers, Deno and any
+edge runtime. `request.text()` gives you the raw body; never re-serialise the
+parsed object to verify.
+
+```js
+const enc = new TextEncoder();
+
+async function verify(secret, timestamp, signature, raw) {
+  if (!timestamp || !signature) return false;
+  if (Math.abs(Date.now() / 1000 - Number(timestamp)) > 300) return false;
+  const key = await crypto.subtle.importKey(
+    "raw", enc.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"],
+  );
+  const mac = await crypto.subtle.sign("HMAC", key, enc.encode(`${timestamp}.${raw}`));
+  const want = "v1=" + [...new Uint8Array(mac)]
+    .map((b) => b.toString(16).padStart(2, "0")).join("");
+  if (want.length !== signature.length) return false;
+  // Compare every byte. Returning early on the first mismatch leaks the
+  // signature one character at a time to anyone who can time the response.
+  let diff = 0;
+  for (let i = 0; i < want.length; i++) {
+    diff |= want.charCodeAt(i) ^ signature.charCodeAt(i);
+  }
+  return diff === 0;
+}
+```
+
+Against the samples here this returns `false` on the freshness check, because
+their timestamp is fixed. Drop that line while you develop.
+
 ### Send one to your own endpoint
 
 ```bash
