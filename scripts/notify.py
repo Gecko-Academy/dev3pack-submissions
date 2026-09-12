@@ -1,7 +1,15 @@
 """Tell a subscriber that the track moved, so nobody has to poll for it.
 
     python3 scripts/notify.py --previous <sha> --commit <sha>   # after a push
+    python3 scripts/notify.py --finals <list> --commit <sha>    # after a final
     python3 scripts/notify.py --ping --commit <sha>             # prove the wiring
+
+TWO EVENTS, BECAUSE THERE ARE TWO SCORE SURFACES AND THEY HAVE DIFFERENT
+OWNERS. `track.updated` carries per-session scores, whose record is this
+repository. `final.scored` carries final-assessment scores, whose record is the
+course API, because they are graded against a question set that cannot ship to
+anybody. A subscriber wants telling either way, so both come down one pipe with
+one envelope and one secret.
 
 WHAT THIS IS FOR. `track.json` is public and pollable, and that stays true: the
 raw URL is still the whole interface and needs no key. But a consumer that keys
@@ -142,6 +150,55 @@ def changes(previous: dict, current: dict) -> list[dict]:
     return moved
 
 
+#: Where a scored final lands in this repository, and the API that is its record.
+FINALS_API = "https://app.geckovision.tech/api/dev3pack/finals"
+
+
+def finals_from(paths: list[str]) -> list[dict]:
+    """What was scored, from the result files this push wrote.
+
+    WHAT IS DELIBERATELY DROPPED: `results`, the per-case verdicts. The course
+    tells partners it never sends per-question results, and a notification is
+    not the place to start. The repository keeps them; this carries the score,
+    both gates, and whether a certificate may be issued.
+    """
+    scored: list[dict] = []
+    for path in paths:
+        if not path:
+            continue
+        document = json.loads((ROOT / path).read_text(encoding="utf-8"))
+        scored.append(
+            {
+                "github": document["github"],
+                "question_set_id": document.get("question_set_id"),
+                "score": document.get("score"),
+                "gates": document.get("gates"),
+                "passed": document.get("passed"),
+                "certificate_eligible": document.get("certificate_eligible"),
+            }
+        )
+    return sorted(scored, key=lambda entry: entry["github"])
+
+
+def finals_envelope(commit: str, scored: list[dict], cohort: str) -> dict:
+    body = {
+        "schema": SCHEMA,
+        "event": "final.scored",
+        "repository": REPO,
+        "commit": commit,
+        "cohort": cohort,
+        # The API is the record for a final, not this repository, so the pointer
+        # goes there. Reading it needs the partner's read key; the summary here
+        # does not.
+        "finals_url": f"{FINALS_API}?cohort={cohort}",
+        "sent_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "counts": {"scored": len(scored)},
+        "truncated": len(scored) > MAX_CHANGED,
+        "scored": scored[:MAX_CHANGED],
+    }
+    return body
+
+
 def envelope(event: str, commit: str, moved: list[dict] | None) -> dict:
     body = {
         "schema": SCHEMA,
@@ -215,6 +272,8 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--commit", required=True, help="the commit being announced")
     parser.add_argument("--previous", default="none", help="the commit it replaced")
+    parser.add_argument("--finals", help="a file listing the result.json paths just written")
+    parser.add_argument("--cohort", default="2026-09", help="the cohort a final belongs to")
     parser.add_argument("--ping", action="store_true", help="send a ping, diff nothing")
     parser.add_argument("--dry-run", action="store_true", help="print the body, send nothing")
     args = parser.parse_args(argv)
@@ -230,6 +289,15 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.ping:
         body = envelope("ping", args.commit, None)
+    elif args.finals:
+        paths = [line.strip() for line in Path(args.finals).read_text().splitlines()]
+        scored = finals_from([p for p in paths if p])
+        if not scored:
+            print("no final was scored in this push; nothing to deliver")
+            return 0
+        body = finals_envelope(args.commit, scored, args.cohort)
+        passed = sum(1 for entry in scored if entry.get("passed"))
+        print(f"{len(scored)} final(s) scored, {passed} passed")
     else:
         moved = changes(track_at(args.previous), track_at(args.commit))
         if not moved:

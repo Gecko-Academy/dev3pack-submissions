@@ -95,15 +95,55 @@ jobs:
             # per-case verdicts, and that is what lands in the repository.
             jq '{github, question_set_id, score, gates, passed, certificate_eligible, results}' \
               response.json > "finals/$learner/result.json"
+            # What the notification below summarises. Written here rather than
+            # rediscovered afterwards, so a result that failed to score cannot
+            # be announced as if it had.
+            echo "finals/$learner/result.json" >> scored.txt
             jq -r '"  \(.github): \(.score.percent)% — passed=\(.passed) — certificate=\(.certificate_eligible)"' \
               response.json
           done < finals.txt
 
       - name: Commit the results
+        id: record
         if: steps.changed.outputs.count != '0'
         run: |
           git config user.name "dev3pack-bot"
           git config user.email "noreply@github.com"
           git add finals/
-          git diff --cached --quiet || git commit -m "finals: record scores for this push"
-          git push
+          if git diff --cached --quiet; then
+            echo "nothing new to record"
+            echo "recorded=no" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "finals: record scores for this push"
+            git push
+            echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            echo "recorded=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      # AFTER THE PUSH, and the same reasoning as `collect.yml`: the body names
+      # a commit, so announcing one that is not public yet is a broken pointer.
+      #
+      # `continue-on-error` for the same reason too. A subscriber being down
+      # must not turn a scored cohort into a red build, because the score is
+      # already recorded and the API is its record either way.
+      #
+      # WHAT TRAVELS: the score, both gates, and whether a certificate may be
+      # issued. NOT the per-case verdicts, which stay in the repository. The
+      # course tells partners it never sends per-question results.
+      - name: Tell the subscriber a final was scored
+        if: steps.record.outputs.recorded == 'yes'
+        continue-on-error: true
+        env:
+          DEV3PACK_WEBHOOK_URL: ${{ vars.DEV3PACK_WEBHOOK_URL }}
+          DEV3PACK_WEBHOOK_SECRET: ${{ secrets.DEV3PACK_WEBHOOK_SECRET }}
+        run: |
+          set -euo pipefail
+          # The cohort comes from the answers themselves, the same place the
+          # scoring step took it from. Defaulting it here instead would point a
+          # subscriber at the wrong cohort's URL the first time one differs.
+          cohort="$(jq -r '.cohort // "2026-09"' $(cat finals.txt) | sort -u | head -1)"
+          echo "cohort: $cohort"
+          python3 scripts/notify.py \
+            --finals scored.txt \
+            --cohort "$cohort" \
+            --commit "${{ steps.record.outputs.commit }}"

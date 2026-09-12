@@ -13,6 +13,7 @@ starts, without asking us for anything.
 | `track.json` | A demo track, same schema as the real one, five invented learners |
 | `webhook-track-updated.json` | A `track.updated` body, five rows added |
 | `webhook-track-removed.json` | A `track.updated` body, five rows removed |
+| `webhook-final-scored.json` | A `final.scored` body, two learners |
 | `webhook-ping.json` | A `ping` body |
 | `samples.json` | The headers for each sample, and the demo secret |
 
@@ -107,6 +108,41 @@ curl -X POST http://localhost:3000/your/endpoint \
 sample is reproducible, which means it is permanently stale. That is the check
 working. Point it at the demo secret and disable the age test while you develop,
 then turn the age test back on before you go live.
+
+## The two events
+
+`track.updated` carries per-session scores. Their record is this repository, and
+`track_url` points at it, pinned to a commit.
+
+`final.scored` carries final-assessment scores. Their record is **not** here: a
+final is graded against a question set that cannot ship to anybody, so the
+course API holds it and `finals_url` points there. Reading that URL needs your
+read key; the summary in the body does not.
+
+```json
+{
+  "schema": "dev3pack.webhook.v1",
+  "event": "final.scored",
+  "cohort": "2099-01",
+  "finals_url": "https://app.geckovision.tech/api/dev3pack/finals?cohort=2099-01",
+  "counts": { "scored": 2 },
+  "scored": [
+    { "github": "dev3pack-demo-pass", "score": { "passed": 15, "total": 15, "percent": 100 },
+      "gates": { "overall_threshold": true, "critical_safety": true },
+      "passed": true, "certificate_eligible": true }
+  ]
+}
+```
+
+**Read `certificate_eligible`, not `score.percent`.** The sample carries
+`dev3pack-demo-unsafe` beside the passing one for exactly this reason: it scores
+73 per cent and earns nothing, because the critical-safety gate is separate and
+can veto a high score. Rank a cohort by percentage and you put them in the wrong
+order.
+
+The `final.scored` sample is invented, unlike the `track.updated` ones, because
+no final has been scored yet. It uses the demo cohort `2099-01`, which holds
+nobody real and is safe to call as often as you like.
 
 ## The demo track
 
