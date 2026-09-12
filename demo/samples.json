@@ -1,5 +1,5 @@
 {
-  "note": "Bodies are the real deliveries the course made on 2026-09-11. The signatures and timestamps are recomputed with the published demo secret so they can be verified without a private key.",
+  "note": "Bodies are the real deliveries the course made on 2026-09-11. The signatures and timestamps are recomputed with the published demo secret so they can be verified without a private key. The final.scored sample is invented, using the demo cohort 2099-01, because no final has been scored yet.",
   "demo_secret": "dev3pack-demo-secret",
   "samples": [
     {
@@ -22,6 +22,13 @@
       "x-dev3pack-delivery": "5fd081e56220b267346b7bf977a65e3e",
       "x-dev3pack-timestamp": "1789166400",
       "x-dev3pack-signature": "v1=885f718d3e8896c9fb77c7bc08a635ad46614cd97770ea112d6072518e8e72ec"
+    },
+    {
+      "file": "demo/webhook-final-scored.json",
+      "x-dev3pack-event": "final.scored",
+      "x-dev3pack-delivery": "3bd3d4a204def82f40d881a98673ea13",
+      "x-dev3pack-timestamp": "1789166400",
+      "x-dev3pack-signature": "v1=a4741b1c1d2eb2620ca11f5598b8b98d96afd52150d99fdc2d1da3aedc92ff06"
     }
   ]
 }
