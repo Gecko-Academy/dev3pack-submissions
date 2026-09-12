@@ -8,10 +8,23 @@
 name: collect
 
 on:
+  # A MERGE BY HAND MUST STILL REBUILD THE TRACK. Merging a submission without
+  # this puts the files on `main` while `track.json` keeps saying the work is
+  # not there, and nobody watching is told. It looks like nothing happened,
+  # because the merge itself looks completely normal.
+  #
+  # THIS CANNOT LOOP. GitHub does not start a workflow for a push made with
+  # `GITHUB_TOKEN`, so neither this job's own track commit nor a merge it
+  # performed can re-trigger it. What reaches here is a push by a person.
+  push:
+    branches: [main]
+    paths: ["submissions/**"]
   schedule:
-    # Every half hour. A cohort of 250 hands in through the evening, and a
-    # learner who fixed a red check should not wait until tomorrow to see it
-    # merge. Cron is UTC.
+    # Every half hour is what this asks for. It is NOT what GitHub delivers on a
+    # quiet repository: on 2026-09-11 the scheduled runs were two to five hours
+    # apart. The push trigger above is what makes a merge prompt; this remains
+    # the safety net that catches a pull request whose checks went green after
+    # the last run. Cron is UTC.
     - cron: "*/30 * * * *"
   workflow_dispatch:
     inputs:
@@ -38,9 +51,9 @@ jobs:
       - name: Merge what passed, and rebuild the track
         env:
           GH_TOKEN: ${{ github.token }}
-          # A scheduled run always merges. A manual run merges only when asked,
-          # so it can be used to see what WOULD happen.
-          MERGE: ${{ github.event_name == 'schedule' && 'yes' || inputs.merge && 'yes' || '' }}
+          # A scheduled run and a push always merge. A manual run merges only
+          # when asked, so it can be used to see what WOULD happen.
+          MERGE: ${{ (github.event_name == 'schedule' || github.event_name == 'push') && 'yes' || inputs.merge && 'yes' || '' }}
         run: |
           if [ -n "$MERGE" ]; then
             python3 scripts/collect.py --merge
