@@ -30,6 +30,14 @@ secret. These are recomputed with a secret published in `samples.json`:
 dev3pack-demo-secret
 ```
 
+**Verify the bytes you received, never a re-serialised body.** The signature
+covers the exact body that was sent: compact JSON, keys sorted, no trailing
+newline. Parsing it and re-encoding changes spacing or key order and the
+signature will not match, with a correct secret and a correct algorithm. In a
+JavaScript handler that means `await req.text()` — never `await req.json()`
+followed by `JSON.stringify`. The sample files here are stored as those exact
+bytes for the same reason.
+
 That secret is public and worth nothing. It exists so you can run your
 verification code and get a `true` back without holding anything private. The
 real secret is sent separately and never appears in this repository.
