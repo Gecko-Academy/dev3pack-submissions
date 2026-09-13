@@ -44,8 +44,11 @@ ROOT = Path(__file__).resolve().parent.parent
 REPO = "Gecko-Academy/dev3pack-submissions"
 SCHEMA = "dev3pack.webhook.v1"
 
-#: A commit whose `demo/track.json` exists and will not move.
-PINNED = "main"
+#: A commit whose `demo/track.json` exists and will not move. A BRANCH NAME IS
+#: NOT ONE: `track_url` would resolve but keep changing under the receiver, and
+#: a subscriber that validates `commit` as a SHA refuses the delivery outright
+#: -- measured against the live endpoint 2026-09-13, `main` 400, this 200.
+PINNED = "0ece99041178d058b2d1fa9d718af4bb424b2927"
 
 
 def envelope(event: str, commit: str, **extra: object) -> dict:
@@ -85,12 +88,22 @@ def send(url: str, secret: str, body: dict, *, dry: bool, note: str) -> int:
             "x-dev3pack-event": str(body["event"]),
             "x-dev3pack-delivery": delivery,
             "x-dev3pack-timestamp": timestamp,
+            # BOTH, exactly as production sends them. A receiver that verifies
+            # `-v2` refuses a delivery carrying only the older header, so a
+            # simulator that sends one of the two reports a signing failure
+            # against a receiver that is working correctly -- measured against
+            # the live endpoint 2026-09-13: v2 alone 202, legacy alone 401.
             "x-dev3pack-signature": f"v1={signature}",
+            "x-dev3pack-signature-v2": f"v1={signature}",
         },
     )
     try:
         with urllib.request.urlopen(request, timeout=20) as response:
-            print(f"  {note:<46} HTTP {response.status}")
+            # The body, not only the status: the repeated-delivery case is only
+            # proved by what comes back (`"duplicate": true`), and a 200 alone
+            # cannot tell an idempotent receiver from one that applied it twice.
+            detail = response.read().decode("utf-8", "replace").strip()[:60]
+            print(f"  {note:<46} HTTP {response.status}  {detail}")
             return 0 if 200 <= response.status < 300 else 1
     except urllib.error.HTTPError as error:
         detail = error.read().decode("utf-8", "replace").strip()[:60]
