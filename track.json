@@ -193,6 +193,152 @@
   ],
   "entries": [
     {
+      "github": "JennyT3",
+      "item": "ch01",
+      "submitted_at": "2026-09-15T05:33:52Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": false,
+      "score": null,
+      "max_score": null,
+      "tier": "handed in"
+    },
+    {
+      "github": "JennyT3",
+      "item": "ch02",
+      "submitted_at": "2026-09-15T05:54:34Z",
+      "ran": true,
+      "passed": [
+        "ch02-e1",
+        "ch02-e2",
+        "ch02-e3",
+        "ch02-e4"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 400,
+      "max_score": 400,
+      "tier": "claimed"
+    },
+    {
+      "github": "JennyT3",
+      "item": "ch03",
+      "submitted_at": "2026-09-15T05:37:18Z",
+      "ran": true,
+      "passed": [
+        "ch03-e1",
+        "ch03-e3"
+      ],
+      "failed": [
+        "ch03-e2"
+      ],
+      "not_reached": [],
+      "scored": true,
+      "score": 200,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "JennyT3",
+      "item": "ch04",
+      "submitted_at": "2026-09-15T05:37:18Z",
+      "ran": true,
+      "passed": [
+        "ch04-e1",
+        "ch04-e2"
+      ],
+      "failed": [
+        "ch04-e3"
+      ],
+      "not_reached": [],
+      "scored": true,
+      "score": 200,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "JennyT3",
+      "item": "ch05",
+      "submitted_at": "2026-09-15T05:37:19Z",
+      "ran": true,
+      "passed": [
+        "ch05-e1"
+      ],
+      "failed": [
+        "ch05-e2"
+      ],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 200,
+      "tier": "claimed"
+    },
+    {
+      "github": "Messibre",
+      "item": "ch01",
+      "submitted_at": "2026-09-14T17:39:07Z",
+      "ran": true,
+      "passed": [],
+      "failed": [],
+      "not_reached": [
+        "ch01-e1"
+      ],
+      "scored": false,
+      "score": null,
+      "max_score": null,
+      "tier": "handed in"
+    },
+    {
+      "github": "SofiaSol10",
+      "item": "ch01",
+      "submitted_at": "2026-09-15T04:46:36Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": false,
+      "score": null,
+      "max_score": null,
+      "tier": "handed in"
+    },
+    {
+      "github": "immaculate-munde",
+      "item": "ch01",
+      "submitted_at": "2026-09-14T19:48:58Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": false,
+      "score": null,
+      "max_score": null,
+      "tier": "handed in"
+    },
+    {
+      "github": "jiyajain23",
+      "item": "ch01",
+      "submitted_at": "2026-09-14T17:20:04Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": false,
+      "score": null,
+      "max_score": null,
+      "tier": "handed in"
+    },
+    {
       "github": "leticiaalmeida-prod",
       "item": "ch01",
       "submitted_at": "2026-09-13T22:17:37Z",

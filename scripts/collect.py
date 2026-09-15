@@ -27,10 +27,13 @@ never executes a submitted notebook, and only ever parses JSON.
 from __future__ import annotations
 
 import argparse
+import base64
 import json
+import os
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -132,6 +135,109 @@ def one_per_item(pulls: list[dict]) -> dict[int, str]:
     return refusals
 
 
+#: What a learner is told after a merge, and only when it is worth telling.
+#: Silence on a clean pass is deliberate: at 250 hand-ins a day, a bot that
+#: congratulates everybody is a bot everybody mutes, and then the one message
+#: that mattered is muted with it.
+EMPTY = """Merged — this is accepted and counted. One thing to flag, though.
+
+**This hand-in has no results in it.** Its claim reads:
+
+```json
+"passed": [], "not_reached": {not_reached}
+```
+
+That happens when the notebook is submitted without being **run and saved**.
+The outputs only land in the file when you save, and for `{item}` those saved
+lines are the only record there is — nothing on our side re-runs this session.
+
+To fix it, and it takes a few minutes:
+
+1. Run every cell, top to bottom. Look for `✅ {first} passed`
+2. **Save the notebook** — this is the step that is usually missing
+3. `uv run bootcamp submit {item} --github {login}`
+4. Commit and push to your fork, and open a pull request
+
+Re-submitting always replaces the earlier attempt, so nothing is lost and
+nothing is locked. Ask in the group if any of it is unclear — this is a
+mechanics problem rather than a you problem."""
+
+PARTIAL = """Merged — accepted and counted.
+
+For your own tracking: **{done} of {total} checks reported a pass** here
+({missing} still open). That is a perfectly normal hand-in and you do not have
+to do anything.
+
+If you want them, finish the cells, run them, save, and submit again — the
+later submission replaces this one."""
+
+
+def claim_of(pull: dict) -> dict | None:
+    """The `submission.json` this pull request is handing in, or None.
+
+    Read at the merged commit rather than from `main`, so a later merge in the
+    same run cannot change what we quote back at somebody.
+    """
+    paths = [entry["path"] for entry in pull.get("files", [])]
+    found = [path for path in paths if path.endswith("/submission.json")]
+    if len(found) != 1:
+        return None
+    raw = gh(
+        "api",
+        f"repos/{REPO}/contents/{found[0]}?ref={pull['headRefOid']}",
+        "--jq",
+        ".content",
+        check=False,
+    ).strip()
+    if not raw:
+        return None
+    try:
+        return json.loads(base64.b64decode(raw).decode("utf-8"))
+    except (ValueError, UnicodeDecodeError):
+        return None
+
+
+def note_for(pull: dict) -> str | None:
+    """What to say about this submission, or None to say nothing."""
+    claim = claim_of(pull)
+    if not claim:
+        return None
+    result = claim.get("result") or {}
+    passed = list(result.get("passed") or [])
+    failed = list(result.get("failed") or [])
+    missing = list(result.get("not_reached") or [])
+    item = str(claim.get("chapter") or "this session")
+    login = (claim.get("student") or {}).get("github", "YOUR-USERNAME")
+
+    if not passed and not failed and missing:
+        return EMPTY.format(
+            not_reached=json.dumps(missing),
+            item=item,
+            first=missing[0],
+            login=login,
+        )
+    if failed or missing:
+        return PARTIAL.format(
+            done=len(passed),
+            total=len(passed) + len(failed) + len(missing),
+            missing=", ".join(sorted(failed + missing)),
+        )
+    return None
+
+
+def say(number: int, body: str) -> None:
+    """Leave the note. A failure here must never fail the run: the merge is the
+    product, and a comment that did not post is a smaller problem than a job
+    that stopped halfway through a cohort's hand-ins."""
+    with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False, encoding="utf-8") as handle:
+        handle.write(body)
+        path = handle.name
+    try:
+        gh("pr", "comment", str(number), "--repo", REPO, "--body-file", path, check=False)
+    finally:
+        os.unlink(path)
+
+
 def merge(number: int, head: str) -> None:
     """Squash-merge, refusing if the branch moved after its checks were read."""
     gh(
@@ -205,6 +311,10 @@ def main(argv: list[str] | None = None) -> int:
         try:
             merge(pull["number"], pull["headRefOid"])
             merged += 1
+            note = note_for(pull)
+            if note:
+                say(pull["number"], note)
+                print(f"  #{pull['number']} noted: its claim reports nothing passed")
         except CollectError as error:
             # One bad merge must not strand the rest: a branch that moved
             # between the listing and now is exactly what the guard is for.
