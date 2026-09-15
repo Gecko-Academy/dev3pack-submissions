@@ -5,20 +5,19 @@
   "student": {
     "github": "JennyT3"
   },
-  "submitted_at": "2026-09-15T05:36:57Z",
+  "submitted_at": "2026-09-15T05:54:34Z",
   "result": {
     "ran": true,
     "passed": [
       "ch02-e1",
       "ch02-e2",
-      "ch02-e3"
-    ],
-    "failed": [
+      "ch02-e3",
       "ch02-e4"
     ],
+    "failed": [],
     "not_reached": [],
     "scored": true,
-    "score": 300,
+    "score": 400,
     "max_score": 400
   },
   "note": "",
@@ -33,8 +32,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "2de7ec2fd562140813e0e8242075fd213c7660c9e5ac7ae17315c251017342da"
+    "notebook_sha256": "15fdaceca46485c0826a7cd38fc1228ead9c6ecfee67155834c04c05ba9610ef"
   },
   "verified": null,
-  "submission_id": "sub_9f5f23185105957e089e5348"
+  "submission_id": "sub_4f5a422fd344eb788de72d2f"
 }
