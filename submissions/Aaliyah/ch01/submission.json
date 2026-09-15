@@ -1,0 +1,36 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch01",
+  "student": {
+    "github": "Aaliyah"
+  },
+  "submitted_at": "2026-09-15T18:16:20Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch01-e1"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": false,
+    "score": null,
+    "max_score": null
+  },
+  "note": "assistant-driven, so it cannot be re-run; handed in rather than marked",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "linux"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "879bc2c57b6dadca8f1f682bb7fa1aa025f46fe05c778aba8d195d523a2d4f55"
+  },
+  "verified": null,
+  "submission_id": "sub_e1079af6bd3c697ebf44d445"
+}
