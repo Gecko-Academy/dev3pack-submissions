@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch05",
+  "student": {
+    "github": "JennyT3"
+  },
+  "submitted_at": "2026-09-15T05:37:19Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch05-e1"
+    ],
+    "failed": [
+      "ch05-e2"
+    ],
+    "not_reached": [],
+    "scored": true,
+    "score": 100,
+    "max_score": 200
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "darwin"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "d56abe97cd8f8659a52b411758f79d9a9ce0b2b4c2cc824af454d20b1cba2259"
+  },
+  "verified": null,
+  "submission_id": "sub_a7bbf4e01668a7893779cc99"
+}
