@@ -4,256 +4,278 @@
        width="100%" />
 </p>
 
-# Dev3Pack submissions
+# Dev3Pack AI-Engineering Bootcamp
 
-![Cohort](https://img.shields.io/badge/cohort-2026--09-6e56cf)
-![Schema](https://img.shields.io/badge/schema-dev3pack.submission.v2-blue)
-![Track](https://img.shields.io/badge/track-public,%20no%20key-1d7a4c)
+![Python](https://img.shields.io/badge/python-3.11+-blue)
+![uv](https://img.shields.io/badge/uv-managed-6e56cf)
 ![License](https://img.shields.io/badge/license-MIT-blue)
+![Claude Code](https://img.shields.io/badge/Claude_Code-ready-orange)
 
-Where you hand in your work. One folder per chapter, opened as a pull request
-from your own fork, and checked automatically.
+Three weeks. **15 sessions**. One source-grounded research assistant you can test, cite, and defend.
 
-**The course lives at [Gecko-Academy/dev3pack-cohort-2026-09](https://github.com/Gecko-Academy/dev3pack-cohort-2026-09)**,
-and reads at [gecko-academy.github.io/dev3pack-cohort-2026-09](https://gecko-academy.github.io/dev3pack-cohort-2026-09/).
-This repository is only the hand-in.
+**14 September – 2 October 2026**, Monday to Friday, two hours a day. Optional showcase on Saturday 3 October.
 
 ## Contents
 
-- [What you are handing in](#what-you-are-handing-in)
-- [How to submit](#how-to-submit)
-- [What CI checks](#what-ci-checks)
-- [Check it yourself first](#check-it-yourself-before-you-open-the-pull-request)
-- [What CI does not check](#what-ci-does-not-check)
-- [If CI refuses your submission](#if-ci-refuses-your-submission)
-- [The final assignment](#the-final-assignment)
-- [Consuming the track](#consuming-the-track)
-- [Test data](#test-data)
-- [A note for whoever merges](#a-note-for-whoever-merges)
-- [Being told instead of asking](#being-told-instead-of-asking)
+- [Start here](#start-here)
+- [For coding assistants](#for-coding-assistants)
+- [What you will learn](#what-you-will-learn)
+- [Units, sessions, extras](#units-sessions-extras)
+- [Repository map](#repository-map)
+- [Course map](#course-map)
+- [What arrives, and when](#what-arrives-and-when)
+- [Week 0](#week-0)
+- [Weeks 1-3](#weeks-1-3)
+- [Capstone and certificate](#capstone-and-certificate)
+- [Bonus and extras](#bonus-and-extras)
+- [Commands](#commands)
+- [Safety](#safety)
 
-## What you are handing in
-
-Two files per chapter, and `uv run bootcamp submit` writes both:
-
-```text
-submissions/
-└── your-github-username/
-    └── ch03/
-        ├── submission.json   your score, and what passed
-        └── notebook.ipynb    your work, which is the evidence for it
-```
-
-Your score is a claim and your notebook is the proof. When you open the pull
-request, CI checks that the bundle is the right shape, that it sits in your own
-folder, that the notebook is the exact file the claim was written against, and
-that the score follows from the passes and help the claim itself lists. It does
-**not** re-run your notebook yet: that arrives in week 2, and until then every
-score in this repository is marked `claimed`, which means self-reported and
-shape-checked. A human merges, and the merge is what records the score.
-
-## How to submit
-
-Once, at the start:
-
-1. **Fork this repository.** You never need write access here, only to your own
-   fork.
-2. Clone your fork.
-
-Then for each chapter, from your course repository:
+## Start here
 
 ```bash
-uv run bootcamp submit ch03 --github your-github-username
+git clone https://github.com/Gecko-Academy/dev3pack-cohort-2026-09.git
+cd dev3pack-cohort-2026-09
+uv run bootcamp start          # installs everything, then says whether it worked
 ```
 
-It runs the chapter's notebook, prints what passed, and writes
-`submissions/your-github-username/ch03/`. Copy that folder into your fork,
-commit, push, and open a pull request.
+`start` is safe to run as many times as you like, and it ends by telling you the
+one command to type next. On macOS and Linux `make setup` is the same thing.
 
-You may submit unfinished work. The file records what passed and what did not,
-and re-submitting replaces the earlier attempt.
+**Windows:** run these in **Git Bash** or WSL2, not PowerShell. The repository
+is public — there is nothing to request and nothing to wait for.
 
-## What CI checks
+If you have SSH keys set up, `git clone git@github.com:Gecko-Academy/dev3pack-cohort-2026-09.git`
+works too. HTTPS is above because it needs nothing configured first.
 
-- **Your pull request only touches your own folder.** GitHub cannot grant write
-  access to one path, so this rule lives in CI instead. It also means nobody can
-  overwrite your work.
-- **The notebook is the one the score was claimed for**, matched by hash, so a
-  score and a notebook cannot be submitted from different attempts. Hand-editing
-  `submission.json` fails here.
-- **The bundle is the right shape** and the claim names the student whose folder
-  it sits in.
+Open **`00-START-HERE.ipynb`**. It lists every notebook in order and ticks what you have finished.
 
-## Check it yourself before you open the pull request
+New to the repo? [`SETUP.md`](SETUP.md) is the half-hour path to a green doctor. No API key is required: every scored notebook runs offline against `FakeLLM`. This repository is read-only for you — open a pull request against the submissions repository rather than this one; week 0 is here now, later weeks land on 14 / 21 / 28 September — `git pull` at the start of each week.
 
-The re-run CI cannot do yet, on your own machine, from your course repository:
+## For coding assistants
+
+Read [`AGENTS.md`](AGENTS.md) first. `CLAUDE.md` and `.cursor/rules/bootcamp.mdc` point at it — do not fork the policy.
+
+Then read in this order:
+
+| File | Why |
+|---|---|
+| [README.md](README.md) | Course map: units, sessions, bonus |
+| `00-START-HERE.ipynb` | Progress ticker and notebook links |
+| [units/en/_toctree.yml](units/en/_toctree.yml) | Page order a learner opens |
+| [src/bootcamp_agent/](src/bootcamp_agent/) | Capstone package (finished shape) |
+| tests/ — not in your copy | Behaviour contracts |
+
+Inspect → plan → implement → test → review. No new dependency unless a lesson asks for it.
+
+Optional, local only — never required, never committed:
 
 ```bash
-uv run python scripts/verify_submission.py submissions/your-username/ch03
+uv tool install graphifyy
+graphify install
 ```
 
-It copies your notebook into the course, runs it, and compares what its checks
-actually print against what your file claims. `VERIFIED` means your submission
-holds up.
+Then `/graphify .` in your assistant. Leave `graphify-out/` untracked.
 
-## What CI does not check
+## What you will learn
 
-Whether you took a hint. That lives in `~/.bootcamp/progress.db` on your own
-machine and never leaves it. `bootcamp submit` reads it and records what it
-finds, and help only ever costs marks, so there is nothing to gain by
-overstating it.
+- **Harness** — assistant instructions, traces, evals, and CI around the model
+- **Contracts** — one adapter, typed outputs, bounded read-only tools
+- **Loops** — budgets, stopping conditions, refusal as a first-class exit
+- **Grounding** — retrieve from a versioned corpus, cite sources, refuse the unsupported
+- **Surfaces** — MCP, deployment, and defending a failure from your own traces
 
-## If CI refuses your submission
+Three threads recur: [loop](docs/guides/loop-engineering.md), [graph](docs/guides/graph-engineering.md), and [harness](docs/guides/harness-engineering.md) engineering. The full day-by-day plan is in [`docs/curriculum.md`](docs/curriculum.md).
 
-Read what it says, fix the exercise, and run `bootcamp submit` again. The
-commonest cause is hand-editing `submission.json`, which is generated and should
-be committed exactly as written.
+## Units, sessions, extras
 
-## The final assignment
+| Kind | Where | Role |
+|---|---|---|
+| **Week 0 units** (`w01`–`w12`) | [units/en/](units/en/) | Self-paced, ungraded, available now. The fast lane is the floor Session 1 assumes. |
+| **Sessions** (`session-01`–`15`) | same tree | Live, weekday, two hours. Introduction, concepts, quiz, exercise notebook, solutions. Session 15 has no notebook. |
+| **Capstone** | units/en/unit2/capstone/ — opens with week 2 | Built between sessions from week 2. `src/bootcamp_agent/` is the finished shape. |
+| **Bonus / depth / cookbook / workspaces** | linked below | Optional. Never counted. |
 
-The final is handed in like anything else, with one extra file:
+Two sessions are assistant-driven (1 and 10) and show as `in Jupyter` in `bootcamp progress`.
 
+## Repository map
+
+Where everything lives, and what a student receives.
+
+<!-- repo-map:start -->
+
+| Path | What lives there | Students get it |
+|---|---|---|
+| `00-START-HERE.ipynb` | The map a learner opens first. Lists every notebook in order and ticks what is finished. | day one |
+| `Makefile` | Short names for the commands you run most: `make setup`, `make lab`, `make check`. Every target is a one-line wrapper around a `uv run` command, so it is a convenience and never a requirement — Windows has no `make` by default. | day one |
+| `units/` | The course. `en/` holds week-0 units, the fifteen sessions, the capstone, and the bonus track, each a directory of pages plus a notebook. | weekly |
+| `src/bootcamp_agent/` | The finished shape of the capstone package, and the check registry every exercise is graded by. | day one |
+| `tests/` | Behaviour contracts for the package — and the solved value of every exercise, which is why students never receive it. | **never** |
+| `data/` | The versioned corpus the retrieval sessions and the capstone answer from. | day one |
+| `scripts/` | The course's own tooling: the site generator, the publisher, the submission collector. | day one |
+| `docs/` | Curriculum, guides, the generated index, and the instructor material. | in part |
+| `depth/` | Six optional software-engineering modules, about 45 minutes each. Never counted. | day one |
+| `cookbook/` | Ten Gecko notebooks, from comprehending an OpenAPI spec to a verified loop on a fork. Optional. | day one |
+| `workspaces/` | Four open projects to build in. Optional, unmarked, no checks. | day one |
+| `integrations/` | Worked integrations the sessions link into rather than re-explain. | day one |
+| `builder-kit/` | Templates a learner copies from when starting their own surface. | day one |
+| `final_assignment/` | The final's harness and the offline practice grader. The private question set is not here and never will be. | day one |
+| `modules/` | A pointer only. The tree lived here until 9 Sep 2026; the file says where it went. | in part |
+| `AGENTS.md` | The policy a coding assistant reads before it edits. `CLAUDE.md` and the Cursor rules point at it rather than forking it. | day one |
+| `README.md` | This file. | day one |
+| `SETUP.md` | The half-hour path from a clone to a green doctor. | day one |
+| `llms.txt` | What an agent helping you needs — and what it must not do. Generated. | day one |
+| `CLAUDE.md` | Points Claude Code at `AGENTS.md`. | day one |
+| `LICENSE` | MIT. | day one |
+| `pyproject.toml` | The package, its dependency groups, and the tool configuration. | day one |
+| `uv.lock` | The resolved dependency set. CI installs from it frozen. | day one |
+| `.github/` | CI. It runs every notebook, the full test suite, and the generator's `--check`. | **never** |
+| `.claude-plugin/` | The plugin manifest that ships the course's own slash commands. | day one |
+| `.cursor/` | Cursor rules, pointing at `AGENTS.md`. | day one |
+| `.env.example` | Every variable the course reads, with empty values. | day one |
+| `.gitignore` | What never enters git, including keys and a learner's own submissions. | day one |
+| `.python-version` | The interpreter `uv` picks. | day one |
+
+7 paths are withheld by name, whatever the week: `.github`, `docs/instructor`, `docs/plans`, `docs/specs`, `evals`, `scripts/instructor_pack.py`, `tests`. Each is on that list for a stated reason — `tests/` alone holds the solved value of every exercise. The publisher audits the tree it built rather than trusting the copy, and refuses if one of them appears.
+
+Sent in part: `docs/`, `modules/`. Guides, the curriculum and the generated index ship; the instructor material, the specs and the plans do not.
+
+<!-- repo-map:end -->
+## Course map
+
+| Track | When | What |
+|---|---|---|
+| [Week 0 — Fast lane](#week-0) | now, ~3h | Environment, packages, contracts, one API call |
+| [Week 0 — Courses A–C](#week-0) | now, optional | Packaging, MCP, data structures |
+| [Week 1 — Sessions 1–5](#weeks-1-3) | Sep 14–18 | Assistants, adapters, structured outputs, tools, first loop |
+| [Week 2 — Sessions 6–10](#weeks-1-3) | Sep 21–25 | Retrieval, grounding, graphs, evals, skills |
+| [Week 3 — Sessions 11–15](#weeks-1-3) | Sep 28–Oct 2 | State, MCP, deploy, defend |
+| [Capstone + certificate](#capstone-and-certificate) | weeks 2–3 | Source-grounded research assistant |
+| [Bonus 1–5](#bonus-and-extras) | optional | Graph RAG, multimodal, multi-agent, memory, teardown |
+| [Depth / cookbook / workspaces](#bonus-and-extras) | optional | SE fundamentals, Gecko labs, **4 project workspaces** |
+
+## What arrives, and when
+
+This repository grows during the course. Week 0 is here now; each Monday one
+more week lands and you `git pull`.
+
+<!-- release-plan:start -->
+
+| Arrives | Date | What is added |
+|---|---|---|
+| Week 0 | now | Everything above except the sessions: the twelve week-0 units, the welcome pages, the bonus track and the whole toolchain (40 paths). |
+| Week 1 | Mon 14 Sep | unit1 |
+| Week 2 | Mon 21 Sep | unit2 |
+| Week 3 | Mon 28 Sep | unit3 |
+
+**Nothing is hidden behind a permission.** A week that has not opened is not in the repository yet, so `git pull` on the Monday is the whole ritual. Your table of contents lists what you actually have, and names what is still to come in a comment at the end — this table is the schedule, and you have it from day one.
+
+A correction is withdrawn as well as added: the publisher removes a file the current week no longer contains, so a fix actually reaches somebody who already pulled.
+
+<!-- release-plan:end -->
+Solutions are separate again: a session's `solutions/` notebook is released
+after that session, so you meet an exercise before its answer is one folder
+away. Until then, `hint(reveal=True)` is the worked answer, and it costs marks.
+
+## Week 0
+
+Self-paced. Handed in as a record, never marked. Short on time? Do the four 45-minute units. Courses A–C stay here for the whole course and nothing in the fifteen sessions waits for them.
+
+### Fast lane
+
+| # | Unit | You leave able to |
+|---|---|---|
+| 1 | [The environment](units/en/unit0/w01-environment/) | Prove which Python and repo environment will run the course |
+| 2 | [Packages and documentation](units/en/unit0/w02-packages-and-docs/) | Read an installed package instead of guessing its API |
+| 3 | [Classes and contracts](units/en/unit0/w03-classes-and-contracts/) | Turn a prose requirement into a typed boundary |
+| 4 | [Calling a real API](units/en/unit0/w04-real-apis/) | Make one bounded HTTP call through an adapter you own |
+
+### Course A — Software engineering foundations
+
+| # | Unit |
+|---|---|
+| 5 | [Packages, PyPI and PEP 8](units/en/unit0/w05-packages-and-pep8/) |
+| 6 | [A portable package](units/en/unit0/w06-portable-packages/) |
+| 7 | [Classes in a package](units/en/unit0/w07-classes-in-packages/) |
+| 8 | [Documentation, tests and readability](units/en/unit0/w08-docs-tests-readability/) |
+
+### Course B — MCP
+
+| # | Unit |
+|---|---|
+| 9 | [Your first MCP server](units/en/unit0/w09-mcp-first-server/) |
+| 10 | [Resources, prompts, and the LLM](units/en/unit0/w10-mcp-resources-prompts-llms/) |
+| 11 | [Databases, APIs, and third-party servers](units/en/unit0/w11-mcp-data-apis-third-party/) |
+
+### Course C — Data structures for agents
+
+| # | Unit |
+|---|---|
+| 12 | [Data structures for agents](units/en/unit0/w12-dsa-for-agents/) |
+
+## Weeks 1-3
+
+Each live session is one directory under `units/en/session-NN-*/`.
+
+| # | Day | Session | You leave with |
+|---|---|---|---|
+| 1 | Mon 14 Sep | [Configure the assistant](units/en/unit1/session-01-assistant-configuration/) | Repo instructions the assistant must read before it edits |
+| 2 | Tue 15 Sep | [Call a model through the adapter](units/en/unit1/session-02-model-adapter/) | One adapter, two lanes, failures that refuse instead of traceback |
+| 3 | Wed 16 Sep | [Structured outputs](units/en/unit1/session-03-structured-outputs/) | A typed answer; retry once, then refuse |
+| 4 | Thu 17 Sep | [Bounded tools](units/en/unit1/session-04-bounded-tools/) | Read-only tools whose boundaries you can prove |
+| 5 | Fri 18 Sep | [A deterministic mini-agent](units/en/unit1/session-05-deterministic-mini-agent/) | A loop that stops, notices repeats, and exits safely |
+| 6 | Mon 21 Sep | A retrieval baseline — not yet | A corpus loader and lexical retrieval — plus the ways it fails |
+| 7 | Tue 22 Sep | Retrieval and grounding metrics — not yet | Hit rate, grounding rate, and the cost of one fix |
+| 8 | Wed 23 Sep | Loops and graphs — not yet | Chain vs loop vs graph; illegal edges do not move |
+| 9 | Thu 24 Sep | Trace and evaluate — not yet | A redacted event log and named error buckets |
+| 10 | Fri 25 Sep | Skills and an ADR — not yet | A `SKILL.md` and a decision that names its reversal |
+| 11 | Mon 28 Sep | State and memory — not yet | Session state, a retention policy, cross-user isolation |
+| 12 | Tue 29 Sep | MCP architecture — not yet | Host / client / server; a surface read as claims |
+| 13 | Wed 30 Sep | Build and secure an MCP server — not yet | A fetch guard that refuses *before* it fetches |
+| 14 | Thu 1 Oct | Deploy and operate — opens Thu 01 Oct | A smoke test and the rollback sentence |
+| 15 | Fri 2 Oct | Defend the capstone — opens Fri 02 Oct | A demo, then a failure diagnosed from your own traces |
+
+Session 13 uses an instructor-hosted Gecko MCP surface; the URL is handed out in class.
+
+## Capstone and certificate
+
+A **source-grounded developer research assistant**: it answers from `data/corpus/`, cites document ids, and refuses when nothing supports the claim. You rebuild `src/bootcamp_agent/` in the session notebooks, then compare against the shipped package. Brief: units/en/unit2/capstone/ — opens with week 2.
+
+[`final_assignment/`](final_assignment/) is a template that scores 30% as shipped — it refuses correctly and answers nothing. Pass both gates (aggregate bar and every **critical** question) and the course issues an Ed25519-signed certificate anyone can verify. Details: [`final_assignment/README.md`](final_assignment/README.md).
+
+## Bonus and extras
+
+Optional. Never counted. Never required for the certificate.
+
+| # | Bonus |
+|---|---|
+| 1 | [Graph RAG and hybrid search](units/en/bonus/b01-graph-rag/) |
+| 2 | [Multimodal ingestion as untrusted data](units/en/bonus/b02-multimodal-ingestion/) |
+| 3 | [Multi-agent orchestration with ADK](units/en/bonus/b03-multi-agent-orchestration/) |
+| 4 | [Long-term memory, consent, and deletion](units/en/bonus/b04-memory-consent-deletion/) |
+| 5 | [Deploy, evaluate, and tear down](units/en/bonus/b05-deploy-evaluate-teardown/) |
+
+- **[depth/](depth/)** — six software-engineering modules (~45 minutes each): boundaries, data, architecture, reliability, production, graph RAG.
+- **[cookbook/](cookbook/)** — ten Gecko notebooks, from comprehending an OpenAPI spec to a verified loop on an instructor-hosted fork.
+- **[workspaces/](workspaces/)** — four open projects (corpus Q&A, retrieval lab, Autonomous Store, news-to-Telegram).
+
+## Commands
+
+```bash
+uv run bootcamp doctor                       # this machine
+uv run bootcamp check ch03                   # one session scorecard
+uv run bootcamp progress                     # every session, one tally
+uv run bootcamp submit ch03 --github <you>   # write submissions/<you>/ch03/
 ```
-submissions/<your-github>/final/
-├── answers.json     what your agent answered, and nothing else
-└── notebook.ipynb   the run that produced it
-```
 
-`answers.json` holds your agent's answers to the published final questions. Your
-agent runs on your machine; only the answers travel. Nothing you wrote is
-executed by the course.
+Checks judge behaviour, not wording. How to hand work in: [units/en/unit0/how-to-submit.mdx](units/en/unit0/how-to-submit.mdx). The generated index: [`docs/course-index.md`](docs/course-index.md).
 
-When a pull request carrying one is merged, the course scores the answers
-against the private key set and writes the result to `finals/<your-github>/`.
-That file records the score, both gates and a verdict per question. It does not
-record what you answered.
+## Safety
 
-Two gates decide a pass, and the second is the one that matters: 30% of
-questions, and **every** question marked critical. Refusing everything reaches
-the first and fails the second. Above both, the course issues a signed receipt
-and you render your certificate from it.
+Never place secrets in `CLAUDE.md`, `AGENTS.md`, Cursor rules, MCP JSON, issues, prompts, or commits. External-tool exercises use recorded/offline mode or the instructor-hosted fork. **No wallets, no payment credentials, no production API keys, no mainnet path — ever — in class exercises.**
 
-## Consuming the track
+Ask a coding assistant to inspect, propose a plan, and make the smallest change. Review the diff yourself. The loop lives in [`AGENTS.md`](AGENTS.md).
 
-`track.json` at the root of this repository is the machine-readable record, and
-the raw URL is the API:
+## License
 
-```
-https://raw.githubusercontent.com/Gecko-Academy/dev3pack-submissions/main/track.json
-```
-
-No key, because everything in it is already public here. Poll it with
-`If-None-Match`. Pin a commit in the path instead of `main` if you need the
-exact document a reading was taken from.
-
-**The track only moves when the collect job runs.** Its cron asks for every half
-hour, and GitHub does not honour that on a quiet repository: on 2026-09-11 the
-scheduled runs were two to five hours apart. So do not build a reading on
-half-hourly. The webhook below is the signal that is actually prompt, because it
-is sent by the run that changed the track.
-
-## Test data
-
-`demo/` holds a track shaped exactly like the real one, three signed webhook
-bodies, and the secret to verify them with. It is for building a receiver and a
-gradebook view before the cohort starts, without asking us for anything.
-
-Nothing there is reachable from the real track: `render_track.py` writes
-`track.json` at the root and never touches that directory. `demo/README.md`
-explains what each fixture is there to catch.
-
-## A note for whoever merges
-
-**Let the collect job do it.** Merging a submission by hand puts the files on
-`main` without rebuilding the track, so `track.json` keeps saying the work is not
-there and nothing is delivered to anybody watching. The track catches up only on
-the next collect run. This is easy to miss, because the merge itself looks
-completely normal.
-
-## Being told instead of asking
-
-Polling still works and is not going away. But a consumer that keys its own rows
-by its own user ids would rather be told, so the collect job can POST a short
-notification whenever a merge actually changed somebody's score.
-
-```json
-{
-  "schema": "dev3pack.webhook.v1",
-  "event": "track.updated",
-  "repository": "Gecko-Academy/dev3pack-submissions",
-  "commit": "b133b8b…",
-  "track_url": "https://raw.githubusercontent.com/Gecko-Academy/dev3pack-submissions/b133b8b…/track.json",
-  "sent_at": "2026-09-11T21:33:40Z",
-  "counts": { "added": 4, "updated": 0, "removed": 0 },
-  "truncated": false,
-  "changed": [
-    { "change": "added", "github": "ernanibmurtinho", "item": "ch03",
-      "scored": true, "score": 300, "max_score": 300, "tier": "claimed",
-      "submitted_at": "2026-09-10T20:10:46Z" }
-  ]
-}
-```
-
-**The body is a hint and `track_url` is the truth.** That URL is pinned to the
-commit, so it cannot change after the fact: a retry, a redelivery or a
-notification that overtakes another all resolve by reading it. `changed` is
-capped at 500 rows and `truncated` says when the cap was hit, which is why the
-summary is never the thing you store.
-
-`change` is `added`, `updated` or `removed`. A removal means the submission left
-the tree, and a consumer that only ever upserts would otherwise keep showing a
-score this repository no longer holds.
-
-Every request is signed:
-
-```
-x-dev3pack-event: track.updated
-x-dev3pack-delivery: 403496a5d6eeca3ac961c3afc8dd9593
-x-dev3pack-timestamp: 1789421620
-x-dev3pack-signature: v1=<hex hmac-sha256>
-```
-
-The signature is HMAC-SHA256 over `<timestamp>.<raw request body>` with the
-shared secret. **Verify it against the raw bytes**, not against a re-serialised
-copy of the parsed JSON, and reject a timestamp more than five minutes old.
-
-```python
-want = "v1=" + hmac.new(secret, f"{ts}.".encode() + raw, hashlib.sha256).hexdigest()
-ok = hmac.compare_digest(want, request.headers["x-dev3pack-signature"])
-```
-
-**Delivery is at-least-once and unordered.** Three attempts with backoff, then
-the step goes red and the run stays green, because a subscriber being down is
-not a reason to make a cohort's merges look broken. Nothing re-sends
-automatically: the `notify` workflow replays a delivery by hand, and it also
-sends a `ping`, which carries the same envelope with no `changed` list so a
-receiver can be verified before anybody has submitted anything.
-
-To turn it on, set `DEV3PACK_WEBHOOK_URL` as a repository variable and
-`DEV3PACK_WEBHOOK_SECRET` as a repository secret. With neither set, nothing is
-delivered and the build stays green, which is what should happen before a
-subscriber exists.
-
-The rules a consumer must follow, because the document cannot enforce them:
-
-- **`schema` is `dev3pack.track.v1`.** Refuse any other value. Additive fields
-  never bump it; a break ships as a new file.
-- **Render `tier` beside every score.** `claimed` is self-reported and
-  shape-checked, `verified` means a re-run agreed, `unverifiable` means it can
-  never be re-run, `handed in` means the item is not marked. A score without
-  its tier is a misreading.
-- **A missing `(github, item)` row means not submitted**, never zero. `score: 0`
-  is a submission where nothing passed.
-- **`scored: false` means no arithmetic.** `score` and `max_score` are `null`;
-  render the word, and leave the row out of totals.
-- **One row per `(github, item)`.** A resubmission replaces the row and drops
-  its `verified` tier, on purpose. Upsert on that key; never append.
-- **`items[]` is the denominator.** It lists every chapter that can be handed
-  in, with `max_score` and whether it is scored, so a blank cell has a shape.
-- **`submitted_at` is the student's clock.** For "changed since", use the
-  commit, not that field.
-- **Non-empty `problems[]` means the document is partial**, and each entry
-  names the file that could not be read.
-
-Grades, certificates and the final assignment are not in this file and never
-will be. They are decided at demo day and delivered separately.
+MIT — see [LICENSE](LICENSE).

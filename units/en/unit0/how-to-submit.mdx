@@ -1,0 +1,36 @@
+# Handing work in
+
+Every unit with a notebook can be handed in. Week 0 is a record of the work and
+is never marked. **Every session carries marks**, scored from what its checks
+print. Two sessions are assistant-driven, so nothing can re-run them and the
+output you saved is the evidence the marks rest on — save the notebook before
+you submit.
+
+```bash
+uv run bootcamp check ch03                       # what passes, what does not
+uv run bootcamp submit ch03 --github <you>       # writes submissions/<you>/ch03/
+```
+
+The bundle holds two files: `submission.json`, the claim, and `notebook.ipynb`,
+the evidence. Copy the folder into your fork of the submissions repository and
+open a pull request. CI checks the shape, that the folder is yours, that the
+notebook is the file the claim was written against, and that the score follows
+from the passes and help the claim lists.
+
+Merging is automatic: a job merges every green pull request and rebuilds the
+public track. It is scheduled every half hour, but GitHub does not honour that
+on a quiet repository — runs have been two to five hours apart. Green means
+accepted; the score appearing on the track can take a few hours, and nobody
+needs to be asked.
+
+Before you open the pull request you can run the same check CI will:
+
+```bash
+uv run python scripts/verify_submission.py submissions/<you>/ch03
+```
+
+It runs your notebook and compares what it actually prints against what your
+file claims.
+
+Submitting again replaces the earlier attempt. Nothing is locked, and nothing is
+lost: the history is the pull requests.

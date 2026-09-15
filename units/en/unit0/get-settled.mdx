@@ -1,0 +1,62 @@
+# Get settled
+
+Every step, in the order they trip people up. Nothing here needs a paid
+account, an API key, or your real name.
+
+## Bookmark these
+
+- [The course as a website](https://gecko-academy.github.io/dev3pack-cohort-2026-09/) — everything, no install needed
+- [The sessions repository](https://github.com/Gecko-Academy/dev3pack-cohort-2026-09) — the code and notebooks you run
+- [The submissions repository](https://github.com/Gecko-Academy/dev3pack-submissions) — where you hand work in
+- [This week's sessions](week1.mdx)
+- [`llms.txt`](https://gecko-academy.github.io/dev3pack-cohort-2026-09/llms.txt) — give this to your AI assistant and it can read the whole course
+
+## Set up your machine
+
+- **Pick your terminal.** macOS: Terminal. Linux: yours. **Windows: Git Bash or WSL2, never PowerShell** — a bash command pasted into PowerShell fails on line one and the error will not say why
+- **Install uv** — `curl -LsSf https://astral.sh/uv/install.sh | sh`, or on Windows `powershell -c "irm https://astral.sh/uv/install.ps1 | iex"`
+- **Install git** if `git --version` says nothing — <https://git-scm.com/downloads>
+- **Create a GitHub account** if you have none — <https://github.com/signup>. A pseudonymous one is fine
+- **Get the course:**
+
+```bash
+git clone https://github.com/Gecko-Academy/dev3pack-cohort-2026-09.git
+cd dev3pack-cohort-2026-09
+uv run bootcamp start
+```
+
+- **`bootcamp start` does the install and the check in one go.** It is safe to run as many times as you like
+- **Stop when it says "All set."** If it does not, it names the fix
+- **`bootcamp: command not found`?** You are outside the course folder (`cd dev3pack-cohort-2026-09`), or you dropped the prefix — it is `uv run bootcamp`, never bare `bootcamp`
+- Full instructions: [SETUP.md](https://github.com/Gecko-Academy/dev3pack-cohort-2026-09/blob/main/SETUP.md)
+
+## Open a notebook
+
+- **On your machine** — `uv run jupyter lab`, then open `units/en/unit1/session-01-assistant-configuration/notebook.ipynb`
+- **In the browser** — every notebook carries an **Open in Colab** badge: [session 1's notebook](https://github.com/Gecko-Academy/dev3pack-cohort-2026-09/blob/main/units/en/unit1/session-01-assistant-configuration/notebook.ipynb)
+- **Run the first cell first.** It checks your setup and never fails the notebook
+- **Sessions 1 and 10 need an assistant that edits files.** Colab's cannot. Use your machine or GitHub Codespaces; the other thirteen work in Colab
+
+## Hand work in
+
+- **Fork the submissions repository — once, today.** Press **Fork** on <https://github.com/Gecko-Academy/dev3pack-submissions>
+- **Run every cell, top to bottom.** You want `✅ chNN-eN passed`
+- **Save the notebook.** The outputs only reach the file when you save, and the outputs are your evidence. Skip this and you hand in an empty notebook
+- **Build the bundle** — `uv run bootcamp submit ch01 --github YOUR-LOGIN`
+- **Your login is the GitHub one**, not a display name — it is in your profile URL
+- **Check it before the pull request** — `uv run python scripts/verify_submission.py submissions/YOUR-LOGIN/ch01`
+- **Copy the folder into your fork, commit, push, open a pull request**
+- **Using the `gh` CLI?** `--body` is required, or it hangs waiting for input
+- **Green CI means accepted.** Merging is automatic and nobody needs to be asked
+- **Submitting again replaces the earlier attempt.** Nothing is locked
+- Full instructions: [how to submit](how-to-submit.mdx)
+
+## Every Monday
+
+- `git pull` in the course folder. A week that has not opened is not in the repository yet
+- Week 1 · 14 Sep — Week 2 · 21 Sep — Week 3 · 28 Sep
+
+## Stuck more than fifteen minutes
+
+- Post the output of `uv run bootcamp doctor` in the group. Never your `.env`
+- Somebody else has hit the same thing
