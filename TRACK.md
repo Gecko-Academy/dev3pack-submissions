@@ -2,7 +2,7 @@
 
 # Track
 
-29 student(s) have handed something in, across 15 marked items.
+32 student(s) have handed something in, across 15 marked items.
 
 A cell shows what that item was worth. `handed in` means the work was
 submitted and is not marked: week 0 is self-paced, and the two
@@ -15,11 +15,11 @@ nothing has been submitted yet, which is not the same as a zero.
 | Abduovv | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | Guis-gk | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | Human-Gechi | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
-| Insia-8 | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| Insia-8 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | Its-prity | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | JemimahEkong | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | JennyT3 | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
-| Messibre | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| Messibre | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | SaraDahman | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | Sodi0 | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | SofiaSol10 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
@@ -30,13 +30,16 @@ nothing has been submitted yet, which is not the same as a zero.
 | devolps-survive | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | immaculate-munde | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | irlandakelly | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
-| jiyajain23 | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| jiyajain23 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | karolrojas07 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| kb-dev28 | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | leticiaalmeida-prod | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
+| lovelymahor | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | med-bc | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | navy0110 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | — |
 | nizalia0206 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | pamvianeta | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| pixiepixeled | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
 | rehna-jp | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | semegn19 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | thefranceway | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
@@ -68,11 +71,14 @@ Handed in as a record of the work, never marked.
 | irlandakelly | 12/12 |
 | jiyajain23 | 0/12 |
 | karolrojas07 | 0/12 |
+| kb-dev28 | 0/12 |
 | leticiaalmeida-prod | 0/12 |
+| lovelymahor | 0/12 |
 | med-bc | 0/12 |
 | navy0110 | 1/12 |
 | nizalia0206 | 0/12 |
 | pamvianeta | 0/12 |
+| pixiepixeled | 0/12 |
 | rehna-jp | 0/12 |
 | semegn19 | 0/12 |
 | thefranceway | 0/12 |
