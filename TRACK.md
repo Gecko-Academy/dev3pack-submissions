@@ -2,7 +2,7 @@
 
 # Track
 
-14 student(s) have handed something in, across 15 marked items.
+21 student(s) have handed something in, across 15 marked items.
 
 A cell shows what that item was worth. `handed in` means the work was
 submitted and is not marked: week 0 is self-paced, and the two
@@ -11,16 +11,23 @@ nothing has been submitted yet, which is not the same as a zero.
 
 | Student | ch01 | ch02 | ch03 | ch04 | ch05 | ch06 | ch07 | ch08 | ch09 | ch10 | ch11 | ch12 | ch13 | ch14 | cap01 | Total |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 250408900-maker |  | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 400/400 |
 | Human-Gechi | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| Insia-8 | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | Its-prity | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| JemimahEkong | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | JennyT3 | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
 | Messibre | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| SaraDahman | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | SofiaSol10 | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | Welu2 | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | debbyelsie | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| desirrebarbosa | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| devolps-survive | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | immaculate-munde | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | irlandakelly |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | — |
 | jiyajain23 | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| karolrojas07 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | leticiaalmeida-prod | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
 | nizalia0206 | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | rehna-jp | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
@@ -32,16 +39,23 @@ Handed in as a record of the work, never marked.
 
 | Student | Units handed in |
 |---|---|
+| 250408900-maker | 0/12 |
 | Human-Gechi | 0/12 |
+| Insia-8 | 0/12 |
 | Its-prity | 0/12 |
+| JemimahEkong | 0/12 |
 | JennyT3 | 0/12 |
 | Messibre | 0/12 |
+| SaraDahman | 0/12 |
 | SofiaSol10 | 0/12 |
 | Welu2 | 0/12 |
 | debbyelsie | 0/12 |
+| desirrebarbosa | 0/12 |
+| devolps-survive | 0/12 |
 | immaculate-munde | 0/12 |
 | irlandakelly | 8/12 |
 | jiyajain23 | 0/12 |
+| karolrojas07 | 0/12 |
 | leticiaalmeida-prod | 0/12 |
 | nizalia0206 | 0/12 |
 | rehna-jp | 0/12 |

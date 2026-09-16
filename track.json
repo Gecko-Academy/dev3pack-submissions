@@ -193,6 +193,24 @@
   ],
   "entries": [
     {
+      "github": "250408900-maker",
+      "item": "ch02",
+      "submitted_at": "2026-09-15T18:01:44Z",
+      "ran": true,
+      "passed": [
+        "ch02-e1",
+        "ch02-e2",
+        "ch02-e3",
+        "ch02-e4"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 400,
+      "max_score": 400,
+      "tier": "claimed"
+    },
+    {
       "github": "Human-Gechi",
       "item": "ch01",
       "submitted_at": "2026-09-15T13:50:48Z",
@@ -208,9 +226,39 @@
       "tier": "unverifiable"
     },
     {
+      "github": "Insia-8",
+      "item": "ch01",
+      "submitted_at": "2026-09-15T21:05:57Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "unverifiable"
+    },
+    {
       "github": "Its-prity",
       "item": "ch01",
       "submitted_at": "2026-09-15T04:25:43Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "unverifiable"
+    },
+    {
+      "github": "JemimahEkong",
+      "item": "ch01",
+      "submitted_at": "2026-09-15T17:52:04Z",
       "ran": true,
       "passed": [
         "ch01-e1"
@@ -321,6 +369,21 @@
       "tier": "unverifiable"
     },
     {
+      "github": "SaraDahman",
+      "item": "ch01",
+      "submitted_at": "2026-09-15T22:17:24Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "unverifiable"
+    },
+    {
       "github": "SofiaSol10",
       "item": "ch01",
       "submitted_at": "2026-09-15T04:46:36Z",
@@ -354,6 +417,36 @@
       "github": "debbyelsie",
       "item": "ch01",
       "submitted_at": "2026-09-15T15:44:00Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "unverifiable"
+    },
+    {
+      "github": "desirrebarbosa",
+      "item": "ch01",
+      "submitted_at": "2026-09-15T17:45:09Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "unverifiable"
+    },
+    {
+      "github": "devolps-survive",
+      "item": "ch01",
+      "submitted_at": "2026-09-15T21:12:23Z",
       "ran": true,
       "passed": [
         "ch01-e1"
@@ -532,6 +625,39 @@
       "score": 100,
       "max_score": 100,
       "tier": "unverifiable"
+    },
+    {
+      "github": "karolrojas07",
+      "item": "ch01",
+      "submitted_at": "2026-09-15T21:51:11Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "unverifiable"
+    },
+    {
+      "github": "karolrojas07",
+      "item": "ch02",
+      "submitted_at": "2026-09-15T18:11:27Z",
+      "ran": true,
+      "passed": [
+        "ch02-e1",
+        "ch02-e2",
+        "ch02-e3",
+        "ch02-e4"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 400,
+      "max_score": 400,
+      "tier": "claimed"
     },
     {
       "github": "leticiaalmeida-prod",
