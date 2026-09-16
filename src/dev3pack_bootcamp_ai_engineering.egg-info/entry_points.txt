@@ -1,0 +1,3 @@
+[console_scripts]
+bootcamp = bootcamp_agent.cli:bootcamp
+bootcamp-agent = bootcamp_agent.cli:main

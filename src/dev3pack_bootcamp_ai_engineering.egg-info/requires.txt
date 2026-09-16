@@ -1,0 +1,17 @@
+python-dotenv>=1.0.1
+
+[anthropic]
+anthropic>=0.40
+
+[certificate]
+cryptography>=43
+
+[openai]
+openai>=1.40
+
+[site]
+markdown-it-py>=3.0
+pyyaml>=6.0
+
+[spreadsheet]
+openpyxl>=3.1
