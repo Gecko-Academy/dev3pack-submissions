@@ -1,0 +1,36 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch01",
+  "student": {
+    "github": "SofiaSol10"
+  },
+  "submitted_at": "2026-09-15T04:46:36Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch01-e1"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 100,
+    "max_score": 100
+  },
+  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "e38c3c14ff759b5f685816a17793b91c16229f218196cf41b5ce6486e27ad453"
+  },
+  "verified": null,
+  "submission_id": "sub_985d3b5e8e03a363e62e75c4"
+}

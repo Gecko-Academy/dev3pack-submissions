@@ -2,7 +2,7 @@
 
 # Track
 
-1 student(s) have handed something in, across 13 marked items.
+6 student(s) have handed something in, across 13 marked items.
 
 A cell shows what that item was worth. `handed in` means the work was
 submitted and is not marked: week 0 is self-paced, and the two
@@ -11,6 +11,11 @@ nothing has been submitted yet, which is not the same as a zero.
 
 | Student | ch01 | ch02 | ch03 | ch04 | ch05 | ch06 | ch07 | ch08 | ch09 | ch10 | ch11 | ch12 | ch13 | ch14 | cap01 | Total |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| JennyT3 | handed in | 400/400 | 200/300 | 200/300 | 100/200 |  |  |  |  |  |  |  |  |  |  | 900/1200 |
+| Messibre | handed in |  |  |  |  |  |  |  |  |  |  |  |  |  |  | — |
+| SofiaSol10 | handed in |  |  |  |  |  |  |  |  |  |  |  |  |  |  | — |
+| immaculate-munde | handed in |  |  |  |  |  |  |  |  |  |  |  |  |  |  | — |
+| jiyajain23 | handed in |  |  |  |  |  |  |  |  |  |  |  |  |  |  | — |
 | leticiaalmeida-prod | handed in | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1200/1200 |
 
 ## Week 0
@@ -19,4 +24,9 @@ Handed in as a record of the work, never marked.
 
 | Student | Units handed in |
 |---|---|
+| JennyT3 | 0/12 |
+| Messibre | 0/12 |
+| SofiaSol10 | 0/12 |
+| immaculate-munde | 0/12 |
+| jiyajain23 | 0/12 |
 | leticiaalmeida-prod | 0/12 |
