@@ -77,6 +77,25 @@ def open_pulls() -> list[dict]:
     return json.loads(raw)
 
 
+def latest_runs(checks) -> list[dict]:
+    """Only the most recent run of a check counts.
+
+    A pull request that is re-checked -- after the check itself was fixed, or
+    after a maintainer re-runs it -- keeps EVERY run in its status rollup, on
+    the same commit. Reading all of them meant one stale failure vetoed a fresh
+    success forever: pull request 84 passed on the fixed checker and was still
+    left as "the check is red", because two runs from before the fix were in the
+    list beside it.
+
+    Trusting the latest is safe here: a learner cannot re-run a check, and a new
+    push changes the head commit, which `merge` already pins.
+    """
+    checks = list(checks)
+    if not checks:
+        return []
+    return [max(checks, key=lambda check: check.get("startedAt") or check.get("completedAt") or "")]
+
+
 def verdict(pull: dict) -> tuple[bool, str]:
     """Whether this may be merged, and the reason when it may not.
 
@@ -102,7 +121,7 @@ def verdict(pull: dict) -> tuple[bool, str]:
         return False, "conflicts with main"
 
     checks = pull.get("statusCheckRollup") or []
-    named = [check for check in checks if check.get("name") == REQUIRED_CHECK]
+    named = latest_runs(check for check in checks if check.get("name") == REQUIRED_CHECK)
     if not named:
         return False, f"the {REQUIRED_CHECK!r} check has not reported yet"
     if any(check.get("status") not in {"COMPLETED", None} for check in named):

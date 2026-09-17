@@ -2,7 +2,7 @@
 
 # Track
 
-32 student(s) have handed something in, across 15 marked items.
+37 student(s) have handed something in, across 15 marked items.
 
 A cell shows what that item was worth. `handed in` means the work was
 submitted and is not marked: week 0 is self-paced, and the two
@@ -11,36 +11,41 @@ nothing has been submitted yet, which is not the same as a zero.
 
 | Student | ch01 | ch02 | ch03 | ch04 | ch05 | ch06 | ch07 | ch08 | ch09 | ch10 | ch11 | ch12 | ch13 | ch14 | cap01 | Total |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 250408900-maker |  | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 400/400 |
+| 250408900-maker |  | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 700/700 |
 | Abduovv | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
-| Guis-gk | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| Guis-gk | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
 | Human-Gechi | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| Igullabs | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | Insia-8 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | Its-prity | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
-| JemimahEkong | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| JemimahEkong | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | JennyT3 | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
-| Messibre | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| Messibre | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
 | SaraDahman | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
-| Sodi0 | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
-| SofiaSol10 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
-| Welu2 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| Sodi0 | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
+| SofiaSol10 | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
+| Welu2 | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
 | arr4-y | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
-| debbyelsie | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| baraa0abd | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| debbyelsie | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | desirrebarbosa | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | devolps-survive | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| gertahodolli | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| helasnoussi |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | — |
 | immaculate-munde | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | irlandakelly | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
 | jiyajain23 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
-| karolrojas07 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| karolrojas07 | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
 | kb-dev28 | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | leticiaalmeida-prod | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
 | lovelymahor | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
-| med-bc | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| med-bc | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
 | navy0110 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | — |
 | nizalia0206 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
-| pamvianeta | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
-| pixiepixeled | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
-| rehna-jp | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| pamvianeta | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
+| pixiepixeled | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
+| rehna-jp | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| sandyreyna | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 | semegn19 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
 | thefranceway | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
 
@@ -54,6 +59,7 @@ Handed in as a record of the work, never marked.
 | Abduovv | 1/12 |
 | Guis-gk | 0/12 |
 | Human-Gechi | 0/12 |
+| Igullabs | 0/12 |
 | Insia-8 | 0/12 |
 | Its-prity | 0/12 |
 | JemimahEkong | 0/12 |
@@ -64,9 +70,12 @@ Handed in as a record of the work, never marked.
 | SofiaSol10 | 0/12 |
 | Welu2 | 0/12 |
 | arr4-y | 0/12 |
+| baraa0abd | 0/12 |
 | debbyelsie | 0/12 |
 | desirrebarbosa | 0/12 |
 | devolps-survive | 0/12 |
+| gertahodolli | 0/12 |
+| helasnoussi | 4/12 |
 | immaculate-munde | 0/12 |
 | irlandakelly | 12/12 |
 | jiyajain23 | 0/12 |
@@ -80,5 +89,6 @@ Handed in as a record of the work, never marked.
 | pamvianeta | 0/12 |
 | pixiepixeled | 0/12 |
 | rehna-jp | 0/12 |
+| sandyreyna | 0/12 |
 | semegn19 | 0/12 |
 | thefranceway | 0/12 |
