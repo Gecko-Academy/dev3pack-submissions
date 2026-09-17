@@ -19,6 +19,19 @@ on:
   push:
     branches: [main]
     paths: ["submissions/**"]
+  # THE CHECK FINISHING IS THE SIGNAL, and the cron below is only the backstop.
+  # A green pull request used to wait for the schedule, and GitHub does not run a
+  # quiet repository's cron every half hour: on 2026-09-17 the runs came five
+  # hours apart, so six accepted submissions sat unmerged all afternoon.
+  #
+  # WHY THIS MAY HOLD A WRITE TOKEN when `verify.yml` may not. A `workflow_run`
+  # job runs this file as it stands on the default branch, in this repository,
+  # and never checks out the fork -- so no submitted code executes here.
+  # `collect.py` reads the API and merges what has already passed. The job that
+  # DOES run a learner's notebook still holds nothing at all.
+  workflow_run:
+    workflows: ["check submissions"]
+    types: [completed]
   schedule:
     # Every half hour is what this asks for. It is NOT what GitHub delivers on a
     # quiet repository: on 2026-09-11 the scheduled runs were two to five hours
@@ -56,9 +69,9 @@ jobs:
       - name: Merge what passed, and rebuild the track
         env:
           GH_TOKEN: ${{ github.token }}
-          # A scheduled run and a push always merge. A manual run merges only
-          # when asked, so it can be used to see what WOULD happen.
-          MERGE: ${{ (github.event_name == 'schedule' || github.event_name == 'push') && 'yes' || inputs.merge && 'yes' || '' }}
+          # A scheduled run, a push and a finished check always merge. A manual
+          # run merges only when asked, so it can show what WOULD happen.
+          MERGE: ${{ (github.event_name == 'schedule' || github.event_name == 'push' || github.event_name == 'workflow_run') && 'yes' || inputs.merge && 'yes' || '' }}
         run: |
           if [ -n "$MERGE" ]; then
             python3 scripts/collect.py --merge
