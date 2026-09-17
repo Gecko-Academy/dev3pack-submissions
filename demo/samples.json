@@ -7,14 +7,14 @@
       "x-dev3pack-event": "track.updated",
       "x-dev3pack-delivery": "6d441fc98b495d62ef610f27f8f8f0a1",
       "x-dev3pack-timestamp": "1789166400",
-      "x-dev3pack-signature": "v1=cccd0a36a81a29aea27ad9c0c66d30f250c53743b92619f05fd5d75af6d56c63"
+      "x-dev3pack-signature": "v1=16e975e8234fea588345b1d639d23d63949fdcb1468df52d6463dcbee2dc8328"
     },
     {
       "file": "demo/webhook-track-removed.json",
       "x-dev3pack-event": "track.updated",
       "x-dev3pack-delivery": "32d39c47ad4816d4658ae8817ed956c6",
       "x-dev3pack-timestamp": "1789166400",
-      "x-dev3pack-signature": "v1=0b11d959710c05a33d6df32219da0c1dbe0cd3e24a3497ad0d5d97943fa92f1e"
+      "x-dev3pack-signature": "v1=8b3f2741e418a924141f82807e31ff738c642d7c56258b983f2b6a99ad6fce9c"
     },
     {
       "file": "demo/webhook-ping.json",
