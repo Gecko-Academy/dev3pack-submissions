@@ -5,7 +5,7 @@
   "student": {
     "github": "apeaircreative"
   },
-  "submitted_at": "2026-09-15T18:16:20Z",
+  "submitted_at": "2026-09-17T21:16:29Z",
   "result": {
     "ran": true,
     "passed": [
@@ -13,11 +13,11 @@
     ],
     "failed": [],
     "not_reached": [],
-    "scored": false,
-    "score": null,
-    "max_score": null
+    "scored": true,
+    "score": 100,
+    "max_score": 100
   },
-  "note": "assistant-driven, so it cannot be re-run; handed in rather than marked",
+  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
   "help": {
     "hinted": 0,
     "revealed": 0,
@@ -29,8 +29,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "879bc2c57b6dadca8f1f682bb7fa1aa025f46fe05c778aba8d195d523a2d4f55"
+    "notebook_sha256": "3d284a827933bbd0c19ec860506607ce25f40460cfad933ccb9e687be7e0732b"
   },
   "verified": null,
-  "submission_id": "sub_e1079af6bd3c697ebf44d445"
+  "submission_id": "sub_830b5d8173ff47021c3fb398"
 }
