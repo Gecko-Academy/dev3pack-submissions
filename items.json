@@ -128,10 +128,10 @@
       "kind": "session",
       "week": 1,
       "date": "2026-09-14",
-      "scored": false,
+      "scored": true,
       "verifiable": false,
       "exercises": 1,
-      "max_score": null
+      "max_score": 100
     },
     {
       "id": "ch02",
@@ -227,10 +227,10 @@
       "kind": "session",
       "week": 2,
       "date": "2026-09-25",
-      "scored": false,
+      "scored": true,
       "verifiable": false,
       "exercises": 2,
-      "max_score": null
+      "max_score": 200
     },
     {
       "id": "ch11",
