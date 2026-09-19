@@ -1,0 +1,36 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch01",
+  "student": {
+    "github": "JemimahEkong"
+  },
+  "submitted_at": "2026-09-15T17:52:04Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch01-e1"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 100,
+    "max_score": 100
+  },
+  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "208138343a3298d9ce2e89e4522085404b0835b6618efa77d74b3302df3ff062"
+  },
+  "verified": null,
+  "submission_id": "sub_f2a1d42b774086752e8298fb"
+}

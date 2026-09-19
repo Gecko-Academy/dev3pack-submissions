@@ -147,14 +147,35 @@ def problems_with(directory: Path) -> list[str]:
 
     if notebook.is_file():
         expected = claim.get("evidence", {}).get("notebook_sha256")
-        actual = hashlib.sha256(notebook.read_bytes()).hexdigest()
-        if expected != actual:
+        if expected not in notebook_digests(notebook.read_bytes()):
             found.append(
                 f"{claim_path}: the notebook is not the one this score was claimed for. "
                 "Hand-editing submission.json is the usual cause; re-run `bootcamp submit`"
             )
 
     return found
+
+
+def notebook_digests(raw: bytes) -> set[str]:
+    """Every digest this notebook may honestly have been claimed under.
+
+    LINE ENDINGS ARE NOT CONTENT. On Windows the notebook on disk has CRLF, so
+    `bootcamp submit` hashes CRLF bytes -- and git, with `core.autocrlf`, commits
+    LF. The file CI reads is then byte-different from the one that was hashed,
+    though not one character of the notebook changed. Pull request 84 was refused
+    for exactly that, and told its author they had re-run the notebook after
+    submitting, which they had not.
+
+    So the claim is compared against the file in both conventions. That
+    tolerates a line-ending conversion and nothing else: any edit to the content
+    still changes both digests, which the tests hold.
+    """
+    lf = raw.replace(b"\r\n", b"\n")
+    return {
+        hashlib.sha256(raw).hexdigest(),
+        hashlib.sha256(lf).hexdigest(),
+        hashlib.sha256(lf.replace(b"\n", b"\r\n")).hexdigest(),
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
