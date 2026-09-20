@@ -1,0 +1,37 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch05",
+  "student": {
+    "github": "kb-dev28"
+  },
+  "submitted_at": "2026-09-20T11:23:14Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch05-e1",
+      "ch05-e2"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 200,
+    "max_score": 200
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "linux"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "d00b7d599e07f92a4bd6022a828662e946ef8307c370e442eb24b3dfdd2cc1d7"
+  },
+  "verified": null,
+  "submission_id": "sub_0c231d272d199437dda3e1c7"
+}
