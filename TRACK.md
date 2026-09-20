@@ -2,7 +2,7 @@
 
 # Track
 
-1 student(s) have handed something in, across 13 marked items.
+40 student(s) have handed something in, across 15 marked items.
 
 A cell shows what that item was worth. `handed in` means the work was
 submitted and is not marked: week 0 is self-paced, and the two
@@ -11,7 +11,46 @@ nothing has been submitted yet, which is not the same as a zero.
 
 | Student | ch01 | ch02 | ch03 | ch04 | ch05 | ch06 | ch07 | ch08 | ch09 | ch10 | ch11 | ch12 | ch13 | ch14 | cap01 | Total |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| leticiaalmeida-prod | handed in | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1200/1200 |
+| 250408900-maker |  | 400/400 | 300/300 | 300/300 |  |  |  |  |  |  |  |  |  |  |  | 1000/1000 |
+| Abduovv | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
+| Guis-gk | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
+| Human-Gechi | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| Igullabs | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| Insia-8 | 100/100 | 400/400 | 300/300 | 300/300 |  |  |  |  |  |  |  |  |  |  |  | 1100/1100 |
+| Its-prity | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| JemimahEkong | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
+| JennyT3 | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
+| Messibre | 100/100 | 400/400 | 300/300 | 300/300 |  |  |  |  |  |  |  |  |  |  |  | 1100/1100 |
+| SaraDahman | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| Sodi0 | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
+| SofiaSol10 | 100/100 | 400/400 | 300/300 | 300/300 |  |  |  |  |  |  |  |  |  |  |  | 1100/1100 |
+| Welu2 | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
+| apeaircreative | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| arr4-y | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| bahatijacklee | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| baraa0abd | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
+| debbyelsie | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
+| desirrebarbosa | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| devolps-survive | 100/100 |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 100/100 |
+| gertahodolli | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| helasnoussi |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | — |
+| immaculate-munde | 100/100 | 400/400 | 300/300 | 300/300 |  |  |  |  |  |  |  |  |  |  |  | 1100/1100 |
+| irlandakelly | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
+| jiyajain23 | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
+| karolrojas07 | 100/100 | 400/400 | 300/300 | 300/300 |  |  |  |  |  |  |  |  |  |  |  | 1100/1100 |
+| kb-dev28 | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
+| leticiaalmeida-prod | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
+| lovelymahor | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| med-bc | 100/100 | 400/400 | 300/300 | 300/300 |  |  |  |  |  |  |  |  |  |  |  | 1100/1100 |
+| navy0110 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | — |
+| nizalia0206 | 100/100 | 400/400 | 300/300 |  |  |  |  |  |  |  |  |  |  |  |  | 800/800 |
+| pamvianeta | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
+| pixiepixeled | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
+| rehna-jp | 100/100 | 400/400 | 300/300 | 300/300 |  |  |  |  |  |  |  |  |  |  |  | 1100/1100 |
+| sandyreyna | 100/100 | 400/400 | 300/300 | 300/300 | 200/200 |  |  |  |  |  |  |  |  |  |  | 1300/1300 |
+| semegn19 | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| thefranceway | 100/100 | 400/400 |  |  |  |  |  |  |  |  |  |  |  |  |  | 500/500 |
+| valeepg | 100/100 | 400/400 | 300/300 | 300/300 |  |  |  |  |  |  |  |  |  |  |  | 1100/1100 |
 
 ## Week 0
 
@@ -19,4 +58,43 @@ Handed in as a record of the work, never marked.
 
 | Student | Units handed in |
 |---|---|
+| 250408900-maker | 0/12 |
+| Abduovv | 1/12 |
+| Guis-gk | 0/12 |
+| Human-Gechi | 0/12 |
+| Igullabs | 0/12 |
+| Insia-8 | 0/12 |
+| Its-prity | 0/12 |
+| JemimahEkong | 0/12 |
+| JennyT3 | 0/12 |
+| Messibre | 0/12 |
+| SaraDahman | 0/12 |
+| Sodi0 | 0/12 |
+| SofiaSol10 | 0/12 |
+| Welu2 | 0/12 |
+| apeaircreative | 0/12 |
+| arr4-y | 0/12 |
+| bahatijacklee | 0/12 |
+| baraa0abd | 0/12 |
+| debbyelsie | 0/12 |
+| desirrebarbosa | 0/12 |
+| devolps-survive | 0/12 |
+| gertahodolli | 0/12 |
+| helasnoussi | 9/12 |
+| immaculate-munde | 0/12 |
+| irlandakelly | 12/12 |
+| jiyajain23 | 0/12 |
+| karolrojas07 | 0/12 |
+| kb-dev28 | 0/12 |
 | leticiaalmeida-prod | 0/12 |
+| lovelymahor | 0/12 |
+| med-bc | 0/12 |
+| navy0110 | 1/12 |
+| nizalia0206 | 0/12 |
+| pamvianeta | 0/12 |
+| pixiepixeled | 0/12 |
+| rehna-jp | 0/12 |
+| sandyreyna | 0/12 |
+| semegn19 | 0/12 |
+| thefranceway | 0/12 |
+| valeepg | 0/12 |
