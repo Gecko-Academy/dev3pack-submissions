@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch04",
+  "student": {
+    "github": "SofiaSol10"
+  },
+  "submitted_at": "2026-09-18T17:31:04Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch04-e1",
+      "ch04-e2",
+      "ch04-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "3bdc8a022d3426cb24995225568c54cf37912df78f0dcd7053321053fb9df8e0"
+  },
+  "verified": null,
+  "submission_id": "sub_afeb1091e35e6662f10c28d2"
+}

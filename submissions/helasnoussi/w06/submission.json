@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "w06",
+  "student": {
+    "github": "helasnoussi"
+  },
+  "submitted_at": "2026-09-17T14:39:52Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "w06-e1",
+      "w06-e2",
+      "w06-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": false,
+    "score": null,
+    "max_score": null
+  },
+  "note": "week 0 is handed in as a record of the work, and is not marked",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "linux"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "b33228a72a240154a327dca83fee179dd64207aaeab2babd71e982f0a1aaedca"
+  },
+  "verified": null,
+  "submission_id": "sub_15552edc84cfc04878ef4752"
+}

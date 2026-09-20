@@ -88,9 +88,9 @@
     {
       "id": "ch01",
       "title": "Configure the assistant and the repository instructions",
-      "scored": false,
+      "scored": true,
       "verifiable": false,
-      "max_score": null
+      "max_score": 100
     },
     {
       "id": "ch02",
@@ -151,9 +151,9 @@
     {
       "id": "ch10",
       "title": "Skills and an architecture decision record",
-      "scored": false,
+      "scored": true,
       "verifiable": false,
-      "max_score": null
+      "max_score": 200
     },
     {
       "id": "ch11",
@@ -198,15 +198,14 @@
       "submitted_at": "2026-09-11T12:00:00Z",
       "ran": true,
       "passed": [
-        "ch01-e1",
-        "ch01-e2"
+        "ch01-e1"
       ],
       "failed": [],
       "not_reached": [],
-      "scored": false,
-      "score": null,
-      "max_score": null,
-      "tier": "handed in"
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "unverifiable"
     },
     {
       "github": "dev3pack-demo-full",
@@ -282,15 +281,14 @@
       "submitted_at": "2026-09-11T12:00:00Z",
       "ran": true,
       "passed": [
-        "ch01-e1",
-        "ch01-e2"
+        "ch01-e1"
       ],
       "failed": [],
       "not_reached": [],
-      "scored": false,
-      "score": null,
-      "max_score": null,
-      "tier": "handed in"
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "unverifiable"
     },
     {
       "github": "dev3pack-demo-partial",
