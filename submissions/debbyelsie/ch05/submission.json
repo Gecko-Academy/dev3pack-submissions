@@ -5,7 +5,7 @@
   "student": {
     "github": "debbyelsie"
   },
-  "submitted_at": "2026-09-20T19:00:00Z",
+  "submitted_at": "2026-09-20T20:08:14Z",
   "result": {
     "ran": true,
     "passed": [
@@ -26,11 +26,12 @@
   },
   "environment": {
     "python": "3.11.15",
-    "platform": "win32"
+    "platform": "windows"
   },
   "evidence": {
-    "notebook": "notebook.ipynb"
-  }
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "ee04209b05e7a5544ae4277fc4eeb84ffeb7e2e621526f06846d0683a421fbd2"
+  },
+  "verified": null,
+  "submission_id": "sub_3633205ddd213f06195f6b3c"
 }
-
-
