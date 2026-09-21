@@ -52,6 +52,37 @@ def load_items() -> list[dict]:
     return list(payload["items"])
 
 
+#: Full marks per passing exercise, and what help costs. The same arithmetic
+#: `check_bundle.py` validates a claim against, so the two cannot disagree.
+FULL_MARKS = 100
+HINT_COST = 30
+REVEAL_COST = 70
+
+
+def score_of(item: dict, result: dict, help_block: object) -> int | None:
+    """What the row is worth, COMPUTED -- never read out of the claim.
+
+    Reading `result["score"]` meant a bundle carried its own mark, and a bundle
+    built before an item became scored carries `null` forever. Every ch01 handed
+    in on day one did exactly that: the leaderboard showed a name and no number,
+    and re-running the collector changed nothing, because the null was in the
+    submission rather than in the arithmetic.
+
+    Computing it from `passed` fixes those rows without asking anybody to submit
+    again, and makes the score stop being something the submitter can state.
+    """
+    if not item["scored"]:
+        return None
+    passed = result.get("passed") or []
+    block = help_block if isinstance(help_block, dict) else {}
+    hinted = block.get("hinted", 0)
+    revealed = block.get("revealed", 0)
+    if not all(isinstance(value, int) and value >= 0 for value in (hinted, revealed)):
+        hinted = revealed = 0
+    earned = len(passed) * FULL_MARKS - revealed * REVEAL_COST - hinted * HINT_COST
+    return max(earned, 0)
+
+
 def tier_of(item: dict, claim: dict) -> str:
     """What may honestly be said about this row.
 
@@ -112,7 +143,7 @@ def read_tree() -> tuple[list[dict], list[str]]:
                 "failed": list(result.get("failed", [])),
                 "not_reached": list(result.get("not_reached", [])),
                 "scored": bool(item["scored"]),
-                "score": result.get("score") if item["scored"] else None,
+                "score": score_of(item, result, claim.get("help")),
                 "max_score": item["max_score"],
                 "tier": tier_of(item, claim),
             }
