@@ -1,0 +1,39 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch02",
+  "student": {
+    "github": "Ryjen1"
+  },
+  "submitted_at": "2026-09-21T08:29:17Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch02-e1",
+      "ch02-e2",
+      "ch02-e3",
+      "ch02-e4"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 400,
+    "max_score": 400
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "linux"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "d7752ccc6e436248f1ad8e23eeb12f732c6df7f8d35d15e2aa8a8255b8cb3ad3"
+  },
+  "verified": null,
+  "submission_id": "sub_61bc030fa07dde9adf77e12c"
+}
