@@ -118,7 +118,7 @@
       "title": "A deterministic mini-agent",
       "scored": true,
       "verifiable": true,
-      "max_score": 200
+      "max_score": 700
     },
     {
       "id": "ch06",
@@ -153,7 +153,7 @@
       "title": "Skills and an architecture decision record",
       "scored": true,
       "verifiable": false,
-      "max_score": 200
+      "max_score": 700
     },
     {
       "id": "ch11",
@@ -271,8 +271,8 @@
       "failed": [],
       "not_reached": [],
       "scored": true,
-      "score": 200,
-      "max_score": 200,
+      "score": 600,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -355,7 +355,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -553,7 +553,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -735,7 +735,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -818,7 +818,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -918,7 +918,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -1150,7 +1150,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -1300,7 +1300,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -1383,7 +1383,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -1466,7 +1466,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -1549,7 +1549,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -1662,7 +1662,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2070,7 +2070,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2361,7 +2361,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2461,7 +2461,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2578,7 +2578,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2661,7 +2661,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2744,7 +2744,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2827,7 +2827,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2910,7 +2910,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -3010,7 +3010,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -3143,7 +3143,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -3226,7 +3226,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -3309,7 +3309,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -3392,7 +3392,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
