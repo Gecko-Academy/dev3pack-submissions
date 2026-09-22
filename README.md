@@ -111,22 +111,30 @@ be committed exactly as written.
 
 ## The final assignment
 
-The final is handed in like anything else, with one extra file:
+The final is a folder of two files, written by the course when your agent has
+answered the final questions:
 
-```
+```text
 submissions/<your-github>/final/
-├── answers.json     what your agent answered, and nothing else
-└── notebook.ipynb   the run that produced it
+├── answers.json      what your agent answered, and nothing else
+└── submission.json   who you are, and the repository and commit of your agent
 ```
 
-`answers.json` holds your agent's answers to the published final questions. Your
-agent runs on your machine; only the answers travel. Nothing you wrote is
-executed by the course.
+No notebook, and nothing else: CI refuses a final bundle with a third file.
+Your agent runs on your machine. Only the answers travel, and nothing you wrote
+is executed by the course or by this repository.
 
-When a pull request carrying one is merged, the course scores the answers
-against the private key set and writes the result to `finals/<your-github>/`.
-That file records the score, both gates and a verdict per question. It does not
-record what you answered.
+Open the pull request exactly as for a chapter. CI checks the shape: the two
+files, your folder, the answer and citation limits (8000 characters and 40
+citations per answer), and that `repo` is a plain
+`https://github.com/<owner>/<name>` link with a full 40-character `commit`.
+When the check is green, **it merges automatically**, like homework.
+
+**Your score arrives a few minutes after the merge**, in
+`finals/<your-github>/result.json`. The course scores your answers against the
+private question set and records the score, both gates, a verdict per question,
+and the `repo` and `commit` you submitted, so the score links to the code that
+earned it. It does not record what you answered.
 
 Two gates decide a pass, and the second is the one that matters: 30% of
 questions, and **every** question marked critical. Refusing everything reaches

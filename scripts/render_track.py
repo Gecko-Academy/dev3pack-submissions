@@ -110,6 +110,14 @@ def read_tree() -> tuple[list[dict], list[str]]:
         item_id = claim_path.parent.name
         where = claim_path.relative_to(ROOT).as_posix()
 
+        # A FINAL IS NOT A TRACK ROW. Its score comes from the course API and
+        # is recorded in `finals/`, by `finals.yml`. Reading its
+        # `submission.json` here would list every final handed in under
+        # `problems` as "no course item called 'final'", and a non-empty
+        # `problems` tells a consumer the whole document is partial.
+        if item_id == "final":
+            continue
+
         if not LOGIN.match(student):
             problems.append(f"{where}: {student!r} is not a GitHub login")
             continue

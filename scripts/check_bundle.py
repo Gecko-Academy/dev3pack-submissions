@@ -25,6 +25,9 @@ import re
 import sys
 from pathlib import Path
 
+# Run as `python3 scripts/check_bundle.py`, so its own directory is on the path.
+from check_final import FINAL, final_problems
+
 #: Must match `bootcamp_agent.submission.SCHEMA` in the course repository.
 SCHEMA = "dev3pack.submission.v2"
 
@@ -64,6 +67,11 @@ def submission_id_for(claim: dict) -> str:
 
 def problems_with(directory: Path) -> list[str]:
     """Everything wrong with this bundle. Empty means it is well-formed."""
+    # A final is answers, not a notebook and a claim, so it has its own rules.
+    # Routed on the FOLDER, which `verify.yml` has already tied to the pull
+    # request's author; no homework item can be called `final` (see ITEM).
+    if directory.name == FINAL:
+        return final_problems(directory)
     found: list[str] = []
     claim_path = directory / "submission.json"
     notebook = directory / "notebook.ipynb"

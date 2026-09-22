@@ -2,8 +2,9 @@
 # score it returns.
 #
 # WHY THIS JOB MAY HOLD A SECRET WHEN THE PULL-REQUEST JOB MAY NOT. This runs on
-# push to main, which means the content was already merged by a human. It never
-# executes a learner's notebook: it reads one JSON file and posts it. The
+# content already on main: merged by a person, or merged by `collect.yml` after
+# the pull-request check passed it through `scripts/check_final.py`. It never
+# executes anything a learner wrote: it reads two JSON files and posts one. The
 # pull-request job, by contrast, sees unmerged content from a fork, so it holds
 # nothing — and `verify.yml` fails the build if anybody ever adds
 # `pull_request_target`, which would hand this token to exactly that content.
@@ -16,6 +17,21 @@ on:
   push:
     branches: [main]
     paths: ["submissions/*/final/answers.json"]
+  # A MERGE BY `collect.yml` NEVER REACHES THE TRIGGER ABOVE. GitHub starts no
+  # workflow for a push made with `GITHUB_TOKEN`, and that is the token collect
+  # merges with, so an auto-merged final would sit on main and never be scored.
+  # Collect dispatches this instead, naming the range its merges covered;
+  # `workflow_dispatch` is the one event that token may start.
+  workflow_dispatch:
+    inputs:
+      before:
+        description: "main before the merges (40-hex)"
+        type: string
+        required: true
+      after:
+        description: "main after the merges (40-hex)"
+        type: string
+        required: true
 
 permissions:
   contents: write
@@ -45,10 +61,18 @@ jobs:
       - name: Which finals arrived in this push
         id: changed
         env:
-          BEFORE: ${{ github.event.before }}
-          AFTER: ${{ github.sha }}
+          BEFORE: ${{ inputs.before || github.event.before }}
+          AFTER: ${{ inputs.after || github.sha }}
         run: |
           set -euo pipefail
+          # Both reach `git` as arguments, and a dispatch takes them as typed.
+          # Anything but a full commit id is refused before git sees it.
+          for sha in "$BEFORE" "$AFTER"; do
+            if ! [[ "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+              echo "::error::not a commit id: $sha"
+              exit 1
+            fi
+          done
           # A first push to a branch has no usable `before`; fall back to the
           # commit itself rather than scoring the whole repository.
           if git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
@@ -79,6 +103,11 @@ jobs:
             [ -n "$path" ] || continue
             learner="$(echo "$path" | cut -d/ -f2)"
             echo "scoring $learner"
+            # Never follow a link out of the checkout: this step holds the key.
+            if [ -L "$path" ] || [ ! -f "$path" ]; then
+              echo "::error::$path is not a regular file; nothing was posted for $learner"
+              exit 1
+            fi
             # The learner is the folder the file sits in, which GitHub already
             # checked when the pull request was opened. The API takes it from
             # here rather than from anything inside the file.
@@ -96,9 +125,34 @@ jobs:
               exit 1
             fi
             mkdir -p "finals/$learner"
+            # THE CODE BEHIND THE SCORE. `repo` and `commit` come from the
+            # bundle's submission.json, so a leaderboard can link each score to
+            # the code that earned it. They are re-checked here rather than
+            # trusted from the pull-request check, because a push by hand never
+            # ran it; a value that fails is recorded as null. A missing or
+            # unreadable submission.json also records null rather than failing:
+            # the score is already on the API, and the link is metadata about it.
+            submission="$(dirname "$path")/submission.json"
+            link='{"repo":null,"commit":null}'
+            if [ -f "$submission" ] && [ ! -L "$submission" ]; then
+              # Slurped, so a file holding two documents or none is refused
+              # rather than turned into two lines or an empty --argjson.
+              link="$(jq -c -s '
+                def repo_ok: type == "string"
+                  and test("^https://github\\.com/[A-Za-z0-9-]{1,39}/[A-Za-z0-9._-]{1,100}$")
+                  and (test("/\\.{1,2}$") | not);
+                def commit_ok: type == "string" and test("^[0-9a-f]{40}$");
+                if length == 1 and (.[0] | type) == "object" then .[0] |
+                  {repo: (if (.repo | repo_ok) then .repo else null end),
+                   commit: (if (.commit | commit_ok) then .commit else null end)}
+                else {repo: null, commit: null} end
+              ' "$submission" 2>/dev/null)" || link='{"repo":null,"commit":null}'
+            fi
             # The recorded result carries no answer text: the API returns
             # per-case verdicts, and that is what lands in the repository.
-            jq '{github, question_set_id, score, gates, passed, certificate_eligible, results}' \
+            jq --argjson link "$link" \
+              '{github, repo: $link.repo, commit: $link.commit, question_set_id,
+                score, gates, passed, certificate_eligible, results}' \
               response.json > "finals/$learner/result.json"
             # What the notification below summarises. Written here rather than
             # rediscovered afterwards, so a result that failed to score cannot
