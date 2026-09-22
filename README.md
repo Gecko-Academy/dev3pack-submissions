@@ -52,6 +52,11 @@ that the score follows from the passes and help the claim itself lists. It does
 score in this repository is marked `claimed`, which means self-reported and
 shape-checked. A human merges, and the merge is what records the score.
 
+**The weekly challenge adds to its session.** Week 1's challenge counts in ch05,
+week 2's in ch10: same row, out of the session's marks plus 500. The points come
+from the line your notebook printed (`week 1 challenge: N/500`), read from the
+notebook and never from `submission.json`, so editing the claim cannot add any.
+
 ## How to submit
 
 Once, at the start:
