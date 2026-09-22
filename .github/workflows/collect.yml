@@ -102,7 +102,9 @@ jobs:
             # notification below diffs against to say whose score moved.
             echo "previous=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             git commit -m "track: after the latest merges"
-            git push
+            # finals.yml pushes to main too, unordered with this. A refused push
+            # used to fail the run and leave the track stale until the next one.
+            bash scripts/push_with_retry.sh
             echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             echo "changed=yes" >> "$GITHUB_OUTPUT"
           fi
