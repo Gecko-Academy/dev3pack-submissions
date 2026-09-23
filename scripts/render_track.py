@@ -16,8 +16,8 @@ stale. Never hand-edit them.
 IT NEVER RUNS A NOTEBOOK. It parses JSON and nothing else, which is why it can
 run in a job holding a write token while the pull-request check, which sees
 unmerged content from a fork, holds nothing at all. Since 2026-09-22 it does
-READ two notebooks per learner (ch05, ch10) as JSON, for one printed line: the
-weekly challenge's points. See `challenge_points`.
+READ the notebooks of two items per learner (ch05, ch10) as JSON, for one
+printed line: the weekly challenge's points. See `session_challenge`.
 """
 
 from __future__ import annotations
@@ -31,7 +31,7 @@ import sys
 from pathlib import Path
 
 # Run as `python3 scripts/render_track.py`, so its own directory is on the path.
-from check_bundle import MAX_NOTEBOOK_BYTES
+from check_bundle import CHALLENGE_NOTEBOOK, MAX_NOTEBOOK_BYTES
 
 ROOT = Path(__file__).resolve().parent.parent
 ITEMS = ROOT / "items.json"
@@ -129,6 +129,20 @@ def challenge_points(item_id: str, notebook: Path) -> int:
             if match and match.group(1) == week:
                 found = min(int(match.group(2)), CHALLENGE_MAX)
     return found
+
+
+def session_challenge(item_id: str, bundle: Path) -> int:
+    """The challenge points a ch05/ch10 bundle carries, from either notebook.
+
+    Most learners played week 1 in the course's demo notebook, not the homework
+    one, so `bootcamp submit` hands that in beside it as `challenge.ipynb`. The
+    points are the larger of the two last lines, each read by the same rule:
+    carrying the demo can only reveal a score, never double one.
+    """
+    return max(
+        challenge_points(item_id, bundle / "notebook.ipynb"),
+        challenge_points(item_id, bundle / CHALLENGE_NOTEBOOK),
+    )
 
 
 def _read_notebook(notebook: Path) -> object | None:
@@ -243,7 +257,7 @@ def read_tree() -> tuple[list[dict], list[str]]:
                     item,
                     result,
                     claim.get("help"),
-                    challenge_points(item_id, claim_path.parent / "notebook.ipynb"),
+                    session_challenge(item_id, claim_path.parent),
                 ),
                 "max_score": item["max_score"],
                 "tier": tier_of(item, claim),

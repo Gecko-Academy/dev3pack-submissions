@@ -65,7 +65,9 @@ QUESTION_SET_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
 #: other host or scheme are all refused by the same rule.
 REPO_URL = re.compile(r"^https://github\.com/([A-Za-z0-9-]{1,39})/([A-Za-z0-9._-]{1,100})$")
 #: `path/to/module.py:ClassName`, relative, no `..` segment. Recorded, never run.
-AGENT = re.compile(r"^(?!/)(?!.*(?:^|/)\.\.(?:/|:))[A-Za-z0-9_./-]{1,200}\.py:[A-Za-z_][A-Za-z0-9_]{0,99}$")
+AGENT = re.compile(
+    r"^(?!/)(?!.*(?:^|/)\.\.(?:/|:))[A-Za-z0-9_./-]{1,200}\.py:[A-Za-z_][A-Za-z0-9_]{0,99}$"
+)
 SUBMITTED_AT = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?(?:Z|\+00:00)$")
 
 ANSWERS_KEYS = {"cohort", "course_release", "question_set_id", "answers"}
@@ -195,9 +197,7 @@ def _answers_problems(path: Path, document: object) -> list[str]:
         else:
             for task_id, entry in answers.items():
                 if not TASK_ID.match(task_id):
-                    found.append(
-                        f"{path}: {task_id!r} is not a task id (expected like 'fa-01')"
-                    )
+                    found.append(f"{path}: {task_id!r} is not a task id (expected like 'fa-01')")
                     continue
                 found += _answer_problems(path, task_id, entry)
     return found

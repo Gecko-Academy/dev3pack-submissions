@@ -1,22 +1,23 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch05",
+  "chapter": "ch07",
   "student": {
     "github": "irlandakelly"
   },
-  "submitted_at": "2026-09-22T23:46:05Z",
+  "submitted_at": "2026-09-23T00:50:07Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch05-e1",
-      "ch05-e2"
+      "ch07-e1",
+      "ch07-e2",
+      "ch07-e3"
     ],
     "failed": [],
     "not_reached": [],
     "scored": true,
-    "score": 200,
-    "max_score": 200
+    "score": 300,
+    "max_score": 300
   },
   "note": "",
   "help": {
@@ -30,8 +31,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "aa3157980468e31b88794ee06ab02d5829a42d116ec02be07ac04bf9274869fb"
+    "notebook_sha256": "2b253019c5863e8575c48a0cd0e4f119ab0ab818423b56a2a9605cf36fb22169"
   },
   "verified": null,
-  "submission_id": "sub_17bac662cd4fda6a1e66658e"
+  "submission_id": "sub_8857ee3c96420b7de06adabf"
 }

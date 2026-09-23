@@ -40,10 +40,18 @@ REVEAL_COST = 70
 
 ITEM = re.compile(r"^(?:ch|w|cap)\d{2}$")
 
-#: A bundle is exactly two files, and this refuses anything else rather than
+#: A bundle is exactly these two files (plus CHALLENGE_NOTEBOOK, below, in two
+#: items only), and this refuses anything else rather than
 #: ignoring it: a check that silently skips what it does not understand is how a
 #: payload rides along beside an honest claim.
 ALLOWED_FILES = {"submission.json", "notebook.ipynb"}
+
+#: The one optional third file: the weekly challenge's demo notebook (demo 08
+#: for ch05, demo 10 for ch10), attached by `bootcamp submit` so the points the
+#: learner earned outside the homework notebook are handed in with it. Only
+#: those two items may carry it; anywhere else it is refused like any stranger.
+CHALLENGE_NOTEBOOK = "challenge.ipynb"
+CHALLENGE_ITEMS = frozenset({"ch05", "ch10"})
 
 #: Ceilings, not targets. A claim is a few hundred bytes and a teaching notebook
 #: is well under a megabyte. At 250 learners handing in 28 items each, an
@@ -81,12 +89,22 @@ def problems_with(directory: Path) -> list[str]:
     if not notebook.is_file():
         found.append(f"{directory}: no notebook.ipynb beside the claim")
 
+    challenge = directory / CHALLENGE_NOTEBOOK
     for entry in sorted(directory.iterdir()):
-        if entry.name not in ALLOWED_FILES:
+        if entry.name == CHALLENGE_NOTEBOOK and directory.name not in CHALLENGE_ITEMS:
+            found.append(
+                f"{directory}: {CHALLENGE_NOTEBOOK} is only accepted in "
+                f"{' and '.join(sorted(CHALLENGE_ITEMS))} bundles, not {directory.name}"
+            )
+        elif entry.name not in ALLOWED_FILES and entry.name != CHALLENGE_NOTEBOOK:
             found.append(f"{directory}: unexpected file in the bundle: {entry.name}")
         elif entry.is_symlink() or not entry.is_file():
             found.append(f"{directory}: {entry.name} must be a regular file")
-    for name, cap in ((claim_path.name, MAX_CLAIM_BYTES), (notebook.name, MAX_NOTEBOOK_BYTES)):
+    for name, cap in (
+        (claim_path.name, MAX_CLAIM_BYTES),
+        (notebook.name, MAX_NOTEBOOK_BYTES),
+        (challenge.name, MAX_NOTEBOOK_BYTES),
+    ):
         path = directory / name
         if path.is_file() and path.stat().st_size > cap:
             size = path.stat().st_size
@@ -161,6 +179,52 @@ def problems_with(directory: Path) -> list[str]:
                 "Hand-editing submission.json is the usual cause; re-run `bootcamp submit`"
             )
 
+    found += challenge_problems(directory, claim_path, claim)
+    return found
+
+
+def challenge_problems(directory: Path, claim_path: Path, claim: dict) -> list[str]:
+    """The optional challenge notebook, bound to the claim the way `notebook.ipynb` is.
+
+    Absent is valid. Present, it must be a notebook (JSON with a `cells` list;
+    nothing is executed) and match `evidence.challenge_sha256`, so the printed
+    challenge line the leaderboard reads cannot be edited in after `bootcamp
+    submit`. A claim that records a digest with no file beside it is refused
+    too: the claim would describe a bundle that is not the one handed in.
+
+    Placement, symlinks and size are reported by `problems_with`; this only
+    reads a file those rules have already let through.
+    """
+    path = directory / CHALLENGE_NOTEBOOK
+    evidence = claim.get("evidence")
+    expected = evidence.get("challenge_sha256") if isinstance(evidence, dict) else None
+    if not (path.exists() or path.is_symlink()):
+        if expected is not None:
+            return [
+                f"{claim_path}: the claim records a {CHALLENGE_NOTEBOOK} but the bundle has none. "
+                "Re-run `bootcamp submit`"
+            ]
+        return []
+    if (
+        directory.name not in CHALLENGE_ITEMS
+        or path.is_symlink()
+        or not path.is_file()
+        or path.stat().st_size > MAX_NOTEBOOK_BYTES
+    ):
+        return []
+    raw = path.read_bytes()
+    found: list[str] = []
+    try:
+        document = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, ValueError, RecursionError):
+        document = None
+    if not (isinstance(document, dict) and isinstance(document.get("cells"), list)):
+        found.append(f"{path}: not a notebook (JSON with a `cells` list)")
+    if expected not in notebook_digests(raw):
+        found.append(
+            f"{claim_path}: {CHALLENGE_NOTEBOOK} is not the one this bundle was submitted with. "
+            "Editing either file by hand is the usual cause; re-run `bootcamp submit`"
+        )
     return found
 
 
