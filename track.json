@@ -118,7 +118,7 @@
       "title": "A deterministic mini-agent",
       "scored": true,
       "verifiable": true,
-      "max_score": 200
+      "max_score": 700
     },
     {
       "id": "ch06",
@@ -153,7 +153,7 @@
       "title": "Skills and an architecture decision record",
       "scored": true,
       "verifiable": false,
-      "max_score": 200
+      "max_score": 700
     },
     {
       "id": "ch11",
@@ -271,8 +271,8 @@
       "failed": [],
       "not_reached": [],
       "scored": true,
-      "score": 200,
-      "max_score": 200,
+      "score": 600,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -355,7 +355,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -541,6 +541,39 @@
       "tier": "claimed"
     },
     {
+      "github": "Insia-8",
+      "item": "ch05",
+      "submitted_at": "2026-09-21T20:20:24Z",
+      "ran": true,
+      "passed": [
+        "ch05-e1",
+        "ch05-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 200,
+      "max_score": 700,
+      "tier": "claimed"
+    },
+    {
+      "github": "Insia-8",
+      "item": "ch06",
+      "submitted_at": "2026-09-21T21:40:56Z",
+      "ran": true,
+      "passed": [
+        "ch06-e2",
+        "ch06-e3",
+        "ch06-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
       "github": "Its-prity",
       "item": "ch01",
       "submitted_at": "2026-09-15T04:25:43Z",
@@ -623,6 +656,22 @@
       "tier": "claimed"
     },
     {
+      "github": "JemimahEkong",
+      "item": "ch05",
+      "submitted_at": "2026-09-22T20:16:28Z",
+      "ran": true,
+      "passed": [
+        "ch05-e1",
+        "ch05-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 200,
+      "max_score": 700,
+      "tier": "claimed"
+    },
+    {
       "github": "JennyT3",
       "item": "ch01",
       "submitted_at": "2026-09-15T05:33:52Z",
@@ -702,7 +751,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -785,7 +834,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -797,6 +846,23 @@
         "ch06-e2",
         "ch06-e3",
         "ch06-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "Messibre",
+      "item": "ch07",
+      "submitted_at": "2026-09-22T19:42:08Z",
+      "ran": true,
+      "passed": [
+        "ch07-e1",
+        "ch07-e2",
+        "ch07-e3"
       ],
       "failed": [],
       "not_reached": [],
@@ -885,7 +951,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -945,6 +1011,23 @@
         "ch03-e1",
         "ch03-e2",
         "ch03-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "Sodi0",
+      "item": "ch04",
+      "submitted_at": "2026-09-21T18:48:31Z",
+      "ran": true,
+      "passed": [
+        "ch04-e1",
+        "ch04-e2",
+        "ch04-e3"
       ],
       "failed": [],
       "not_reached": [],
@@ -1018,6 +1101,22 @@
       "scored": true,
       "score": 300,
       "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "SofiaSol10",
+      "item": "ch05",
+      "submitted_at": "2026-09-22T15:28:05Z",
+      "ran": true,
+      "passed": [
+        "ch05-e1",
+        "ch05-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -1100,7 +1199,24 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
+      "tier": "claimed"
+    },
+    {
+      "github": "Welu2",
+      "item": "ch06",
+      "submitted_at": "2026-09-22T06:56:39Z",
+      "ran": true,
+      "passed": [
+        "ch06-e2",
+        "ch06-e3",
+        "ch06-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
       "tier": "claimed"
     },
     {
@@ -1134,6 +1250,23 @@
       "scored": true,
       "score": 400,
       "max_score": 400,
+      "tier": "claimed"
+    },
+    {
+      "github": "apeaircreative",
+      "item": "ch03",
+      "submitted_at": "2026-09-21T18:09:01Z",
+      "ran": true,
+      "passed": [
+        "ch03-e1",
+        "ch03-e2",
+        "ch03-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
       "tier": "claimed"
     },
     {
@@ -1233,7 +1366,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -1316,7 +1449,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -1399,7 +1532,24 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
+      "tier": "claimed"
+    },
+    {
+      "github": "baraa0abd",
+      "item": "ch06",
+      "submitted_at": "2026-09-21T18:22:21Z",
+      "ran": true,
+      "passed": [
+        "ch06-e2",
+        "ch06-e3",
+        "ch06-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
       "tier": "claimed"
     },
     {
@@ -1465,7 +1615,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -1549,6 +1699,39 @@
       "tier": "claimed"
     },
     {
+      "github": "gertahodolli",
+      "item": "ch04",
+      "submitted_at": "2026-09-21T19:58:23Z",
+      "ran": true,
+      "passed": [
+        "ch04-e1",
+        "ch04-e2",
+        "ch04-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "gertahodolli",
+      "item": "ch05",
+      "submitted_at": "2026-09-21T20:07:07Z",
+      "ran": true,
+      "passed": [
+        "ch05-e1",
+        "ch05-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 200,
+      "max_score": 700,
+      "tier": "claimed"
+    },
+    {
       "github": "helasnoussi",
       "item": "ch01",
       "submitted_at": "2026-09-21T13:27:54Z",
@@ -1596,6 +1779,39 @@
       "scored": true,
       "score": 300,
       "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "helasnoussi",
+      "item": "ch04",
+      "submitted_at": "2026-09-22T10:57:52Z",
+      "ran": true,
+      "passed": [
+        "ch04-e1",
+        "ch04-e2",
+        "ch04-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "helasnoussi",
+      "item": "ch05",
+      "submitted_at": "2026-09-22T14:02:32Z",
+      "ran": true,
+      "passed": [
+        "ch05-e1",
+        "ch05-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -1875,6 +2091,25 @@
     },
     {
       "github": "irlandakelly",
+      "item": "cap01",
+      "submitted_at": "2026-09-23T00:54:33Z",
+      "ran": true,
+      "passed": [
+        "cap01-e1",
+        "cap01-e2",
+        "cap01-e3",
+        "cap01-e4",
+        "cap01-e5"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 500,
+      "max_score": 500,
+      "tier": "claimed"
+    },
+    {
+      "github": "irlandakelly",
       "item": "ch01",
       "submitted_at": "2026-09-16T00:45:02Z",
       "ran": true,
@@ -1943,7 +2178,7 @@
     {
       "github": "irlandakelly",
       "item": "ch05",
-      "submitted_at": "2026-09-16T01:34:37Z",
+      "submitted_at": "2026-09-22T23:46:05Z",
       "ran": true,
       "passed": [
         "ch05-e1",
@@ -1952,8 +2187,42 @@
       "failed": [],
       "not_reached": [],
       "scored": true,
-      "score": 200,
-      "max_score": 200,
+      "score": 700,
+      "max_score": 700,
+      "tier": "claimed"
+    },
+    {
+      "github": "irlandakelly",
+      "item": "ch06",
+      "submitted_at": "2026-09-23T00:37:37Z",
+      "ran": true,
+      "passed": [
+        "ch06-e2",
+        "ch06-e3",
+        "ch06-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "irlandakelly",
+      "item": "ch07",
+      "submitted_at": "2026-09-23T00:50:07Z",
+      "ran": true,
+      "passed": [
+        "ch07-e1",
+        "ch07-e2",
+        "ch07-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
       "tier": "claimed"
     },
     {
@@ -2244,7 +2513,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2344,7 +2613,41 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
+      "tier": "claimed"
+    },
+    {
+      "github": "karolrojas07",
+      "item": "ch06",
+      "submitted_at": "2026-09-22T04:12:13Z",
+      "ran": true,
+      "passed": [
+        "ch06-e2",
+        "ch06-e3",
+        "ch06-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "karolrojas07",
+      "item": "ch07",
+      "submitted_at": "2026-09-22T04:06:07Z",
+      "ran": true,
+      "passed": [
+        "ch07-e1",
+        "ch07-e2",
+        "ch07-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
       "tier": "claimed"
     },
     {
@@ -2427,7 +2730,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2510,7 +2813,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2583,7 +2886,7 @@
     {
       "github": "licette32",
       "item": "ch05",
-      "submitted_at": "2026-09-21T02:46:10Z",
+      "submitted_at": "2026-09-22T22:18:28Z",
       "ran": true,
       "passed": [
         "ch05-e1",
@@ -2593,7 +2896,24 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
+      "tier": "claimed"
+    },
+    {
+      "github": "licette32",
+      "item": "ch06",
+      "submitted_at": "2026-09-22T16:10:16Z",
+      "ran": true,
+      "passed": [
+        "ch06-e2",
+        "ch06-e3",
+        "ch06-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
       "tier": "claimed"
     },
     {
@@ -2676,7 +2996,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2759,7 +3079,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -2859,7 +3179,24 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
+      "tier": "claimed"
+    },
+    {
+      "github": "nizalia0206",
+      "item": "ch06",
+      "submitted_at": "2026-09-22T11:39:23Z",
+      "ran": true,
+      "passed": [
+        "ch06-e2",
+        "ch06-e3",
+        "ch06-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
       "tier": "claimed"
     },
     {
@@ -2992,7 +3329,24 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
+      "tier": "claimed"
+    },
+    {
+      "github": "pamvianeta",
+      "item": "ch06",
+      "submitted_at": "2026-09-22T05:46:09Z",
+      "ran": true,
+      "passed": [
+        "ch06-e2",
+        "ch06-e3",
+        "ch06-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
       "tier": "claimed"
     },
     {
@@ -3075,7 +3429,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -3158,7 +3512,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -3241,7 +3595,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -3319,6 +3673,23 @@
         "ch03-e1",
         "ch03-e2",
         "ch03-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "thefranceway",
+      "item": "ch04",
+      "submitted_at": "2026-09-22T15:45:20Z",
+      "ran": true,
+      "passed": [
+        "ch04-e1",
+        "ch04-e2",
+        "ch04-e3"
       ],
       "failed": [],
       "not_reached": [],

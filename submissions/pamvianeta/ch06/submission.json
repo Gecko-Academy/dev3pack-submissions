@@ -1,22 +1,23 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch05",
+  "chapter": "ch06",
   "student": {
-    "github": "licette32"
+    "github": "pamvianeta"
   },
-  "submitted_at": "2026-09-22T22:18:28Z",
+  "submitted_at": "2026-09-22T05:46:09Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch05-e1",
-      "ch05-e2"
+      "ch06-e2",
+      "ch06-e3",
+      "ch06-e1"
     ],
     "failed": [],
     "not_reached": [],
     "scored": true,
-    "score": 200,
-    "max_score": 200
+    "score": 300,
+    "max_score": 300
   },
   "note": "",
   "help": {
@@ -30,8 +31,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "c0c30d94352b67c5c23c3cc44cabb6d0d99d00180e5e89b9770d7782c0537cad"
+    "notebook_sha256": "302026fab2a5c9b2e47f3ec0df7f3fd4893a4af393cdabe78384a01c9bc89f34"
   },
   "verified": null,
-  "submission_id": "sub_5a14f53a6fcb72ed258c991a"
+  "submission_id": "sub_3791048d1408ea1a82b0d565"
 }
