@@ -210,6 +210,66 @@ class ABadNotebookIsWorthZeroAndNeverBreaksTheRender(unittest.TestCase):
         self.assertEqual(entry["score"], 200)
 
 
+class TheChallengeNotebookCarriesTheScore(unittest.TestCase):
+    """`challenge.ipynb`, the demo notebook `bootcamp submit` attaches to ch05/ch10."""
+
+    def score_with(self, item: str, homework: object, challenge: object | bytes) -> int:
+        with tree(item, homework) as bundle:
+            body = challenge if isinstance(challenge, bytes) else json.dumps(challenge).encode()
+            (bundle / "challenge.ipynb").write_bytes(body)
+            (entry,), problems = render_track.read_tree()
+        self.assertEqual(problems, [])
+        return entry["score"]
+
+    def test_the_demo_notebook_alone_carries_the_points(self) -> None:
+        self.assertEqual(self.score_with("ch05", notebook("no line\n"), notebook(LINE1)), 600)
+
+    def test_the_larger_of_the_two_wins(self) -> None:
+        low, high = "   week 1 challenge: 100/500\n", "   week 1 challenge: 450/500\n"
+        self.assertEqual(self.score_with("ch05", notebook(low), notebook(high)), 650)
+        self.assertEqual(self.score_with("ch05", notebook(high), notebook(low)), 650)
+        # Never the sum: carrying both cannot double a score.
+        self.assertEqual(self.score_with("ch05", notebook(LINE1), notebook(LINE1)), 600)
+
+    def test_ch10_reads_week_2_from_it(self) -> None:
+        line = "   week 2 challenge: 120/500\n"
+        self.assertEqual(self.score_with("ch10", notebook(), notebook(line)), 320)
+
+    def test_a_wrong_week_line_in_it_adds_nothing(self) -> None:
+        line = "   week 2 challenge: 400/500\n"
+        self.assertEqual(self.score_with("ch05", notebook(), notebook(line)), 200)
+
+    def test_it_is_capped_like_the_homework_notebook(self) -> None:
+        line = "   week 1 challenge: 999/500\n"
+        self.assertEqual(self.score_with("ch05", notebook(), notebook(line)), 700)
+
+    def test_unreadable_is_worth_zero(self) -> None:
+        self.assertEqual(self.score_with("ch05", notebook(), b"{ not json" + LINE1.encode()), 200)
+
+    def test_other_items_ignore_it(self) -> None:
+        self.assertEqual(self.score_with("ch06", notebook(), notebook(LINE1)), 200)
+
+    def test_a_symlinked_challenge_is_not_followed(self) -> None:
+        with tempfile.TemporaryDirectory() as elsewhere:
+            target = Path(elsewhere) / "real.ipynb"
+            target.write_text(json.dumps(notebook(LINE1)))
+            with tree("ch05", notebook()) as bundle:
+                os.symlink(target, bundle / "challenge.ipynb")
+                (entry,), _ = render_track.read_tree()
+        self.assertEqual(entry["score"], 200)
+
+    def test_the_claim_still_cannot_add_points(self) -> None:
+        extra = {"evidence": {"challenge_sha256": "0" * 64}, "challenge": 500}
+        with tree("ch05", notebook(), **extra) as bundle:
+            (bundle / "challenge.ipynb").write_text(json.dumps(notebook("nothing\n")))
+            stated = json.loads((bundle / "submission.json").read_text())
+            stated["result"]["score"] = 700
+            stated["result"]["output"] = LINE1
+            (bundle / "submission.json").write_text(json.dumps(stated))
+            (entry,), _ = render_track.read_tree()
+        self.assertEqual(entry["score"], 200)
+
+
 class TheRealTreeOnlyMovesWhereANotebookPrintedALine(unittest.TestCase):
     """Render the repository as it is, with and without challenge points.
 
@@ -232,8 +292,8 @@ class TheRealTreeOnlyMovesWhereANotebookPrintedALine(unittest.TestCase):
             (e["github"], e["item"])
             for e in after_entries
             if e["item"] in render_track.CHALLENGE_WEEK
-            and render_track.challenge_points(
-                e["item"], render_track.SUBMISSIONS / e["github"] / e["item"] / "notebook.ipynb"
+            and render_track.session_challenge(
+                e["item"], render_track.SUBMISSIONS / e["github"] / e["item"]
             )
         }
         header = next(line for line in before if line.startswith("| Student | "))
