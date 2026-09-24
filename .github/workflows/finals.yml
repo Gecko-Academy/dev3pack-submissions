@@ -2,8 +2,9 @@
 # score it returns.
 #
 # WHY THIS JOB MAY HOLD A SECRET WHEN THE PULL-REQUEST JOB MAY NOT. This runs on
-# push to main, which means the content was already merged by a human. It never
-# executes a learner's notebook: it reads one JSON file and posts it. The
+# content already on main: merged by a person, or merged by `collect.yml` after
+# the pull-request check passed it through `scripts/check_final.py`. It never
+# executes anything a learner wrote: it reads two JSON files and posts one. The
 # pull-request job, by contrast, sees unmerged content from a fork, so it holds
 # nothing — and `verify.yml` fails the build if anybody ever adds
 # `pull_request_target`, which would hand this token to exactly that content.
@@ -16,6 +17,21 @@ on:
   push:
     branches: [main]
     paths: ["submissions/*/final/answers.json"]
+  # A MERGE BY `collect.yml` NEVER REACHES THE TRIGGER ABOVE. GitHub starts no
+  # workflow for a push made with `GITHUB_TOKEN`, and that is the token collect
+  # merges with, so an auto-merged final would sit on main and never be scored.
+  # Collect dispatches this instead, naming the range its merges covered;
+  # `workflow_dispatch` is the one event that token may start.
+  workflow_dispatch:
+    inputs:
+      before:
+        description: "main before the merges (40-hex)"
+        type: string
+        required: true
+      after:
+        description: "main after the merges (40-hex)"
+        type: string
+        required: true
 
 permissions:
   contents: write
@@ -45,10 +61,18 @@ jobs:
       - name: Which finals arrived in this push
         id: changed
         env:
-          BEFORE: ${{ github.event.before }}
-          AFTER: ${{ github.sha }}
+          BEFORE: ${{ inputs.before || github.event.before }}
+          AFTER: ${{ inputs.after || github.sha }}
         run: |
           set -euo pipefail
+          # Both reach `git` as arguments, and a dispatch takes them as typed.
+          # Anything but a full commit id is refused before git sees it.
+          for sha in "$BEFORE" "$AFTER"; do
+            if ! [[ "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+              echo "::error::not a commit id: $sha"
+              exit 1
+            fi
+          done
           # A first push to a branch has no usable `before`; fall back to the
           # commit itself rather than scoring the whole repository.
           if git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
@@ -71,47 +95,16 @@ jobs:
           KEY: ${{ secrets.DEV3PACK_SERVER_KEY }}
         run: |
           set -euo pipefail
-          if [ -z "${KEY:-}" ]; then
-            echo "::error::DEV3PACK_SERVER_KEY is not set; nothing was scored"
-            exit 1
-          fi
-          while read -r path; do
-            [ -n "$path" ] || continue
-            learner="$(echo "$path" | cut -d/ -f2)"
-            echo "scoring $learner"
-            # The learner is the folder the file sits in, which GitHub already
-            # checked when the pull request was opened. The API takes it from
-            # here rather than from anything inside the file.
-            payload="$(jq -c --arg g "$learner" \
-              '{github: $g, set: "final", cohort: (.cohort // "2026-09"),
-                course_release: (.course_release // "unknown"), answers: .answers}' "$path")"
-            code="$(curl -sS -o response.json -w '%{http_code}' \
-              -X POST "$API/api/dev3pack/submit" \
-              -H "authorization: Bearer $KEY" \
-              -H "content-type: application/json" \
-              --data "$payload")"
-            if [ "$code" != "200" ]; then
-              echo "::error::$learner scored HTTP $code"
-              cat response.json
-              exit 1
-            fi
-            mkdir -p "finals/$learner"
-            # The recorded result carries no answer text: the API returns
-            # per-case verdicts, and that is what lands in the repository.
-            jq '{github, question_set_id, score, gates, passed, certificate_eligible, results}' \
-              response.json > "finals/$learner/result.json"
-            # What the notification below summarises. Written here rather than
-            # rediscovered afterwards, so a result that failed to score cannot
-            # be announced as if it had.
-            echo "finals/$learner/result.json" >> scored.txt
-            jq -r '"  \(.github): \(.score.percent)% — passed=\(.passed) — certificate=\(.certificate_eligible)"' \
-              response.json
-          done < finals.txt
+          # Scores everybody in the list, recording nothing for a learner whose
+          # request failed and carrying on. `failed.txt` names them, and the
+          # last step of this job turns it red. See scripts/finals_score.sh.
+          bash scripts/finals_score.sh finals.txt
 
       - name: Commit the results
         id: record
         if: steps.changed.outputs.count != '0'
         run: |
+          set -euo pipefail
           git config user.name "dev3pack-bot"
           git config user.email "noreply@github.com"
           git add finals/
@@ -120,7 +113,8 @@ jobs:
             echo "recorded=no" >> "$GITHUB_OUTPUT"
           else
             git commit -m "finals: record scores for this push"
-            git push
+            # Rebases and retries when collect pushed first. See the script.
+            bash scripts/push_with_retry.sh
             echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             echo "recorded=yes" >> "$GITHUB_OUTPUT"
           fi
@@ -151,9 +145,27 @@ jobs:
           # The cohort comes from the answers themselves, the same place the
           # scoring step took it from. Defaulting it here instead would point a
           # subscriber at the wrong cohort's URL the first time one differs.
-          cohort="$(jq -r '.cohort // "2026-09"' $(cat finals.txt) | sort -u | head -1)"
+          #
+          # ONLY FROM LEARNERS WHO WERE SCORED. The list of arrivals can hold a
+          # file that failed because it could not be read, and reading it again
+          # here would fail the announcement for everybody who succeeded.
+          cohort="$(sed -E 's#^finals/([^/]+)/result\.json$#submissions/\1/final/answers.json#' scored.txt \
+            | xargs jq -r '.cohort // "2026-09"' | sort -u | head -1)"
           echo "cohort: $cohort"
           python3 scripts/notify.py \
             --finals scored.txt \
             --cohort "$cohort" \
             --commit "${{ steps.record.outputs.commit }}"
+
+      # LAST, so a failure cannot stop anybody else being recorded or announced.
+      # Everyone scored is already committed, pushed and notified by now; this
+      # only makes sure a learner who was NOT scored turns the run red, by name.
+      - name: Fail if any final was not scored
+        if: steps.changed.outputs.count != '0'
+        run: |
+          set -euo pipefail
+          if [ -s failed.txt ]; then
+            echo "::error::not scored, and nothing recorded for: $(paste -sd, failed.txt)"
+            exit 1
+          fi
+          echo "every final in this range was scored"
