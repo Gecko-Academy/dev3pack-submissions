@@ -1,22 +1,23 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch05",
+  "chapter": "ch07",
   "student": {
-    "github": "250408900-maker"
+    "github": "jiyajain23"
   },
-  "submitted_at": "2026-09-23T06:42:24Z",
+  "submitted_at": "2026-09-23T10:36:51Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch05-e1",
-      "ch05-e2"
+      "ch07-e1",
+      "ch07-e2",
+      "ch07-e3"
     ],
     "failed": [],
     "not_reached": [],
     "scored": true,
-    "score": 200,
-    "max_score": 200
+    "score": 300,
+    "max_score": 300
   },
   "note": "",
   "help": {
@@ -25,14 +26,13 @@
     "cost": 0
   },
   "environment": {
-    "python": "3.11.16",
+    "python": "3.11.0",
     "platform": "windows"
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "94f67a24b765d4ee1a7615f0546de77db80a11cd32e5176d4a5931777911d765",
-    "challenge_sha256": "42cae50bfa6ac9f60621e303dec3ba1a34d3fc6b81a40a6671dcad91804b4ad4"
+    "notebook_sha256": "9a2a0f6065a4b698530eaacbebb07df7ca3239b30061bd92de553118242890df"
   },
   "verified": null,
-  "submission_id": "sub_f8a318b95ff82bdac5889ae9"
+  "submission_id": "sub_a087c705412bb2fab4652b87"
 }

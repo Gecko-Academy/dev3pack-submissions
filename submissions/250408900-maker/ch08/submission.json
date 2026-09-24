@@ -1,22 +1,23 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch05",
+  "chapter": "ch08",
   "student": {
     "github": "250408900-maker"
   },
-  "submitted_at": "2026-09-23T06:42:24Z",
+  "submitted_at": "2026-09-23T16:34:05Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch05-e1",
-      "ch05-e2"
+      "ch08-e1",
+      "ch08-e2",
+      "ch08-e3"
     ],
     "failed": [],
     "not_reached": [],
     "scored": true,
-    "score": 200,
-    "max_score": 200
+    "score": 300,
+    "max_score": 300
   },
   "note": "",
   "help": {
@@ -30,9 +31,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "94f67a24b765d4ee1a7615f0546de77db80a11cd32e5176d4a5931777911d765",
-    "challenge_sha256": "42cae50bfa6ac9f60621e303dec3ba1a34d3fc6b81a40a6671dcad91804b4ad4"
+    "notebook_sha256": "f30c7d04bc7be3df92b511ba596c1dab05f395f6df6ab25c6da0f86c67310b2a"
   },
   "verified": null,
-  "submission_id": "sub_f8a318b95ff82bdac5889ae9"
+  "submission_id": "sub_b44a462a01f86fc0a0ded92f"
 }

@@ -175,8 +175,11 @@ def problems_with(directory: Path) -> list[str]:
         expected = claim.get("evidence", {}).get("notebook_sha256")
         if expected not in notebook_digests(notebook.read_bytes()):
             found.append(
-                f"{claim_path}: the notebook is not the one this score was claimed for. "
-                "Hand-editing submission.json is the usual cause; re-run `bootcamp submit`"
+                f"{claim_path}: the notebook changed after you submitted, so it no "
+                "longer matches the score claimed for it. Saving or re-running the "
+                "notebook is enough to do this, and it is the usual cause. Fix: run "
+                "`bootcamp submit` again and do not open the notebook afterwards. "
+                "(The same check would catch a hand-edited submission.json.)"
             )
 
     found += challenge_problems(directory, claim_path, claim)
