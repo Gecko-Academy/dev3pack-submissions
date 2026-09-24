@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch06",
+  "student": {
+    "github": "rehna-jp"
+  },
+  "submitted_at": "2026-09-23T12:03:25Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch06-e2",
+      "ch06-e3",
+      "ch06-e1"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "darwin"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "1080d7d58343a63282b788eb48747d786981c7af1508cbe5628f0f835fb3a6e4"
+  },
+  "verified": null,
+  "submission_id": "sub_00ba0505fb571034831e5457"
+}

@@ -1,0 +1,33 @@
+# Test the scripts that guard this repository.
+#
+# `check_bundle.py` is the gate in front of an auto-merge, and for a final that
+# merge is followed by a job holding the server key. A rule that quietly stops
+# refusing is invisible from a green submission check, so the rules have tests,
+# and this runs them whenever the scripts or the workflows change.
+#
+# THIS JOB HOLDS NOTHING. Stdlib Python, no install, no token beyond read, no
+# secret. A learner's pull request touches only `submissions/`, so it never
+# triggers this, and the submission check stays the one named `submissions`
+# that `collect.py` waits for.
+name: tests
+
+on:
+  pull_request:
+    paths: ["scripts/**", "tests/**", ".github/workflows/**"]
+  push:
+    branches: [main]
+    paths: ["scripts/**", "tests/**", ".github/workflows/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    if: github.repository == 'Gecko-Academy/dev3pack-submissions'
+    name: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: python3 -m unittest discover -s tests -v

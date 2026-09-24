@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch07",
+  "student": {
+    "github": "licette32"
+  },
+  "submitted_at": "2026-09-23T03:01:42Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch07-e1",
+      "ch07-e2",
+      "ch07-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "ce8cf19d25febba41239d84f46c5a65ac154e93d97c2ab1665b32c5f9ccf8301"
+  },
+  "verified": null,
+  "submission_id": "sub_60269cb267324557855dde11"
+}
