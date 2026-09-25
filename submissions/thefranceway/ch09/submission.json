@@ -1,0 +1,37 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch09",
+  "student": {
+    "github": "thefranceway"
+  },
+  "submitted_at": "2026-09-25T16:16:29Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch09-e1",
+      "ch09-e2"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 200,
+    "max_score": 200
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "darwin"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "681587c5dfdaa397644003f49189acf671869a8b703ce0f0620021aff364a0cd"
+  },
+  "verified": null,
+  "submission_id": "sub_0814375b74fee6256df57ef1"
+}
