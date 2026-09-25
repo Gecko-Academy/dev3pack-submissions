@@ -3,9 +3,9 @@
   "cohort": "2026-09",
   "chapter": "ch06",
   "student": {
-    "github": "jennytejedor"
+    "github": "JennyT3"
   },
-  "submitted_at": "2026-09-24T21:33:31Z",
+  "submitted_at": "2026-09-25T12:06:51Z",
   "result": {
     "ran": true,
     "passed": [
@@ -34,5 +34,5 @@
     "notebook_sha256": "0020b200f6406d46a9f478a5ce969e41648ce71aafee0744500b244891905ec5"
   },
   "verified": null,
-  "submission_id": "sub_b74b1093939d876759db609d"
+  "submission_id": "sub_8cff5bcb86550d52daafc88a"
 }
