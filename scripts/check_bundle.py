@@ -40,8 +40,8 @@ REVEAL_COST = 70
 
 ITEM = re.compile(r"^(?:ch|w|cap)\d{2}$")
 
-#: A bundle is exactly these two files (plus CHALLENGE_NOTEBOOK, below, in two
-#: items only), and this refuses anything else rather than
+#: A bundle is exactly these two files (plus CHALLENGE_NOTEBOOK and STORE_FILE,
+#: below, each in named items only), and this refuses anything else rather than
 #: ignoring it: a check that silently skips what it does not understand is how a
 #: payload rides along beside an honest claim.
 ALLOWED_FILES = {"submission.json", "notebook.ipynb"}
@@ -53,11 +53,19 @@ ALLOWED_FILES = {"submission.json", "notebook.ipynb"}
 CHALLENGE_NOTEBOOK = "challenge.ipynb"
 CHALLENGE_ITEMS = frozenset({"ch05", "ch10"})
 
+#: The one optional fourth file: the student's store, for seeding the course
+#: fork. Session 10 is where it is written, so only ch10 may carry it. Must match
+#: `bootcamp_agent.submission.STORE_FILE` and `weekly.carry_store` in the course.
+STORE_FILE = "store.json"
+STORE_ITEMS = frozenset({"ch10"})
+
 #: Ceilings, not targets. A claim is a few hundred bytes and a teaching notebook
 #: is well under a megabyte. At 250 learners handing in 28 items each, an
 #: unbounded notebook is also how a repository becomes unclonable.
 MAX_CLAIM_BYTES = 64 * 1024
 MAX_NOTEBOOK_BYTES = 8 * 1024 * 1024
+#: A store is a few hundred bytes. Must match `weekly.carry_store.MAX_STORE_BYTES`.
+MAX_STORE_BYTES = 64 * 1024
 
 
 def submission_id_for(claim: dict) -> str:
@@ -96,7 +104,15 @@ def problems_with(directory: Path) -> list[str]:
                 f"{directory}: {CHALLENGE_NOTEBOOK} is only accepted in "
                 f"{' and '.join(sorted(CHALLENGE_ITEMS))} bundles, not {directory.name}"
             )
-        elif entry.name not in ALLOWED_FILES and entry.name != CHALLENGE_NOTEBOOK:
+        elif entry.name == STORE_FILE and directory.name not in STORE_ITEMS:
+            found.append(
+                f"{directory}: {STORE_FILE} is only accepted in "
+                f"{' and '.join(sorted(STORE_ITEMS))} bundles, not {directory.name}"
+            )
+        elif entry.name not in ALLOWED_FILES and entry.name not in (
+            CHALLENGE_NOTEBOOK,
+            STORE_FILE,
+        ):
             found.append(f"{directory}: unexpected file in the bundle: {entry.name}")
         elif entry.is_symlink() or not entry.is_file():
             found.append(f"{directory}: {entry.name} must be a regular file")
@@ -104,6 +120,7 @@ def problems_with(directory: Path) -> list[str]:
         (claim_path.name, MAX_CLAIM_BYTES),
         (notebook.name, MAX_NOTEBOOK_BYTES),
         (challenge.name, MAX_NOTEBOOK_BYTES),
+        (STORE_FILE, MAX_STORE_BYTES),
     ):
         path = directory / name
         if path.is_file() and path.stat().st_size > cap:
@@ -183,6 +200,49 @@ def problems_with(directory: Path) -> list[str]:
             )
 
     found += challenge_problems(directory, claim_path, claim)
+    found += store_problems(directory, claim_path, claim)
+    return found
+
+
+def store_problems(directory: Path, claim_path: Path, claim: dict) -> list[str]:
+    """The optional store, bound to the claim the way the challenge notebook is.
+
+    Absent is valid: a student who has not finished the store still hands in.
+    Present, it must parse as a JSON object (it is read, never executed) and
+    match `evidence.store_sha256`, so the store the instructor seeds is the one
+    this claim was submitted with. Placement, symlinks and size are reported by
+    `problems_with`; this only reads a file those rules have already let through.
+    """
+    path = directory / STORE_FILE
+    evidence = claim.get("evidence")
+    expected = evidence.get("store_sha256") if isinstance(evidence, dict) else None
+    if not (path.exists() or path.is_symlink()):
+        if expected is not None:
+            return [
+                f"{claim_path}: the claim records a {STORE_FILE} but the bundle has none. "
+                "Re-run `bootcamp submit`"
+            ]
+        return []
+    if (
+        directory.name not in STORE_ITEMS
+        or path.is_symlink()
+        or not path.is_file()
+        or path.stat().st_size > MAX_STORE_BYTES
+    ):
+        return []
+    raw = path.read_bytes()
+    found: list[str] = []
+    try:
+        document = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, ValueError, RecursionError):
+        document = None
+    if not isinstance(document, dict):
+        found.append(f"{path}: not a store (a JSON object)")
+    if expected not in notebook_digests(raw):
+        found.append(
+            f"{claim_path}: {STORE_FILE} is not the one this bundle was submitted with. "
+            "Editing either file by hand is the usual cause; re-run `bootcamp submit`"
+        )
     return found
 
 
