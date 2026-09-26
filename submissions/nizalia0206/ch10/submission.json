@@ -1,0 +1,37 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch10",
+  "student": {
+    "github": "nizalia0206"
+  },
+  "submitted_at": "2026-09-26T09:14:51Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch10-e1",
+      "ch10-e2"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 200,
+    "max_score": 200
+  },
+  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "dbe6f0803627fc2853ea8ce45c1999835a04c9c9b3a5b05d8e1acaaa59f06df3"
+  },
+  "verified": null,
+  "submission_id": "sub_487243e931c4287185630e3b"
+}
