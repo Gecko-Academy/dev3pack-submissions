@@ -1283,6 +1283,24 @@
       "tier": "unverifiable"
     },
     {
+      "github": "Mialy333",
+      "item": "ch02",
+      "submitted_at": "2026-09-26T16:23:59Z",
+      "ran": true,
+      "passed": [
+        "ch02-e1",
+        "ch02-e2",
+        "ch02-e3",
+        "ch02-e4"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 400,
+      "max_score": 400,
+      "tier": "claimed"
+    },
+    {
       "github": "Ryjen1",
       "item": "ch01",
       "submitted_at": "2026-09-21T08:01:37Z",
