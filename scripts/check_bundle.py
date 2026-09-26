@@ -190,7 +190,22 @@ def problems_with(directory: Path) -> list[str]:
 
     if notebook.is_file():
         expected = claim.get("evidence", {}).get("notebook_sha256")
-        if expected not in notebook_digests(notebook.read_bytes()):
+        raw = notebook.read_bytes()
+        if not is_notebook(raw):
+            # Checked BEFORE the fingerprint, because the fingerprint's advice is wrong
+            # here. Measured 2026-09-26 on a real hand-in: the file called
+            # notebook.ipynb was the lesson's text saved as Markdown, uploaded two hours
+            # before `bootcamp submit` ran. The hash message told the student to submit
+            # again and not reopen the notebook, which cannot fix a file that was never
+            # the notebook. Three days passed. Say what the file is, and which one to use.
+            found.append(
+                f"{notebook}: this is not a Jupyter notebook. It looks like the "
+                "notebook's text saved in another format (Markdown or a script). Upload "
+                "the notebook.ipynb that `bootcamp submit` wrote, from the same folder "
+                f"as submission.json (submissions/{owner}/{item}/ on your computer), "
+                "not a copy exported, downloaded or re-saved from another program."
+            )
+        elif expected not in notebook_digests(raw):
             found.append(
                 f"{claim_path}: the notebook changed after you submitted, so it no "
                 "longer matches the score claimed for it. Saving or re-running the "
@@ -289,6 +304,19 @@ def challenge_problems(directory: Path, claim_path: Path, claim: dict) -> list[s
             "Editing either file by hand is the usual cause; re-run `bootcamp submit`"
         )
     return found
+
+
+def is_notebook(raw: bytes) -> bool:
+    """A Jupyter notebook is JSON whose top level carries a `cells` list.
+
+    Nothing here is executed. A file that fails this is not a changed notebook,
+    it is a different file, and the fix for each is different.
+    """
+    try:
+        document = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, ValueError, RecursionError):
+        return False
+    return isinstance(document, dict) and isinstance(document.get("cells"), list)
 
 
 def notebook_digests(raw: bytes) -> set[str]:
