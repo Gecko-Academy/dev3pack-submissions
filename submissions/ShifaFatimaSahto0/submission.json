@@ -1,0 +1,39 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch02",
+  "student": {
+    "github": "ShifaFatimaSahto0"
+  },
+  "submitted_at": "2026-09-27T17:01:58Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch02-e1",
+      "ch02-e2",
+      "ch02-e3",
+      "ch02-e4"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 400,
+    "max_score": 400
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.7",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "77b59823317bfed5e3cd5382371f8583a6752bfe9b58468de17bcb21d2ce311f"
+  },
+  "verified": null,
+  "submission_id": "sub_0f2396d255f85787e088a506"
+}
