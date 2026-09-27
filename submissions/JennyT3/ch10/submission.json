@@ -1,16 +1,16 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch05",
+  "chapter": "ch10",
   "student": {
     "github": "JennyT3"
   },
-  "submitted_at": "2026-09-25T16:13:51Z",
+  "submitted_at": "2026-09-25T18:29:42Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch05-e1",
-      "ch05-e2"
+      "ch10-e1",
+      "ch10-e2"
     ],
     "failed": [],
     "not_reached": [],
@@ -18,7 +18,7 @@
     "score": 200,
     "max_score": 200
   },
-  "note": "",
+  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
   "help": {
     "hinted": 0,
     "revealed": 0,
@@ -30,8 +30,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "cdd9ffca650f8224991e6aa4996b4549d8e1ef8a4f82804bae3eca639a9019a7"
+    "notebook_sha256": "390002ce247608580bfc4ae127e1fd72f03f38f8e7a3eabdc21e738bae140f82"
   },
   "verified": null,
-  "submission_id": "sub_d6ebd64731a1d73b778ee40a"
+  "submission_id": "sub_0ecafff0367a6604e035c4fc"
 }

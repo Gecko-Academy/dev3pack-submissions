@@ -1,16 +1,16 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch05",
+  "chapter": "ch10",
   "student": {
-    "github": "JennyT3"
+    "github": "thefranceway"
   },
-  "submitted_at": "2026-09-25T16:13:51Z",
+  "submitted_at": "2026-09-25T19:49:02Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch05-e1",
-      "ch05-e2"
+      "ch10-e1",
+      "ch10-e2"
     ],
     "failed": [],
     "not_reached": [],
@@ -18,7 +18,7 @@
     "score": 200,
     "max_score": 200
   },
-  "note": "",
+  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
   "help": {
     "hinted": 0,
     "revealed": 0,
@@ -30,8 +30,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "cdd9ffca650f8224991e6aa4996b4549d8e1ef8a4f82804bae3eca639a9019a7"
+    "notebook_sha256": "fcad4418d8d85a29a1a2b482bd9f8a65f001ecb3dd511d6b28ebadc17192cdb4"
   },
   "verified": null,
-  "submission_id": "sub_d6ebd64731a1d73b778ee40a"
+  "submission_id": "sub_4500cd01f976591c664328b6"
 }
