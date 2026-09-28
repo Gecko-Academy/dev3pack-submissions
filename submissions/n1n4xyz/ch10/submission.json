@@ -1,0 +1,37 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch10",
+  "student": {
+    "github": "n1n4xyz"
+  },
+  "submitted_at": "2026-09-28T17:33:43Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch10-e1",
+      "ch10-e2"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 200,
+    "max_score": 200
+  },
+  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "darwin"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "aada7810afe9284fb68deb8fc1f8c2f28890c7cd370b7f68c5e0a43817e6bdb7"
+  },
+  "verified": null,
+  "submission_id": "sub_b1cc3a222364e19d94336350"
+}
