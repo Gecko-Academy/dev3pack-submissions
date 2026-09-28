@@ -3,9 +3,9 @@
   "cohort": "2026-09",
   "chapter": "ch05",
   "student": {
-    "github": "kb-dev28"
+    "github": "n1n4xyz"
   },
-  "submitted_at": "2026-09-28T17:01:12Z",
+  "submitted_at": "2026-09-28T16:45:46Z",
   "result": {
     "ran": true,
     "passed": [
@@ -26,13 +26,12 @@
   },
   "environment": {
     "python": "3.11.16",
-    "platform": "linux"
+    "platform": "darwin"
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "2fbd5382388bd7e2f6ac3a61fc78d34e8bc404e5700701f336af351684fa0655",
-    "challenge_sha256": "22e78e6b40e65b9816e63ce3713e8f1856363e1e756bd747ddb89344765fc503"
+    "notebook_sha256": "416d14744e25c0844128edfb667f4439c5b381dab0b61edcc51a7c97e2d31e74"
   },
   "verified": null,
-  "submission_id": "sub_3abb986939bab9081f3ca483"
+  "submission_id": "sub_c6bc8836fa70a24915a7f903"
 }
