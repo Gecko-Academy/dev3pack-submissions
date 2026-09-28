@@ -1,0 +1,36 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch01",
+  "student": {
+    "github": "jiyajain23"
+  },
+  "submitted_at": "2026-09-14T17:20:04Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch01-e1"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": false,
+    "score": null,
+    "max_score": null
+  },
+  "note": "assistant-driven, so it cannot be re-run; handed in rather than marked",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.0",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "1e4af4607b01d948e2b109c53bfe4b5fd5267edc0b3f2f1bb574c86c1c61be0f"
+  },
+  "verified": null,
+  "submission_id": "sub_1c1f42b332316970144c0638"
+}

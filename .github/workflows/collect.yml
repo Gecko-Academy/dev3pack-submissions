@@ -19,6 +19,19 @@ on:
   push:
     branches: [main]
     paths: ["submissions/**"]
+  # THE CHECK FINISHING IS THE SIGNAL, and the cron below is only the backstop.
+  # A green pull request used to wait for the schedule, and GitHub does not run a
+  # quiet repository's cron every half hour: on 2026-09-17 the runs came five
+  # hours apart, so six accepted submissions sat unmerged all afternoon.
+  #
+  # WHY THIS MAY HOLD A WRITE TOKEN when `verify.yml` may not. A `workflow_run`
+  # job runs this file as it stands on the default branch, in this repository,
+  # and never checks out the fork -- so no submitted code executes here.
+  # `collect.py` reads the API and merges what has already passed. The job that
+  # DOES run a learner's notebook still holds nothing at all.
+  workflow_run:
+    workflows: ["check submissions"]
+    types: [completed]
   schedule:
     # Every half hour is what this asks for. It is NOT what GitHub delivers on a
     # quiet repository: on 2026-09-11 the scheduled runs were two to five hours
@@ -36,6 +49,9 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  # Only to start `finals.yml` for the finals this run merged. See the step
+  # "Score the finals this run merged" for why a merge cannot start it itself.
+  actions: write
 
 concurrency:
   group: collect
@@ -43,17 +59,28 @@ concurrency:
 
 jobs:
   collect:
+    # ONLY ON THE REAL REPOSITORY. A learner's fork carries this file too, and
+    # with Actions enabled it runs there -- on schedule and on every push --
+    # and a pull request opened from that fork's `main` then drags the bot's
+    # commits along. Pull request 125 was exactly that.
+    if: github.repository == 'Gecko-Academy/dev3pack-submissions'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
 
+      # Where main stood before this run merged anything: the start of the
+      # range handed to `finals.yml` below.
+      - name: Remember where main started
+        id: start
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Merge what passed, and rebuild the track
         env:
           GH_TOKEN: ${{ github.token }}
-          # A scheduled run and a push always merge. A manual run merges only
-          # when asked, so it can be used to see what WOULD happen.
-          MERGE: ${{ (github.event_name == 'schedule' || github.event_name == 'push') && 'yes' || inputs.merge && 'yes' || '' }}
+          # A scheduled run, a push and a finished check always merge. A manual
+          # run merges only when asked, so it can show what WOULD happen.
+          MERGE: ${{ (github.event_name == 'schedule' || github.event_name == 'push' || github.event_name == 'workflow_run') && 'yes' || inputs.merge && 'yes' || '' }}
         run: |
           if [ -n "$MERGE" ]; then
             python3 scripts/collect.py --merge
@@ -75,10 +102,50 @@ jobs:
             # notification below diffs against to say whose score moved.
             echo "previous=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             git commit -m "track: after the latest merges"
-            git push
+            # finals.yml pushes to main too, unordered with this. A refused push
+            # used to fail the run and leave the track stale until the next one.
+            bash scripts/push_with_retry.sh
             echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             echo "changed=yes" >> "$GITHUB_OUTPUT"
           fi
+
+      # A FINAL MERGED HERE WOULD OTHERWISE NEVER BE SCORED. These merges are
+      # pushes made with `GITHUB_TOKEN`, and GitHub starts no workflow for
+      # those, so the push trigger in `finals.yml` never fires for them. A
+      # `workflow_dispatch` is the one event this token may start. It names the
+      # range these merges covered, and finals scores exactly the answers
+      # files that range added or changed.
+      #
+      # AFTER THE TRACK PUSH, because finals pushes to main too, and two jobs
+      # pushing at once is how one of them is refused as non-fast-forward.
+      #
+      # EVEN IF THE TRACK STEP FAILED. The merges already happened, and a final
+      # that is on main but never scored is found by nobody.
+      - name: Score the finals this run merged
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BEFORE: ${{ steps.start.outputs.sha }}
+        run: |
+          set -euo pipefail
+          # origin/main, not HEAD: a track commit whose push failed exists only
+          # here, and finals could not find it.
+          after="$(git rev-parse origin/main)"
+          if [ "$BEFORE" = "$after" ]; then
+            echo "main did not move; no final to score"
+            exit 0
+          fi
+          # `|| true` on the grep alone, which exits 1 when nothing matches.
+          git diff --name-only --diff-filter=AM "$BEFORE..$after" > merged.txt
+          finals="$(grep -cE '^submissions/[^/]+/final/answers\.json$' merged.txt || true)"
+          if [ "$finals" = "0" ]; then
+            echo "no final among this run's merges"
+            exit 0
+          fi
+          echo "$finals final(s) merged; starting finals.yml for $BEFORE..$after"
+          gh workflow run finals.yml --repo "$REPO" --ref main \
+            -f before="$BEFORE" -f after="$after"
 
       # AFTER THE PUSH, NEVER BEFORE. The body names a commit and a raw URL
       # built from it, so announcing an unpushed commit gives the subscriber a
