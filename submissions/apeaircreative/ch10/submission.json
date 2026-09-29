@@ -1,16 +1,16 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch05",
+  "chapter": "ch10",
   "student": {
-    "github": "kb-dev28"
+    "github": "apeaircreative"
   },
-  "submitted_at": "2026-09-28T17:01:12Z",
+  "submitted_at": "2026-09-28T19:28:29Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch05-e1",
-      "ch05-e2"
+      "ch10-e1",
+      "ch10-e2"
     ],
     "failed": [],
     "not_reached": [],
@@ -18,7 +18,7 @@
     "score": 200,
     "max_score": 200
   },
-  "note": "",
+  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
   "help": {
     "hinted": 0,
     "revealed": 0,
@@ -30,9 +30,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "2fbd5382388bd7e2f6ac3a61fc78d34e8bc404e5700701f336af351684fa0655",
-    "challenge_sha256": "22e78e6b40e65b9816e63ce3713e8f1856363e1e756bd747ddb89344765fc503"
+    "notebook_sha256": "3815ffb7df7e3ed003203c99cba182a13432efb01b016a4748d036e6df9dcd4b"
   },
   "verified": null,
-  "submission_id": "sub_3abb986939bab9081f3ca483"
+  "submission_id": "sub_b04734851979fa75fefa68ed"
 }
