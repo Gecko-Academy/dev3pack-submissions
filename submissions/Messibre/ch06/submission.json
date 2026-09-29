@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch06",
+  "student": {
+    "github": "Messibre"
+  },
+  "submitted_at": "2026-09-21T17:10:34Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch06-e2",
+      "ch06-e3",
+      "ch06-e1"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "f2a86aef12768fe612c0b0fa04a5b7716bdd2bf6b983f911a43ee3498b1d2934"
+  },
+  "verified": null,
+  "submission_id": "sub_57b7ae1c8468af6218b19ab7"
+}

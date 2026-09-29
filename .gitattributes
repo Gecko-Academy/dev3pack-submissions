@@ -1,0 +1,6 @@
+# Submissions are byte-exact evidence: `submission.json` records the SHA-256 of the
+# notebook beside it. Git's line-ending conversion (`core.autocrlf` on Windows)
+# rewrites CRLF to LF on commit, which changes the bytes without changing a
+# character -- and made an honest Windows submission fail as though it had been
+# edited. `-text` tells git to leave these files exactly as written.
+submissions/** -text

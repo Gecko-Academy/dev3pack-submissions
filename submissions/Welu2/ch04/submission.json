@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch04",
+  "student": {
+    "github": "Welu2"
+  },
+  "submitted_at": "2026-09-18T06:37:28Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch04-e1",
+      "ch04-e2",
+      "ch04-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "linux"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "7922f05951187717ee6227eddf73181ad9ed1963cd4422232697216815f96f17"
+  },
+  "verified": null,
+  "submission_id": "sub_92e51fff2391bea45b679a0e"
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch05",
+  "student": {
+    "github": "arr4-y"
+  },
+  "submitted_at": "2026-09-21T03:44:05Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch05-e1",
+      "ch05-e2"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 200,
+    "max_score": 200
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "1632c98bbe67733e410c90c5f8aeb9e5216300a27f1895858d9122074ab10423"
+  },
+  "verified": null,
+  "submission_id": "sub_9b3f1ff0705c73bb88b34aba"
+}
