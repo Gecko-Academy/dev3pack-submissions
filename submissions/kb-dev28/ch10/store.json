@@ -1,0 +1,25 @@
+{
+  "store": "kb-dev28-coffee",
+  "authority": "FaYWqJXHgTVJuJJhworKDqgg1MR4TFC92MxrcwYgTtJd",
+  "telegram_channel_id": "@kb_dev28_coffee",
+  "items": [
+    {
+      "name": "Espresso",
+      "price_lamports": 1000000,
+      "decimals": 6,
+      "mint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU"
+    },
+    {
+      "name": "Croissant",
+      "price_lamports": 2500000,
+      "decimals": 6,
+      "mint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU"
+    },
+    {
+      "name": "Cold brew",
+      "price_lamports": 3000000,
+      "decimals": 6,
+      "mint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU"
+    }
+  ]
+}
