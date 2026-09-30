@@ -1,22 +1,23 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch05",
+  "chapter": "ch07",
   "student": {
-    "github": "SaulChoque"
+    "github": "kb-dev28"
   },
-  "submitted_at": "2026-09-29T18:56:12Z",
+  "submitted_at": "2026-09-29T17:14:54Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch05-e1",
-      "ch05-e2"
+      "ch07-e1",
+      "ch07-e2",
+      "ch07-e3"
     ],
     "failed": [],
     "not_reached": [],
     "scored": true,
-    "score": 200,
-    "max_score": 200
+    "score": 300,
+    "max_score": 300
   },
   "note": "",
   "help": {
@@ -30,8 +31,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "5810c65ca064e8de9ca91959fea81cbd36273bac6858f9ca2fee7bd8b812ced2"
+    "notebook_sha256": "47a057d06a448d50650574d3e339e74d465caa6a27c61b401e99d76d43b28fb7"
   },
   "verified": null,
-  "submission_id": "sub_c80943b451537fac10b9e149"
+  "submission_id": "sub_9cbde3b1dfd1ae1a88a386c1"
 }

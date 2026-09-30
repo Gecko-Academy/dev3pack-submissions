@@ -1,16 +1,16 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch05",
+  "chapter": "ch10",
   "student": {
-    "github": "SaulChoque"
+    "github": "SofiaSol10"
   },
-  "submitted_at": "2026-09-29T18:56:12Z",
+  "submitted_at": "2026-09-29T23:29:40Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch05-e1",
-      "ch05-e2"
+      "ch10-e1",
+      "ch10-e2"
     ],
     "failed": [],
     "not_reached": [],
@@ -18,7 +18,7 @@
     "score": 200,
     "max_score": 200
   },
-  "note": "",
+  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
   "help": {
     "hinted": 0,
     "revealed": 0,
@@ -26,12 +26,12 @@
   },
   "environment": {
     "python": "3.11.16",
-    "platform": "linux"
+    "platform": "windows"
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "5810c65ca064e8de9ca91959fea81cbd36273bac6858f9ca2fee7bd8b812ced2"
+    "notebook_sha256": "a3fe2bd56be395827bb05d69e91de69c768f9f4dcdf6c0f02d658148e6974e1d"
   },
   "verified": null,
-  "submission_id": "sub_c80943b451537fac10b9e149"
+  "submission_id": "sub_78604bfd0b1eb43edb16e1e1"
 }
