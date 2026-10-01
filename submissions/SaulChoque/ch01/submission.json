@@ -1,0 +1,36 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch01",
+  "student": {
+    "github": "SaulChoque"
+  },
+  "submitted_at": "2026-09-28T01:33:09Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch01-e1"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 100,
+    "max_score": 100
+  },
+  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "linux"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "da18be22b776dedfaa055f17379d6cd0f4284c35c0a966c0c77bbed1ab80acdc"
+  },
+  "verified": null,
+  "submission_id": "sub_85d159d87501de66f27fdbd1"
+}

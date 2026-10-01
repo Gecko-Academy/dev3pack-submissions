@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch07",
+  "student": {
+    "github": "lovelymahor"
+  },
+  "submitted_at": "2026-09-24T13:13:10Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch07-e1",
+      "ch07-e2",
+      "ch07-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "d7fc119ced1379c6733cf5dd04cf25c5650cb71122d276673c42e70b49dabf56"
+  },
+  "verified": null,
+  "submission_id": "sub_52dd5b8eb4d5e51963ea5af5"
+}

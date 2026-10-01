@@ -1,0 +1,37 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch05",
+  "student": {
+    "github": "apeaircreative"
+  },
+  "submitted_at": "2026-09-24T02:00:22Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch05-e1",
+      "ch05-e2"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 200,
+    "max_score": 200
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "linux"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "013f260dd3345ecde80a6d4eac6b22e984ec74406d193d69f22ffaf92e939014"
+  },
+  "verified": null,
+  "submission_id": "sub_ed18fd430dc144da8611fa00"
+}

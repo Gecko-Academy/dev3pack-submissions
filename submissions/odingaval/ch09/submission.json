@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch09",
+  "student": {
+    "github": "odingaval"
+  },
+  "submitted_at": "2026-09-30T16:37:53Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch09-e1"
+    ],
+    "failed": [
+      "ch09-e2"
+    ],
+    "not_reached": [],
+    "scored": true,
+    "score": 100,
+    "max_score": 200
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "linux"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "db3bb82ab432321e19ca68149af158181e9b31e57924b31bc00b73fd3e1f44dc"
+  },
+  "verified": null,
+  "submission_id": "sub_1e9b3f1b6c8051d1d0fdf83f"
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch11",
+  "student": {
+    "github": "karolrojas07"
+  },
+  "submitted_at": "2026-09-29T00:46:26Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch11-e1",
+      "ch11-e2",
+      "ch11-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.9",
+    "platform": "darwin"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "a79a7abd7301e57e60715e733d1d08e92fe92cffe5c3b3d6e74f819d37ebbbb5"
+  },
+  "verified": null,
+  "submission_id": "sub_c9a601a256c78cac000c56e4"
+}

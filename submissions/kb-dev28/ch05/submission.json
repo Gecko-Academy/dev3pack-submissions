@@ -5,7 +5,7 @@
   "student": {
     "github": "kb-dev28"
   },
-  "submitted_at": "2026-09-20T11:23:14Z",
+  "submitted_at": "2026-09-28T17:01:12Z",
   "result": {
     "ran": true,
     "passed": [
@@ -30,8 +30,9 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "d00b7d599e07f92a4bd6022a828662e946ef8307c370e442eb24b3dfdd2cc1d7"
+    "notebook_sha256": "2fbd5382388bd7e2f6ac3a61fc78d34e8bc404e5700701f336af351684fa0655",
+    "challenge_sha256": "22e78e6b40e65b9816e63ce3713e8f1856363e1e756bd747ddb89344765fc503"
   },
   "verified": null,
-  "submission_id": "sub_0c231d272d199437dda3e1c7"
+  "submission_id": "sub_3abb986939bab9081f3ca483"
 }

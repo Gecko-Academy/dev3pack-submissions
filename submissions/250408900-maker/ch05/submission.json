@@ -5,7 +5,7 @@
   "student": {
     "github": "250408900-maker"
   },
-  "submitted_at": "2026-09-19T12:53:18Z",
+  "submitted_at": "2026-09-23T06:42:24Z",
   "result": {
     "ran": true,
     "passed": [
@@ -30,8 +30,9 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "0aeaa99e8c01eaa9e981440661d91638f5057e677575231395031c0752fae907"
+    "notebook_sha256": "94f67a24b765d4ee1a7615f0546de77db80a11cd32e5176d4a5931777911d765",
+    "challenge_sha256": "42cae50bfa6ac9f60621e303dec3ba1a34d3fc6b81a40a6671dcad91804b4ad4"
   },
   "verified": null,
-  "submission_id": "sub_8a436c5f64d7c42944c3d958"
+  "submission_id": "sub_f8a318b95ff82bdac5889ae9"
 }

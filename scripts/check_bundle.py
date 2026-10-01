@@ -25,6 +25,9 @@ import re
 import sys
 from pathlib import Path
 
+# Run as `python3 scripts/check_bundle.py`, so its own directory is on the path.
+from check_final import FINAL, final_problems
+
 #: Must match `bootcamp_agent.submission.SCHEMA` in the course repository.
 SCHEMA = "dev3pack.submission.v2"
 
@@ -37,16 +40,32 @@ REVEAL_COST = 70
 
 ITEM = re.compile(r"^(?:ch|w|cap)\d{2}$")
 
-#: A bundle is exactly two files, and this refuses anything else rather than
+#: A bundle is exactly these two files (plus CHALLENGE_NOTEBOOK and STORE_FILE,
+#: below, each in named items only), and this refuses anything else rather than
 #: ignoring it: a check that silently skips what it does not understand is how a
 #: payload rides along beside an honest claim.
 ALLOWED_FILES = {"submission.json", "notebook.ipynb"}
+
+#: The one optional third file: the weekly challenge's demo notebook (demo 08
+#: for ch05, demo 10 for ch10), attached by `bootcamp submit` so the points the
+#: learner earned outside the homework notebook are handed in with it. Only
+#: those two items may carry it; anywhere else it is refused like any stranger.
+CHALLENGE_NOTEBOOK = "challenge.ipynb"
+CHALLENGE_ITEMS = frozenset({"ch05", "ch10"})
+
+#: The one optional fourth file: the student's store, for seeding the course
+#: fork. Session 10 is where it is written, so only ch10 may carry it. Must match
+#: `bootcamp_agent.submission.STORE_FILE` and `weekly.carry_store` in the course.
+STORE_FILE = "store.json"
+STORE_ITEMS = frozenset({"ch10"})
 
 #: Ceilings, not targets. A claim is a few hundred bytes and a teaching notebook
 #: is well under a megabyte. At 250 learners handing in 28 items each, an
 #: unbounded notebook is also how a repository becomes unclonable.
 MAX_CLAIM_BYTES = 64 * 1024
 MAX_NOTEBOOK_BYTES = 8 * 1024 * 1024
+#: A store is a few hundred bytes. Must match `weekly.carry_store.MAX_STORE_BYTES`.
+MAX_STORE_BYTES = 64 * 1024
 
 
 def submission_id_for(claim: dict) -> str:
@@ -64,6 +83,11 @@ def submission_id_for(claim: dict) -> str:
 
 def problems_with(directory: Path) -> list[str]:
     """Everything wrong with this bundle. Empty means it is well-formed."""
+    # A final is answers, not a notebook and a claim, so it has its own rules.
+    # Routed on the FOLDER, which `verify.yml` has already tied to the pull
+    # request's author; no homework item can be called `final` (see ITEM).
+    if directory.name == FINAL:
+        return final_problems(directory)
     found: list[str] = []
     claim_path = directory / "submission.json"
     notebook = directory / "notebook.ipynb"
@@ -73,12 +97,31 @@ def problems_with(directory: Path) -> list[str]:
     if not notebook.is_file():
         found.append(f"{directory}: no notebook.ipynb beside the claim")
 
+    challenge = directory / CHALLENGE_NOTEBOOK
     for entry in sorted(directory.iterdir()):
-        if entry.name not in ALLOWED_FILES:
+        if entry.name == CHALLENGE_NOTEBOOK and directory.name not in CHALLENGE_ITEMS:
+            found.append(
+                f"{directory}: {CHALLENGE_NOTEBOOK} is only accepted in "
+                f"{' and '.join(sorted(CHALLENGE_ITEMS))} bundles, not {directory.name}"
+            )
+        elif entry.name == STORE_FILE and directory.name not in STORE_ITEMS:
+            found.append(
+                f"{directory}: {STORE_FILE} is only accepted in "
+                f"{' and '.join(sorted(STORE_ITEMS))} bundles, not {directory.name}"
+            )
+        elif entry.name not in ALLOWED_FILES and entry.name not in (
+            CHALLENGE_NOTEBOOK,
+            STORE_FILE,
+        ):
             found.append(f"{directory}: unexpected file in the bundle: {entry.name}")
         elif entry.is_symlink() or not entry.is_file():
             found.append(f"{directory}: {entry.name} must be a regular file")
-    for name, cap in ((claim_path.name, MAX_CLAIM_BYTES), (notebook.name, MAX_NOTEBOOK_BYTES)):
+    for name, cap in (
+        (claim_path.name, MAX_CLAIM_BYTES),
+        (notebook.name, MAX_NOTEBOOK_BYTES),
+        (challenge.name, MAX_NOTEBOOK_BYTES),
+        (STORE_FILE, MAX_STORE_BYTES),
+    ):
         path = directory / name
         if path.is_file() and path.stat().st_size > cap:
             size = path.stat().st_size
@@ -147,13 +190,133 @@ def problems_with(directory: Path) -> list[str]:
 
     if notebook.is_file():
         expected = claim.get("evidence", {}).get("notebook_sha256")
-        if expected not in notebook_digests(notebook.read_bytes()):
+        raw = notebook.read_bytes()
+        if not is_notebook(raw):
+            # Checked BEFORE the fingerprint, because the fingerprint's advice is wrong
+            # here. Measured 2026-09-26 on a real hand-in: the file called
+            # notebook.ipynb was the lesson's text saved as Markdown, uploaded two hours
+            # before `bootcamp submit` ran. The hash message told the student to submit
+            # again and not reopen the notebook, which cannot fix a file that was never
+            # the notebook. Three days passed. Say what the file is, and which one to use.
             found.append(
-                f"{claim_path}: the notebook is not the one this score was claimed for. "
-                "Hand-editing submission.json is the usual cause; re-run `bootcamp submit`"
+                f"{notebook}: this is not a Jupyter notebook. It looks like the "
+                "notebook's text saved in another format (Markdown or a script). Upload "
+                "the notebook.ipynb that `bootcamp submit` wrote, from the same folder "
+                f"as submission.json (submissions/{owner}/{item}/ on your computer), "
+                "not a copy exported, downloaded or re-saved from another program."
+            )
+        elif expected not in notebook_digests(raw):
+            found.append(
+                f"{claim_path}: the notebook changed after you submitted, so it no "
+                "longer matches the score claimed for it. Saving or re-running the "
+                "notebook is enough to do this, and it is the usual cause. Fix: run "
+                "`bootcamp submit` again and do not open the notebook afterwards. "
+                "(The same check would catch a hand-edited submission.json.)"
             )
 
+    found += challenge_problems(directory, claim_path, claim)
+    found += store_problems(directory, claim_path, claim)
     return found
+
+
+def store_problems(directory: Path, claim_path: Path, claim: dict) -> list[str]:
+    """The optional store, bound to the claim the way the challenge notebook is.
+
+    Absent is valid: a student who has not finished the store still hands in.
+    Present, it must parse as a JSON object (it is read, never executed) and
+    match `evidence.store_sha256`, so the store the instructor seeds is the one
+    this claim was submitted with. Placement, symlinks and size are reported by
+    `problems_with`; this only reads a file those rules have already let through.
+    """
+    path = directory / STORE_FILE
+    evidence = claim.get("evidence")
+    expected = evidence.get("store_sha256") if isinstance(evidence, dict) else None
+    if not (path.exists() or path.is_symlink()):
+        if expected is not None:
+            return [
+                f"{claim_path}: the claim records a {STORE_FILE} but the bundle has none. "
+                "Re-run `bootcamp submit`"
+            ]
+        return []
+    if (
+        directory.name not in STORE_ITEMS
+        or path.is_symlink()
+        or not path.is_file()
+        or path.stat().st_size > MAX_STORE_BYTES
+    ):
+        return []
+    raw = path.read_bytes()
+    found: list[str] = []
+    try:
+        document = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, ValueError, RecursionError):
+        document = None
+    if not isinstance(document, dict):
+        found.append(f"{path}: not a store (a JSON object)")
+    if expected not in notebook_digests(raw):
+        found.append(
+            f"{claim_path}: {STORE_FILE} is not the one this bundle was submitted with. "
+            "Editing either file by hand is the usual cause; re-run `bootcamp submit`"
+        )
+    return found
+
+
+def challenge_problems(directory: Path, claim_path: Path, claim: dict) -> list[str]:
+    """The optional challenge notebook, bound to the claim the way `notebook.ipynb` is.
+
+    Absent is valid. Present, it must be a notebook (JSON with a `cells` list;
+    nothing is executed) and match `evidence.challenge_sha256`, so the printed
+    challenge line the leaderboard reads cannot be edited in after `bootcamp
+    submit`. A claim that records a digest with no file beside it is refused
+    too: the claim would describe a bundle that is not the one handed in.
+
+    Placement, symlinks and size are reported by `problems_with`; this only
+    reads a file those rules have already let through.
+    """
+    path = directory / CHALLENGE_NOTEBOOK
+    evidence = claim.get("evidence")
+    expected = evidence.get("challenge_sha256") if isinstance(evidence, dict) else None
+    if not (path.exists() or path.is_symlink()):
+        if expected is not None:
+            return [
+                f"{claim_path}: the claim records a {CHALLENGE_NOTEBOOK} but the bundle has none. "
+                "Re-run `bootcamp submit`"
+            ]
+        return []
+    if (
+        directory.name not in CHALLENGE_ITEMS
+        or path.is_symlink()
+        or not path.is_file()
+        or path.stat().st_size > MAX_NOTEBOOK_BYTES
+    ):
+        return []
+    raw = path.read_bytes()
+    found: list[str] = []
+    try:
+        document = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, ValueError, RecursionError):
+        document = None
+    if not (isinstance(document, dict) and isinstance(document.get("cells"), list)):
+        found.append(f"{path}: not a notebook (JSON with a `cells` list)")
+    if expected not in notebook_digests(raw):
+        found.append(
+            f"{claim_path}: {CHALLENGE_NOTEBOOK} is not the one this bundle was submitted with. "
+            "Editing either file by hand is the usual cause; re-run `bootcamp submit`"
+        )
+    return found
+
+
+def is_notebook(raw: bytes) -> bool:
+    """A Jupyter notebook is JSON whose top level carries a `cells` list.
+
+    Nothing here is executed. A file that fails this is not a changed notebook,
+    it is a different file, and the fix for each is different.
+    """
+    try:
+        document = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, ValueError, RecursionError):
+        return False
+    return isinstance(document, dict) and isinstance(document.get("cells"), list)
 
 
 def notebook_digests(raw: bytes) -> set[str]:
