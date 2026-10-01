@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch13",
+  "student": {
+    "github": "Insia-8"
+  },
+  "submitted_at": "2026-10-01T19:31:38Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch13-e4",
+      "ch13-e2",
+      "ch13-e1"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "7067734f2fd2748cc4f0dc928a39a503cbae789c9b2d5854e407bc083575c651"
+  },
+  "verified": null,
+  "submission_id": "sub_709ca69172cad725b1a9abc6"
+}
