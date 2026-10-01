@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch03",
+  "student": {
+    "github": "semegn19"
+  },
+  "submitted_at": "2026-10-01T13:26:20Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch03-e1",
+      "ch03-e2",
+      "ch03-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.9",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "70bd0aa05bb9559a3700eed6fce73042e209b02f2e781e9d6592f82c37e41ad7"
+  },
+  "verified": null,
+  "submission_id": "sub_b9c049d5bac3cba4504a5404"
+}
