@@ -1,0 +1,118 @@
+{
+  "cohort": "2026-09",
+  "course_release": "85ad371e3e6354fc18edb4522b1fd66ac6223f62",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "A citation the retriever never returned is a fabrication and should be stripped and flagged.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "The first diagnostic question is: did the right passage reach the prompt? If retrieval missed it, fix chunking, the index, or the query instead. If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "Designing the refusal path first ensures that the loop can correctly handle cases where there is no relevant information before incurring the cost of a model call. This prevents wasteful spending and allows for proper human review.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "The four parts of one iteration of an agent loop are: Perceive, Decide, Act, Observe. The application owns three of these steps: Act, Observe, and a part of Decide (validating the chosen tool's arguments).",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "The autonomy spectrum starts at a deterministic chain, which has no decisions, and increases towards tool-using loops, reflection loops, and multi-agent systems. Each step up in autonomy adds latency, cost, and potential failure modes. The professional habit is to start at the bottom of the spectrum and only move up when a measured failure justifies it, preferring a fixed pipeline workflow when possible.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace turns a failing case into a diagnosis by identifying the specific issue: retrieval, tool selection, instruction-following, or formatting. Once classified, the biggest issue is addressed first, and a regression case is added to ensure the same failure does not reoccur unnoticed.",
+      "citations": [
+        "evaluation-basics",
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "Code-based checks are preferable when the property being evaluated is mechanical, such as verifying if a citation is expected, if something can be parsed, or if it stays within a given budget. Before trusting a model as a judge, especially for fuzzy properties like tone or coherence, it is essential to inspect its false positives to ensure it is not passing everything.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-09": {
+      "answer": "When connecting to an MCP server you did not write, practical rules include: prefer read-only servers while learning; never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace records what the system actually did: what was retrieved, which tools were called with which arguments, what the model returned.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "In a RAG assistant, prompt injection can enter through the corpus itself, where documents edited to include instructions will have those instructions placed, verbatim, into the model's context at answer time.",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "I do not know.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I do not know",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "The context does not discuss fine-tuning a model on your own data. Therefore, I do not know.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    }
+  }
+}
