@@ -1,8 +1,8 @@
 {
   "kind": "final",
   "github": "ernanibmurtinho",
-  "repo": "https://github.com/ernanibmurtinho/dev3pack-final-demo",
-  "commit": "d4e837e01dff1320f13574df8f677e053229a636",
+  "repo": "https://github.com/ernanibmurtinho/dev3pack-final-walkthrough",
+  "commit": "ba10de172a2e7c574514168ff831f5429308a7a6",
   "agent": "agent.py:YourAgent",
-  "submitted_at": "2026-10-01T04:41:10Z"
+  "submitted_at": "2026-10-01T05:29:57Z"
 }
