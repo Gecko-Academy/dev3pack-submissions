@@ -4,46 +4,60 @@
   "question_set_id": "private-2026-09-a",
   "answers": {
     "pf-01": {
-      "answer": "I don't know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "A citation the retriever never returned is a fabrication and should be stripped and flagged.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-02": {
-      "answer": "I don't know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "First diagnostic question: did the right passage reach the prompt? If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context. If retrieval missed it, fix chunking, the index, or the query instead.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-03": {
-      "answer": "I don't know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "A loop that cannot refuse will fabricate. When retrieval returns nothing relevant, the correct behavior is to say so before spending a model call and flag the answer for human review. The refusal path should be designed first because it is the path every other safeguard falls back to.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-04": {
-      "answer": "I don't know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "The four parts are Perceive, Decide, Act, and Observe. The application owns Perceive, Act, and Observe; only Decide belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-05": {
-      "answer": "I don't know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "The autonomy spectrum ranges from a deterministic chain (no decisions) to a tool-using loop (the model picks tools), a reflection loop (the model critiques its own draft), and multi-agent systems (models delegate to models). The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
     },
     "pf-06": {
-      "answer": "I don't know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "When a case fails, the trace answers the diagnostic question \u2014 was it retrieval, tool selection, instruction-following, or formatting? \u2014 in minutes. Classify each failure into one of those buckets, fix the biggest bucket first, and add a regression case so the same failure cannot return unnoticed.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
     },
     "pf-07": {
-      "answer": "I don't know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "Prefer code-based checks when the property is mechanical \u2014 e.g., did it cite the expected source, did it parse, did it stay under the tool budget \u2014 because they are fast, free, and deterministic. Before trusting an LLM-as-judge, inspect its false positives and spot-check it against human labels, since it inherits the judge's own biases and a common failure is an evaluator that passes everything.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
     },
     "pf-08": {
       "answer": "I don't know based on the provided corpus.",
