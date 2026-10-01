@@ -1,0 +1,36 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch14",
+  "student": {
+    "github": "debbyelsie"
+  },
+  "submitted_at": "2026-10-01T20:03:11Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch14-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 100,
+    "max_score": 100
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "a030297f476657e101821dedca5cc61a14ce099b52e33bbcb0f5896a71ceaaac"
+  },
+  "verified": null,
+  "submission_id": "sub_d0a4ea06902acc90a508ee65"
+}
