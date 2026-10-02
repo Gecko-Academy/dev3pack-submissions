@@ -6118,7 +6118,7 @@
     {
       "github": "nizalia0206",
       "item": "ch11",
-      "submitted_at": "2026-09-30T15:48:35Z",
+      "submitted_at": "2026-09-30T16:20:24Z",
       "ran": true,
       "passed": [
         "ch11-e1",
@@ -6135,12 +6135,29 @@
     {
       "github": "nizalia0206",
       "item": "ch12",
-      "submitted_at": "2026-09-30T16:00:37Z",
+      "submitted_at": "2026-09-30T16:20:35Z",
       "ran": true,
       "passed": [
         "ch12-e2",
         "ch12-e1",
         "ch12-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "nizalia0206",
+      "item": "ch13",
+      "submitted_at": "2026-10-02T09:47:01Z",
+      "ran": true,
+      "passed": [
+        "ch13-e4",
+        "ch13-e2",
+        "ch13-e1"
       ],
       "failed": [],
       "not_reached": [],
