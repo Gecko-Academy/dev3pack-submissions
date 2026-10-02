@@ -1,24 +1,23 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch10",
+  "chapter": "ch14",
   "student": {
     "github": "JuliaGastellu"
   },
-  "submitted_at": "2026-10-02T12:43:11Z",
+  "submitted_at": "2026-10-02T12:43:30Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch10-e1",
-      "ch10-e2"
+      "ch14-e3"
     ],
     "failed": [],
     "not_reached": [],
     "scored": true,
-    "score": 200,
-    "max_score": 200
+    "score": 100,
+    "max_score": 100
   },
-  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
+  "note": "",
   "help": {
     "hinted": 0,
     "revealed": 0,
@@ -30,8 +29,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "51496631227514f7d52639da72a869fa492445d68970671356c1d1c0bcaa2724"
+    "notebook_sha256": "227fbc1541f4959f0c589ecb0f698831d65ca7aef21f1b7aa26fa5cd56759592"
   },
   "verified": null,
-  "submission_id": "sub_f0322f15a5594ed1d7cd9875"
+  "submission_id": "sub_c2db50f943f28c55c626f806"
 }
