@@ -5951,6 +5951,25 @@
     },
     {
       "github": "nizalia0206",
+      "item": "cap01",
+      "submitted_at": "2026-10-02T09:57:37Z",
+      "ran": true,
+      "passed": [
+        "cap01-e1",
+        "cap01-e2",
+        "cap01-e3",
+        "cap01-e4",
+        "cap01-e5"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 500,
+      "max_score": 500,
+      "tier": "claimed"
+    },
+    {
+      "github": "nizalia0206",
       "item": "ch01",
       "submitted_at": "2026-09-15T11:05:39Z",
       "ran": true,
