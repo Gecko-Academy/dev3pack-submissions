@@ -1,22 +1,23 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch05",
+  "chapter": "ch08",
   "student": {
-    "github": "bahatijacklee"
+    "github": "debbyelsie"
   },
-  "submitted_at": "2026-10-01T09:43:28Z",
+  "submitted_at": "2026-09-30T20:32:24Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch05-e1",
-      "ch05-e2"
+      "ch08-e1",
+      "ch08-e2",
+      "ch08-e3"
     ],
     "failed": [],
     "not_reached": [],
     "scored": true,
-    "score": 200,
-    "max_score": 200
+    "score": 300,
+    "max_score": 300
   },
   "note": "",
   "help": {
@@ -25,13 +26,13 @@
     "cost": 0
   },
   "environment": {
-    "python": "3.11.16",
-    "platform": "linux"
+    "python": "3.11.15",
+    "platform": "windows"
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "20cafe49f0d888eee01e4860f1206d6b9d7f953e9eed3c73af45564862e5ad79"
+    "notebook_sha256": "6b8a759caaea043c1067b604ac937ccab16677353f9ae45a8e919d903d73a092"
   },
   "verified": null,
-  "submission_id": "sub_bb56d2b880206d253d29ba19"
+  "submission_id": "sub_132ead9a9713d2b3ab7861e6"
 }
