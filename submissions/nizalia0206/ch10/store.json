@@ -1,0 +1,25 @@
+{
+  "store": "nizalia0206-coffee",
+  "authority": "AN6mBYgDQpxahvyTSEY243nEsJUaGHEGS5ZpQJcsBZVM",
+  "telegram_channel_id": "@SyedaNizalia",
+  "items": [
+    {
+      "name": "Espresso",
+      "price_lamports": 1000000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "name": "Latte",
+      "price_lamports": 1500000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "name": "Cappuccino",
+      "price_lamports": 1300000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    }
+  ]
+}
