@@ -8483,5 +8483,52 @@
       "tier": "unverifiable"
     }
   ],
-  "problems": []
+  "problems": [],
+  "finish_line": [
+    {
+      "github": "Abduovv",
+      "gecko": null,
+      "final": {
+        "percent": 80,
+        "passed": true,
+        "certificate_eligible": true
+      }
+    },
+    {
+      "github": "ernanibmurtinho",
+      "gecko": null,
+      "final": {
+        "percent": 53,
+        "passed": false,
+        "certificate_eligible": false
+      }
+    },
+    {
+      "github": "licette32",
+      "gecko": null,
+      "final": {
+        "percent": 100,
+        "passed": true,
+        "certificate_eligible": true
+      }
+    },
+    {
+      "github": "Mialy333",
+      "gecko": null,
+      "final": {
+        "percent": 100,
+        "passed": true,
+        "certificate_eligible": true
+      }
+    },
+    {
+      "github": "MihaelaCatan04",
+      "gecko": null,
+      "final": {
+        "percent": 93,
+        "passed": true,
+        "certificate_eligible": true
+      }
+    }
+  ]
 }

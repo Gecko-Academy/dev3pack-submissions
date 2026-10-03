@@ -128,3 +128,17 @@ Handed in as a record of the work, never marked.
 | thefranceway | 0/12 |
 | valeepg | 0/12 |
 | viviancreates | 0/12 |
+
+## Finish line
+
+The two deliverables due on 5 October: the Gecko capstone (a link to your
+own `my-gecko-buyer`, at the commit you handed in) and the final submission
+(scored on the private questions). An empty cell means not handed in yet.
+
+| Student | Gecko capstone | Final | Certificate |
+|---|---|---|---|
+| Abduovv |  | 80% | eligible |
+| ernanibmurtinho |  | 53% | not yet |
+| licette32 |  | 100% | eligible |
+| Mialy333 |  | 100% | eligible |
+| MihaelaCatan04 |  | 93% | eligible |
