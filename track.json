@@ -1920,6 +1920,25 @@
     },
     {
       "github": "Mialy333",
+      "item": "cap01",
+      "submitted_at": "2026-10-02T16:32:36Z",
+      "ran": true,
+      "passed": [
+        "cap01-e1",
+        "cap01-e2",
+        "cap01-e3",
+        "cap01-e4",
+        "cap01-e5"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 500,
+      "max_score": 500,
+      "tier": "claimed"
+    },
+    {
+      "github": "Mialy333",
       "item": "ch01",
       "submitted_at": "2026-09-25T16:29:10Z",
       "ran": true,
@@ -2033,6 +2052,39 @@
       "scored": true,
       "score": 300,
       "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "MominaSafdarr",
+      "item": "ch04",
+      "submitted_at": "2026-10-02T16:07:12Z",
+      "ran": true,
+      "passed": [
+        "ch04-e1",
+        "ch04-e2",
+        "ch04-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "MominaSafdarr",
+      "item": "ch05",
+      "submitted_at": "2026-10-02T16:26:52Z",
+      "ran": true,
+      "passed": [
+        "ch05-e1",
+        "ch05-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 400,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -6321,7 +6373,7 @@
     {
       "github": "nizalia0206",
       "item": "ch05",
-      "submitted_at": "2026-09-20T17:05:45Z",
+      "submitted_at": "2026-10-02T16:54:16Z",
       "ran": true,
       "passed": [
         "ch05-e1",
@@ -6330,7 +6382,7 @@
       "failed": [],
       "not_reached": [],
       "scored": true,
-      "score": 200,
+      "score": 700,
       "max_score": 700,
       "tier": "claimed"
     },
@@ -7197,6 +7249,23 @@
       "scored": true,
       "score": 200,
       "max_score": 700,
+      "tier": "claimed"
+    },
+    {
+      "github": "sandyreyna",
+      "item": "ch06",
+      "submitted_at": "2026-09-26T07:35:40Z",
+      "ran": true,
+      "passed": [
+        "ch06-e2",
+        "ch06-e3",
+        "ch06-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
       "tier": "claimed"
     },
     {
