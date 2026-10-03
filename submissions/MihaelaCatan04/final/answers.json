@@ -1,0 +1,119 @@
+{
+  "cohort": "2026-09",
+  "course_release": "1de8649529156c35bdeafacfbbef40726a9b0fba",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "A RAG application should strip and flag any citation that the retriever never returned as it is considered a fabrication.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.9,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "The first diagnostic question is: did the right passage reach the prompt? If retrieval missed it, fix chunking, the index, or the query. If the right passage was present and the answer still went wrong, the failure is in generation (instructions, formatting, or the model ignoring context).",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "The refusal path in an agent loop should be designed first because a loop that cannot refuse will fabricate. When retrieval returns nothing relevant, the correct behavior is to say so and flag the answer for human review. Designing the refusal path first ensures that it is the path every other safeguard falls back to.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "The four parts of one iteration of an agent loop are: Perceive, Decide, Act, and Observe. The application owns Perceive, Act, and Observe, while only the decision-making belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "The autonomy spectrum ranges from deterministic chains with no decisions, to tool-using loops where the model picks tools, to a reflection loop where the model critiques its own draft, and finally to multi-agent systems where models delegate to other models. The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it. This approach minimizes latency, cost, and potential failure modes, and it suggests that a workflow that can be a fixed pipeline should remain as such.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace turns a failing case into a fix by providing an ordered record of what the system actually did, such as what was retrieved, which tools were called with which arguments, and what the model returned. When a case fails, the trace helps answer diagnostic questions about whether the failure was due to retrieval, tool selection, instruction-following, or formatting. This allows developers to classify each failure, fix the largest category of failures first, and add a regression case to prevent the same failure from returning unnoticed.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.9,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "A code-based check is preferable when the property is mechanical, such as checking if the expected source was cited, if the content parsed correctly, or if it stayed under a tool budget. Before trusting a judge, you must inspect the evaluator's false positives to ensure reliability.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.9,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "If a model's JSON fails to parse, the robust handling pattern is to attempt to parse again; if that fails, retry once with a corrective instruction to 'return only the JSON object, no prose'. If the second attempt also fails, return a typed refusal with 'needs_human_review' set to true to make the failure visible and bounded.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "When connecting to an MCP server you did not write, the practical rules are: prefer read-only servers while learning; never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace is the ordered record of what the system actually did, including what was retrieved, which tools were called with which arguments, and what the model returned. It helps diagnose failures by identifying whether they occurred during retrieval, tool selection, instruction-following, or formatting.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "Prompt injection can enter a RAG assistant through the corpus itself, as a document edited to include instructions will have those instructions placed, verbatim, into the model's context at answer time.",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 0.9,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "I do not know.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I do not know",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "The provided context does not contain information about fine-tuning a model on your own data.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    }
+  }
+}
