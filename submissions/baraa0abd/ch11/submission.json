@@ -1,22 +1,23 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch05",
+  "chapter": "ch11",
   "student": {
     "github": "baraa0abd"
   },
-  "submitted_at": "2026-10-04T12:08:36Z",
+  "submitted_at": "2026-10-04T12:09:01Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch05-e1",
-      "ch05-e2"
+      "ch11-e1",
+      "ch11-e2",
+      "ch11-e3"
     ],
     "failed": [],
     "not_reached": [],
     "scored": true,
-    "score": 200,
-    "max_score": 200
+    "score": 300,
+    "max_score": 300
   },
   "note": "",
   "help": {
@@ -30,9 +31,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "61fed1be594b02033022bda77bf919ee3fa781459e798ae1b1f24919a605b78d",
-    "challenge_sha256": "e4d40df1e9070da7e11d35d7c42b9ee4d6998cd696bf460bf6b264a97bf19bec"
+    "notebook_sha256": "6b60be3cf59fc29024fa59968b464fbc5d2c990f5ac380f01c5d3a7ff12e5f42"
   },
   "verified": null,
-  "submission_id": "sub_44eaa63fb02414c3b7be3a90"
+  "submission_id": "sub_af8b82b6198bf4ab7d790aba"
 }
