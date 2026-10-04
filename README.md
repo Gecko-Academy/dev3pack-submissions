@@ -27,6 +27,7 @@ This repository is only the hand-in.
 - [What CI does not check](#what-ci-does-not-check)
 - [If CI refuses your submission](#if-ci-refuses-your-submission)
 - [The final assignment](#the-final-assignment)
+- [The Gecko capstone link](#the-gecko-capstone-link)
 - [Consuming the track](#consuming-the-track)
 - [Test data](#test-data)
 - [A note for whoever merges](#a-note-for-whoever-merges)
@@ -51,6 +52,11 @@ that the score follows from the passes and help the claim itself lists. It does
 **not** re-run your notebook yet: that arrives in week 2, and until then every
 score in this repository is marked `claimed`, which means self-reported and
 shape-checked. A human merges, and the merge is what records the score.
+
+**The weekly challenge adds to its session.** Week 1's challenge counts in ch05,
+week 2's in ch10: same row, out of the session's marks plus 500. The points come
+from the line your notebook printed (`week 1 challenge: N/500`), read from the
+notebook and never from `submission.json`, so editing the claim cannot add any.
 
 ## How to submit
 
@@ -111,27 +117,63 @@ be committed exactly as written.
 
 ## The final assignment
 
-The final is handed in like anything else, with one extra file:
+The final is a folder of two files, written by the course when your agent has
+answered the final questions:
 
-```
+```text
 submissions/<your-github>/final/
-├── answers.json     what your agent answered, and nothing else
-└── notebook.ipynb   the run that produced it
+├── answers.json      what your agent answered, and nothing else
+└── submission.json   who you are, and the repository and commit of your agent
 ```
 
-`answers.json` holds your agent's answers to the published final questions. Your
-agent runs on your machine; only the answers travel. Nothing you wrote is
-executed by the course.
+No notebook, and nothing else: CI refuses a final bundle with a third file.
+Your agent runs on your machine. Only the answers travel, and nothing you wrote
+is executed by the course or by this repository.
 
-When a pull request carrying one is merged, the course scores the answers
-against the private key set and writes the result to `finals/<your-github>/`.
-That file records the score, both gates and a verdict per question. It does not
-record what you answered.
+Open the pull request exactly as for a chapter. CI checks the shape: the two
+files, your folder, the answer and citation limits (8000 characters and 40
+citations per answer), and that `repo` is a plain
+`https://github.com/<owner>/<name>` link with a full 40-character `commit`.
+When the check is green, **it merges automatically**, like homework.
+
+**Your score arrives a few minutes after the merge**, in
+`finals/<your-github>/result.json`. The course scores your answers against the
+private question set and records the score, both gates, a verdict per question,
+and the `repo` and `commit` you submitted, so the score links to the code that
+earned it. It does not record what you answered.
 
 Two gates decide a pass, and the second is the one that matters: 30% of
 questions, and **every** question marked critical. Refusing everything reaches
 the first and fails the second. Above both, the course issues a signed receipt
 and you render your certificate from it.
+
+## The Gecko capstone link
+
+The Gecko capstone stays in your own `my-gecko-buyer` repository: your code, your
+receipts, your refusals. What you hand in is only **the link**. Due **5 October**.
+
+**[Hand in my Gecko capstone](https://github.com/Gecko-Academy/dev3pack-submissions/issues/new?template=gecko-capstone.yml)**:
+paste your link, press **Submit new issue**. That is all.
+
+A bot answers on the issue within a minute:
+
+- **Recorded**, with the commit it took: the newest one on your repository. It also
+  lists anything the judges will look for and not find (receipts, refusals, the
+  smoke report). Your row appears under **Finish line** in [TRACK.md](TRACK.md).
+- **Not recorded yet**, with what to fix: the link is somebody else's, the course
+  template, or a private repository. Fix it and **edit the issue**; the bot reads it
+  again.
+
+Push your `receipts/`, `refusals/` and `smoke-report.json` **before** you hand in.
+Pushed more later? Edit the issue (any change), and the newest commit is recorded.
+
+From a terminal, the same thing, from the course folder:
+
+```bash
+uv run bootcamp gecko submit --repo ../my-gecko-buyer --github <your-github> --push
+```
+
+Both end in the same file, `submissions/<your-github>/gecko/submission.json`.
 
 ## Consuming the track
 

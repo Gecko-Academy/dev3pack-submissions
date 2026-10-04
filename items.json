@@ -175,7 +175,7 @@
       "scored": true,
       "verifiable": true,
       "exercises": 2,
-      "max_score": 200
+      "max_score": 700
     },
     {
       "id": "ch06",
@@ -230,7 +230,7 @@
       "scored": true,
       "verifiable": false,
       "exercises": 2,
-      "max_score": 200
+      "max_score": 700
     },
     {
       "id": "ch11",
@@ -278,7 +278,7 @@
     },
     {
       "id": "cap01",
-      "title": "Capstone: the source-grounded research assistant",
+      "title": "Final assignment notebook (cap01): the source-grounded research assistant",
       "kind": "project",
       "opens_in_week": 2,
       "scored": true,

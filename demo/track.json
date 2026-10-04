@@ -118,7 +118,7 @@
       "title": "A deterministic mini-agent",
       "scored": true,
       "verifiable": true,
-      "max_score": 200
+      "max_score": 700
     },
     {
       "id": "ch06",
@@ -153,7 +153,7 @@
       "title": "Skills and an architecture decision record",
       "scored": true,
       "verifiable": false,
-      "max_score": 200
+      "max_score": 700
     },
     {
       "id": "ch11",
@@ -272,7 +272,7 @@
       "not_reached": [],
       "scored": true,
       "score": 200,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {
@@ -323,7 +323,7 @@
       ],
       "scored": true,
       "score": 0,
-      "max_score": 200,
+      "max_score": 700,
       "tier": "claimed"
     },
     {

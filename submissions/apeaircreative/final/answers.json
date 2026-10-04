@@ -1,0 +1,121 @@
+{
+  "cohort": "2026-09",
+  "course_release": "1de8649529156c35bdeafacfbbef40726a9b0fba",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "A citation the retriever never returned is a fabrication and should be stripped and flagged.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "The first diagnostic question is: did the right passage reach the prompt? If retrieval missed the right passage, fix chunking, the index, or the query. If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "The refusal path should be designed first because it serves as the fallback for every other safeguard. By designing it first, you ensure that the system has a clear and correct behavior when it encounters situations where it cannot proceed or find the necessary information, rather than risking the system fabricating an answer that may lead to further issues. This practice helps maintain the integrity and reliability of the system.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "The four parts of one iteration of an agent loop are: **Perceive**, **Decide**, **Act**, and **Observe**. The application owns **Decide**, and the other three steps belong to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "The autonomy spectrum starts at the bottom with a deterministic chain (no decisions) and gradually increases as the model picks tools, then critiques its own draft, and finally involves multi-agent systems where models delegate to models. The professional habit is to start at the bottom of the spectrum where a workflow can be a fixed pipeline and only move up when a measured failure justifies it.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace turns a failing case into a diagnosis by answering the diagnostic question \u2014 was it retrieval, tool selection, instruction-following, or formatting? \u2014 in minutes.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "Code-based checks are preferable when the property being evaluated is mechanical, such as checking if something cited the expected source, parsed correctly, or stayed under a tool budget. Before trusting a model as a judge, you must inspect its false positives, as common failures include evaluators that pass everything.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "A robust handling pattern is: attempt to parse; on failure, retry once with a corrective instruction (return only the JSON object, no prose); on a second failure, return a typed refusal with `needs_human_review` set to true. This keeps the failure visible and bounded instead of letting malformed output leak into downstream code.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "When connecting to an MCP server you did not write, practical rules include: prefer read-only servers while learning; never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace records what the system actually did: what was retrieved, which tools were called with which arguments, what the model returned.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "A RAG assistant is vulnerable to prompt injection through its corpus, which can include documents edited to include instructions, specs and docs in OpenAPI descriptions that can redirect calls or exfiltrate credentials, and repository contents like comments, commit messages, and README files that are model-visible input.",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "The course corpus does not discuss fine-tuning a model on your own data.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    }
+  }
+}
