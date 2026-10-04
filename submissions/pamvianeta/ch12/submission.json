@@ -1,24 +1,24 @@
 {
   "schema": "dev3pack.submission.v2",
   "cohort": "2026-09",
-  "chapter": "ch02",
+  "chapter": "ch12",
   "student": {
-    "github": "semegn19"
+    "github": "pamvianeta"
   },
-  "submitted_at": "2026-10-03T23:56:08Z",
+  "submitted_at": "2026-10-04T01:44:47Z",
   "result": {
     "ran": true,
     "passed": [
-      "ch02-e1",
-      "ch02-e2",
-      "ch02-e3",
-      "ch02-e4"
+      "ch12-e1",
+      "ch12-e3"
     ],
-    "failed": [],
+    "failed": [
+      "ch12-e2"
+    ],
     "not_reached": [],
     "scored": true,
-    "score": 400,
-    "max_score": 400
+    "score": 200,
+    "max_score": 300
   },
   "note": "",
   "help": {
@@ -27,13 +27,13 @@
     "cost": 0
   },
   "environment": {
-    "python": "3.11.9",
+    "python": "3.11.16",
     "platform": "windows"
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "f0c3de1d537470102050540517b63290fb66f836522fb731df107a16a58722a6"
+    "notebook_sha256": "bbd8d8fae37c3f649a42ad3e61258cf6c24b619f93f4115b2368011eef29365f"
   },
   "verified": null,
-  "submission_id": "sub_31f11a265af88eb4c036f029"
+  "submission_id": "sub_a9240c006d93565ddb4ff55f"
 }
