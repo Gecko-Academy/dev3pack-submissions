@@ -16,7 +16,9 @@ name: finals
 on:
   push:
     branches: [main]
-    paths: ["submissions/*/final/answers.json"]
+    # submission.json too: a resubmission whose agent answers byte-for-byte the same
+    # changes only the commit it names, and result.json must follow it (#642).
+    paths: ["submissions/*/final/answers.json", "submissions/*/final/submission.json"]
   # A MERGE BY `collect.yml` NEVER REACHES THE TRIGGER ABOVE. GitHub starts no
   # workflow for a push made with `GITHUB_TOKEN`, and that is the token collect
   # merges with, so an auto-merged final would sit on main and never be scored.
@@ -35,6 +37,8 @@ on:
 
 permissions:
   contents: write
+  # to start collect.yml, which rebuilds TRACK.md's Finish line from the new score
+  actions: write
 
 concurrency:
   group: finals
@@ -84,7 +88,9 @@ jobs:
           # final, and NEVER on the diff: swallowing git's failure is what let
           # this job report success while scoring nobody.
           git diff --name-only --diff-filter=AM "$range" > changed.txt
-          grep -E '^submissions/[^/]+/final/answers\.json$' changed.txt > finals.txt || true
+          # Either file names a final to score; both map to its answers.json, once.
+          { grep -E '^submissions/[^/]+/final/(answers|submission)\.json$' changed.txt || true; } \
+            | sed -E 's#/[^/]+\.json$#/answers.json#' | sort -u > finals.txt
           echo "count=$(wc -l < finals.txt)" >> "$GITHUB_OUTPUT"
           cat finals.txt
 
@@ -118,6 +124,17 @@ jobs:
             echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             echo "recorded=yes" >> "$GITHUB_OUTPUT"
           fi
+
+      # The Finish line in TRACK.md reads finals/*/result.json, and only collect.yml
+      # renders it. A push made with this token starts no workflow, so without this
+      # a new score waited for collect's 30-minute schedule (a student saw her old
+      # 93% after her 100% was recorded, 4 Oct). Best-effort: the score is recorded.
+      - name: Rebuild the track with the new scores
+        if: steps.record.outputs.recorded == 'yes'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run collect.yml --repo "$GITHUB_REPOSITORY" --ref main -f merge=true
 
       # AFTER THE PUSH, and the same reasoning as `collect.yml`: the body names
       # a commit, so announcing one that is not public yet is a broken pointer.

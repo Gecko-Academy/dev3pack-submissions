@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "w03",
+  "student": {
+    "github": "navy0110"
+  },
+  "submitted_at": "2026-10-04T05:15:27Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "w03-e1",
+      "w03-e2",
+      "w03-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": false,
+    "score": null,
+    "max_score": null
+  },
+  "note": "week 0 is handed in as a record of the work, and is not marked",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.9",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "1e38b68194277df0040c62ae1eb249142ad6b4b378fc0b8b26d6e50e103aff96"
+  },
+  "verified": null,
+  "submission_id": "sub_f223949e6339337dfbf1568c"
+}
