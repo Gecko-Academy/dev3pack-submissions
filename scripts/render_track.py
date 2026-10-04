@@ -13,24 +13,33 @@ A PURE FOLD. Everything here is computed from `items.json` and the merged
 byte for byte. If they ever differ, the submissions are right and these were
 stale. Never hand-edit them.
 
-IT NEVER OPENS A NOTEBOOK. It parses JSON claims and nothing else, which is why
-it can run in a job holding a write token while the pull-request check, which
-sees unmerged content from a fork, holds nothing at all.
+IT NEVER RUNS A NOTEBOOK. It parses JSON and nothing else, which is why it can
+run in a job holding a write token while the pull-request check, which sees
+unmerged content from a fork, holds nothing at all. Since 2026-09-22 it does
+READ the notebooks of two items per learner (ch05, ch10) as JSON, for one
+printed line: the weekly challenge's points. See `session_challenge`.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
+import stat
 import sys
 from pathlib import Path
+
+# Run as `python3 scripts/render_track.py`, so its own directory is on the path.
+from check_bundle import CHALLENGE_NOTEBOOK, MAX_NOTEBOOK_BYTES
+from check_gecko import GECKO, gecko_problems
 
 ROOT = Path(__file__).resolve().parent.parent
 ITEMS = ROOT / "items.json"
 SUBMISSIONS = ROOT / "submissions"
 MARKDOWN = ROOT / "TRACK.md"
 JSON_OUT = ROOT / "track.json"
+FINALS = ROOT / "finals"
 
 SCHEMA = "dev3pack.track.v1"
 #: Must match `bootcamp_agent.submission.SCHEMA`, like `check_bundle.py`.
@@ -59,7 +68,7 @@ HINT_COST = 30
 REVEAL_COST = 70
 
 
-def score_of(item: dict, result: dict, help_block: object) -> int | None:
+def score_of(item: dict, result: dict, help_block: object, challenge: int = 0) -> int | None:
     """What the row is worth, COMPUTED -- never read out of the claim.
 
     Reading `result["score"]` meant a bundle carried its own mark, and a bundle
@@ -70,6 +79,10 @@ def score_of(item: dict, result: dict, help_block: object) -> int | None:
 
     Computing it from `passed` fixes those rows without asking anybody to submit
     again, and makes the score stop being something the submitter can state.
+
+    `challenge` is the weekly challenge's points for ch05/ch10, from
+    `challenge_points`, added AFTER the floor: help spent on the session cannot
+    eat into a challenge, and a challenge is not help's refund.
     """
     if not item["scored"]:
         return None
@@ -80,7 +93,98 @@ def score_of(item: dict, result: dict, help_block: object) -> int | None:
     if not all(isinstance(value, int) and value >= 0 for value in (hinted, revealed)):
         hinted = revealed = 0
     earned = len(passed) * FULL_MARKS - revealed * REVEAL_COST - hinted * HINT_COST
-    return max(earned, 0)
+    return max(earned, 0) + challenge
+
+
+#: The session each weekly challenge ADDS TO (founder ruling 2026-09-22): same
+#: item, same row, same webhook shape; only the number grows. The course raises
+#: these items' `max_score` in `items.json` by CHALLENGE_MAX to match.
+CHALLENGE_WEEK = {"ch05": "1", "ch10": "2"}
+CHALLENGE_MAX = 500
+#: ASCII so `\d` cannot match a non-ASCII digit that `int()` would still accept.
+#: Three digits on purpose: `9999/500` is not a challenge line at all.
+CHALLENGE_LINE = re.compile(r"^\s*week (1|2) challenge: (\d{1,3})/500\s*$", re.ASCII)
+
+
+def challenge_points(item_id: str, notebook: Path) -> int:
+    """The weekly challenge's points, as the notebook printed them. 0 if none.
+
+    FROM THE NOTEBOOK, NEVER THE CLAIM. `submission.json` is the learner's own
+    statement; the printed line is at least bound to the notebook the claim's
+    hash covers. Anything unreadable is worth 0 rather than a failed render:
+    one malformed bundle must not blank the whole leaderboard.
+
+    Read as JSON only, never executed; a symlink is refused, not followed.
+    """
+    week = CHALLENGE_WEEK.get(item_id)
+    if week is None:
+        return 0
+    document = _read_notebook(notebook)
+    if document is None:
+        return 0
+    found = 0
+    for text in _stream_texts(document):
+        for line in text.splitlines():
+            match = CHALLENGE_LINE.match(line)
+            # A week-2 line in ch05 is not ch05's challenge: skipped, so it can
+            # neither add points nor mask the real line printed before it.
+            if match and match.group(1) == week:
+                found = min(int(match.group(2)), CHALLENGE_MAX)
+    return found
+
+
+def session_challenge(item_id: str, bundle: Path) -> int:
+    """The challenge points a ch05/ch10 bundle carries, from either notebook.
+
+    Most learners played week 1 in the course's demo notebook, not the homework
+    one, so `bootcamp submit` hands that in beside it as `challenge.ipynb`. The
+    points are the larger of the two last lines, each read by the same rule:
+    carrying the demo can only reveal a score, never double one.
+    """
+    return max(
+        challenge_points(item_id, bundle / "notebook.ipynb"),
+        challenge_points(item_id, bundle / CHALLENGE_NOTEBOOK),
+    )
+
+
+def _read_notebook(notebook: Path) -> object | None:
+    if notebook.parent.is_symlink():
+        return None
+    try:
+        # O_NOFOLLOW refuses a symlinked file at open time, not at a check before it.
+        fd = os.open(notebook, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0))
+    except OSError:
+        return None
+    with os.fdopen(fd, "rb") as handle:
+        if not stat.S_ISREG(os.fstat(handle.fileno()).st_mode):
+            return None
+        # Bounded read: never more than one byte past the cap, whatever the size says.
+        raw = handle.read(MAX_NOTEBOOK_BYTES + 1)
+    if len(raw) > MAX_NOTEBOOK_BYTES:
+        return None
+    try:
+        return json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, ValueError, RecursionError):
+        return None
+
+
+def _stream_texts(document: object) -> list[str]:
+    """Every stream output's text, in document order. Tolerates any shape."""
+    texts: list[str] = []
+    cells = document.get("cells") if isinstance(document, dict) else None
+    for cell in cells if isinstance(cells, list) else []:
+        if not isinstance(cell, dict) or cell.get("cell_type") != "code":
+            continue
+        outputs = cell.get("outputs")
+        for output in outputs if isinstance(outputs, list) else []:
+            if not isinstance(output, dict) or output.get("output_type") != "stream":
+                continue
+            text = output.get("text")
+            if isinstance(text, list) and all(isinstance(part, str) for part in text):
+                texts.append("".join(text))
+            elif isinstance(text, str):
+                texts.append(text)
+    return texts
 
 
 def tier_of(item: dict, claim: dict) -> str:
@@ -109,6 +213,17 @@ def read_tree() -> tuple[list[dict], list[str]]:
         student = claim_path.parent.parent.name
         item_id = claim_path.parent.name
         where = claim_path.relative_to(ROOT).as_posix()
+
+        # A FINAL IS NOT A TRACK ROW. Its score comes from the course API and
+        # is recorded in `finals/`, by `finals.yml`. Reading its
+        # `submission.json` here would list every final handed in under
+        # `problems` as "no course item called 'final'", and a non-empty
+        # `problems` tells a consumer the whole document is partial.
+        if item_id == "final":
+            continue
+        # Nor is a Gecko capstone hand-in: it is a link, read by `read_finish_line`.
+        if item_id == GECKO:
+            continue
 
         if not LOGIN.match(student):
             problems.append(f"{where}: {student!r} is not a GitHub login")
@@ -143,7 +258,12 @@ def read_tree() -> tuple[list[dict], list[str]]:
                 "failed": list(result.get("failed", [])),
                 "not_reached": list(result.get("not_reached", [])),
                 "scored": bool(item["scored"]),
-                "score": score_of(item, result, claim.get("help")),
+                "score": score_of(
+                    item,
+                    result,
+                    claim.get("help"),
+                    session_challenge(item_id, claim_path.parent),
+                ),
                 "max_score": item["max_score"],
                 "tier": tier_of(item, claim),
             }
@@ -151,7 +271,53 @@ def read_tree() -> tuple[list[dict], list[str]]:
     return entries, problems
 
 
-def render_json(entries: list[dict], problems: list[str], items: list[dict]) -> str:
+def read_finish_line() -> list[dict]:
+    """One row per student who handed in either deliverable: the Gecko capstone
+    link and the final's scored result, side by side.
+
+    Nothing here is a grade. The capstone row says which repository and commit
+    was handed in; the final row repeats what `finals.yml` recorded. A link that
+    fails its own check is left out rather than shown, as the PR check refused it.
+    """
+    rows: dict[str, dict] = {}
+
+    def row(student: str) -> dict:
+        return rows.setdefault(student, {"github": student, "gecko": None, "final": None})
+
+    for claim_path in sorted(SUBMISSIONS.glob(f"*/{GECKO}/submission.json")):
+        student = claim_path.parent.parent.name
+        if not LOGIN.match(student) or gecko_problems(claim_path.parent):
+            continue
+        claim = json.loads(claim_path.read_text(encoding="utf-8"))
+        row(student)["gecko"] = {
+            "repo": claim["repo"],
+            "commit": claim["commit"],
+            "url": f"{claim['repo']}/tree/{claim['commit']}",
+            "submitted_at": claim.get("submitted_at"),
+        }
+    for result_path in sorted(FINALS.glob("*/result.json")):
+        student = result_path.parent.name
+        if not LOGIN.match(student):
+            continue
+        try:
+            result = json.loads(result_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        score = result.get("score") or {}
+        row(student)["final"] = {
+            "percent": score.get("percent"),
+            "passed": bool(result.get("passed")),
+            "certificate_eligible": bool(result.get("certificate_eligible")),
+        }
+    return [rows[student] for student in sorted(rows, key=str.lower)]
+
+
+def render_json(
+    entries: list[dict],
+    problems: list[str],
+    items: list[dict],
+    finish: list[dict] | None = None,
+) -> str:
     payload = {
         "schema": SCHEMA,
         "items": [
@@ -167,10 +333,17 @@ def render_json(entries: list[dict], problems: list[str], items: list[dict]) -> 
         "entries": sorted(entries, key=lambda e: (e["github"], e["item"])),
         "problems": problems,
     }
+    if finish is not None:
+        payload["finish_line"] = finish
     return json.dumps(payload, indent=2) + "\n"
 
 
-def render_markdown(entries: list[dict], problems: list[str], items: list[dict]) -> str:
+def render_markdown(
+    entries: list[dict],
+    problems: list[str],
+    items: list[dict],
+    finish: list[dict] | None = None,
+) -> str:
     students = sorted({entry["github"] for entry in entries})
     by_key = {(entry["github"], entry["item"]): entry for entry in entries}
     graded = [item for item in items if item["kind"] != "unit"]
@@ -214,6 +387,26 @@ def render_markdown(entries: list[dict], problems: list[str], items: list[dict])
         done = [item["id"] for item in units if (student, item["id"]) in by_key]
         lines.append(f"| {student} | {len(done)}/{len(units)} |")
 
+    if finish is not None:
+        lines += [
+            "",
+            "## Finish line",
+            "",
+            "The two deliverables due on 5 October: the Gecko capstone (a link to your",
+            "own `my-gecko-buyer`, at the commit you handed in) and the final submission",
+            "(scored on the private questions). An empty cell means not handed in yet.",
+            "",
+            "| Student | Gecko capstone | Final | Certificate |",
+            "|---|---|---|---|",
+        ]
+        for row in finish:
+            gecko = row["gecko"]
+            final = row["final"]
+            link = f"[{gecko['commit'][:7]}]({gecko['url']})" if gecko else ""
+            score = f"{final['percent']}%" if final and final["percent"] is not None else ""
+            eligible = ("eligible" if final["certificate_eligible"] else "not yet") if final else ""
+            lines.append(f"| {row['github']} | {link} | {score} | {eligible} |")
+
     if problems:
         lines += ["", "## Problems", ""]
         lines += [f"- {problem}" for problem in problems]
@@ -228,9 +421,10 @@ def main(argv: list[str] | None = None) -> int:
 
     items = load_items()
     entries, problems = read_tree()
+    finish = read_finish_line()
     files = {
-        JSON_OUT: render_json(entries, problems, items),
-        MARKDOWN: render_markdown(entries, problems, items),
+        JSON_OUT: render_json(entries, problems, items, finish),
+        MARKDOWN: render_markdown(entries, problems, items, finish),
     }
     if args.check:
         stale = [p.name for p, text in files.items() if not p.is_file() or p.read_text() != text]

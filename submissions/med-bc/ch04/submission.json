@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch04",
+  "student": {
+    "github": "med-bc"
+  },
+  "submitted_at": "2026-09-18T00:40:05Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch04-e1",
+      "ch04-e2",
+      "ch04-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "e399a371c10f4e88e85b089414b374c645dfbd070413289de396fb8afcea2f56"
+  },
+  "verified": null,
+  "submission_id": "sub_9e17f50e65657b4b1dcdf34d"
+}

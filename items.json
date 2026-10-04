@@ -175,7 +175,7 @@
       "scored": true,
       "verifiable": true,
       "exercises": 2,
-      "max_score": 200
+      "max_score": 700
     },
     {
       "id": "ch06",
@@ -230,7 +230,7 @@
       "scored": true,
       "verifiable": false,
       "exercises": 2,
-      "max_score": 200
+      "max_score": 700
     },
     {
       "id": "ch11",

@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch13",
+  "student": {
+    "github": "navy0110"
+  },
+  "submitted_at": "2026-10-02T03:45:58Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch13-e4",
+      "ch13-e2",
+      "ch13-e1"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.9",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "6ac34eefd209390199fb19252d73057e644dcc1a34e55dbd32057429851769bd"
+  },
+  "verified": null,
+  "submission_id": "sub_76933454d98a4380822fc770"
+}

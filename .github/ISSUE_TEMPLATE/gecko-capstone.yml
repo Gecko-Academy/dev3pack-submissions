@@ -1,0 +1,21 @@
+name: Hand in my Gecko capstone
+description: Paste the link to your my-gecko-buyer. That is all. Due 5 October.
+title: "Gecko capstone"
+labels: ["gecko-capstone"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Paste the link to **your own** `my-gecko-buyer` repository and press **Submit new issue**.
+        A bot replies here in about a minute, with the commit it recorded.
+
+        Push your receipts, refusals and `smoke-report.json` **before** you submit: the
+        latest commit on your repository is what the judges read. Pushed more later?
+        Edit this issue (or open a new one), and the newest commit is recorded.
+  - type: input
+    id: repo
+    attributes:
+      label: Your my-gecko-buyer link
+      placeholder: https://github.com/your-github/my-gecko-buyer
+    validations:
+      required: true

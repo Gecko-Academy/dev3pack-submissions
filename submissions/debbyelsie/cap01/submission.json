@@ -1,0 +1,40 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "cap01",
+  "student": {
+    "github": "debbyelsie"
+  },
+  "submitted_at": "2026-10-03T21:54:38Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "cap01-e1",
+      "cap01-e2",
+      "cap01-e3",
+      "cap01-e4",
+      "cap01-e5"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 500,
+    "max_score": 500
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "bd279aab318157c469f0a5bc42cec3a7eb8aec6ee18c8ffbd18db02caac2dbc1"
+  },
+  "verified": null,
+  "submission_id": "sub_44650d4c9349ddc63e3d64fc"
+}

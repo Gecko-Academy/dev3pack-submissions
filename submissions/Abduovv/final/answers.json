@@ -1,0 +1,120 @@
+{
+  "cohort": "2026-09",
+  "course_release": "85ad371e3e6354fc18edb4522b1fd66ac6223f62",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "A citation the retriever never returned is a fabrication and should be stripped and flagged.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "The first diagnostic question is: did the right passage reach the prompt? If retrieval missed it, fix chunking, the index, or the query. If the right passage was present, the failure is in generation: fix instructions, formatting, or the model ignoring context.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "The refusal path should be designed first because a loop that cannot refuse will fabricate, and the refusal path is the fallback that every other safeguard depends on. When retrieval returns nothing relevant, the correct behavior is to say so before spending a model call and flag the answer for human review.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "The four parts are **Perceive**, **Decide**, **Act**, and **Observe**. The application owns three of them \u2014 Perceive, Act, and Observe; only Decide belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "The autonomy spectrum ranges from a deterministic chain (no decisions) to a tool-using loop (the model picks tools) to a reflection loop (the model critiques its own draft) to multi-agent systems (models delegate to models). Each step up adds latency, cost, and failure modes. The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it; a workflow that can be a fixed pipeline should be a fixed pipeline.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace is the ordered record of what the system actually did: what was retrieved, which tools were called with which arguments, and what the model returned. When a case fails, the trace answers the diagnostic question \u2014 was it retrieval, tool selection, instruction-following, or formatting? \u2014 in minutes. You classify the failure into one of those buckets, fix the biggest bucket first, and add a regression case so the same failure cannot return unnoticed. For RAG, the trace also checks whether the right passage reached the prompt; if retrieval missed it, you fix chunking, the index, or the query, and if the passage was present but the answer was wrong, the failure is in generation (instructions, formatting, or the model ignoring context). Keeping retrieved chunks inspectable (log them, show them) makes this a two-minute diagnosis instead of guessing.",
+      "citations": [
+        "evaluation-basics",
+        "rag-basics"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "A code-based check is preferable when the property is mechanical \u2014 e.g., whether the answer cites the expected source, whether it parses, or whether it stays under the tool budget \u2014 because code checks are fast, free, and deterministic. LLM-as-judge is reserved for genuinely fuzzy properties like tone or coherence. Before trusting a judge, you must inspect its false positives (a common failure is an evaluator that passes everything) and spot-check it against human labels, since the judge inherits its own biases.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "Attempt to parse; on failure, retry once with a corrective instruction (\"return only the JSON object, no prose\"); on a second failure, return a typed refusal with `needs_human_review` set to true.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 0.99,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "The practical rules for connecting to an MCP server you did not write are: (1) prefer read-only servers while learning; (2) never place credentials in client configuration files that get committed; (3) treat everything a server returns as untrusted data, not instructions; (4) use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect; and (5) a server that can spend money or mutate production state deserves the same review as giving a new contractor production access.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "An ordered record of what was retrieved, which tools were called with which arguments, and what the model returned.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "Any channel that feeds text into the prompt is an injection surface. For a RAG assistant, this means the corpus itself (a document edited to include instructions placed verbatim into the model's context), specs and docs (malicious OpenAPI descriptions redirecting calls or exfiltrating credentials), and repository files (comments, commit messages, READMEs). Every ingested document, spec, and tool response must be treated as untrusted input.",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "I do not know. The provided context does not contain any information about Anthropic's Claude API pricing or charges from last month.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I do not know.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "I do not know. The provided context does not contain any information about fine-tuning a model on your own data. The passages cover RAG basics, structured outputs, agent loops, evaluation, and MCP server connections, but none mention fine-tuning or training on custom datasets.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    }
+  }
+}

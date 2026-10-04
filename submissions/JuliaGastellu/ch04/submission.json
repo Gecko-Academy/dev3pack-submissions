@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch04",
+  "student": {
+    "github": "JuliaGastellu"
+  },
+  "submitted_at": "2026-10-02T12:29:01Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch04-e1",
+      "ch04-e2",
+      "ch04-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.4",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "3812e9577942fb744dc7707ff62619f76d05dd79ee9727d1dd07f44fdda2324c"
+  },
+  "verified": null,
+  "submission_id": "sub_5060d5e4037fadf0b59d99a7"
+}
