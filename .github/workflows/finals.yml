@@ -16,7 +16,9 @@ name: finals
 on:
   push:
     branches: [main]
-    paths: ["submissions/*/final/answers.json"]
+    # submission.json too: a resubmission whose agent answers byte-for-byte the same
+    # changes only the commit it names, and result.json must follow it (#642).
+    paths: ["submissions/*/final/answers.json", "submissions/*/final/submission.json"]
   # A MERGE BY `collect.yml` NEVER REACHES THE TRIGGER ABOVE. GitHub starts no
   # workflow for a push made with `GITHUB_TOKEN`, and that is the token collect
   # merges with, so an auto-merged final would sit on main and never be scored.
@@ -84,7 +86,9 @@ jobs:
           # final, and NEVER on the diff: swallowing git's failure is what let
           # this job report success while scoring nobody.
           git diff --name-only --diff-filter=AM "$range" > changed.txt
-          grep -E '^submissions/[^/]+/final/answers\.json$' changed.txt > finals.txt || true
+          # Either file names a final to score; both map to its answers.json, once.
+          { grep -E '^submissions/[^/]+/final/(answers|submission)\.json$' changed.txt || true; } \
+            | sed -E 's#/[^/]+\.json$#/answers.json#' | sort -u > finals.txt
           echo "count=$(wc -l < finals.txt)" >> "$GITHUB_OUTPUT"
           cat finals.txt
 
