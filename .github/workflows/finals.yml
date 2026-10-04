@@ -37,6 +37,8 @@ on:
 
 permissions:
   contents: write
+  # to start collect.yml, which rebuilds TRACK.md's Finish line from the new score
+  actions: write
 
 concurrency:
   group: finals
@@ -122,6 +124,17 @@ jobs:
             echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             echo "recorded=yes" >> "$GITHUB_OUTPUT"
           fi
+
+      # The Finish line in TRACK.md reads finals/*/result.json, and only collect.yml
+      # renders it. A push made with this token starts no workflow, so without this
+      # a new score waited for collect's 30-minute schedule (a student saw her old
+      # 93% after her 100% was recorded, 4 Oct). Best-effort: the score is recorded.
+      - name: Rebuild the track with the new scores
+        if: steps.record.outputs.recorded == 'yes'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run collect.yml --repo "$GITHUB_REPOSITORY" --ref main -f merge=true
 
       # AFTER THE PUSH, and the same reasoning as `collect.yml`: the body names
       # a commit, so announcing one that is not public yet is a broken pointer.
