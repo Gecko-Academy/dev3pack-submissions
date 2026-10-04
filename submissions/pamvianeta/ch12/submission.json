@@ -1,0 +1,39 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch12",
+  "student": {
+    "github": "pamvianeta"
+  },
+  "submitted_at": "2026-10-04T01:44:47Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch12-e1",
+      "ch12-e3"
+    ],
+    "failed": [
+      "ch12-e2"
+    ],
+    "not_reached": [],
+    "scored": true,
+    "score": 200,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "bbd8d8fae37c3f649a42ad3e61258cf6c24b619f93f4115b2368011eef29365f"
+  },
+  "verified": null,
+  "submission_id": "sub_a9240c006d93565ddb4ff55f"
+}
