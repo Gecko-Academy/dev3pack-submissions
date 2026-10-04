@@ -92,12 +92,10 @@
       "needs_human_review": false
     },
     "pf-12": {
-      "answer": "Any channel that feeds text into the prompt is an injection surface. For a RAG assistant that means the corpus itself: a document edited to include instructions will have those instructions placed, verbatim, into the model's context at answer time. For an API-using agent it means specs and docs: a malicious OpenAPI description can try to redirect calls or exfiltrate credentials. For a coding assistant it means the repository: comments, commit messages, and README files are all model-visible input.",
-      "citations": [
-        "prompt-injection"
-      ],
-      "confidence": 0.85,
-      "needs_human_review": false
+      "answer": "I do not know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
     },
     "pf-13": {
       "answer": "I do not know based on the provided corpus.",
