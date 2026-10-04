@@ -1,0 +1,123 @@
+{
+  "cohort": "2026-09",
+  "course_release": "3262a668fbfbe085d0c91394c1de882cf1f5bd58",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "Every answer should name the document ids it drew from, and the application should verify those ids against what was actually retrieved. A citation the retriever never returned is a fabrication and should be stripped and flagged. The \"I don't know\" case matters most: when nothing relevant is retrieved, the system must refuse rather than let the model improvise from its training data. Most of RAG's value appears with a corpus of five documents, not five million. Start small, keep the corpus versioned in git, and grow it only when a measured retrieval failure says you need to.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "When a RAG system answers wrongly, the first diagnostic question is: did the right passage reach the prompt? If retrieval missed it, no amount of prompt engineering will fix the answer \u2014 fix chunking, the index, or the query instead. If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context. Keeping retrieved chunks inspectable (log them, show them) is what makes this diagnosis a two-minute check instead of a guessing game.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "There is a spectrum: a deterministic chain (no decisions), a tool-using loop (the model picks tools), a reflection loop (the model critiques its own draft), and multi-agent systems (models delegate to models). Each step up adds latency, cost, and failure modes. The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it. A workflow that can be a fixed pipeline should be a fixed pipeline. A loop that cannot refuse will fabricate. When retrieval returns nothing relevant, the correct behavior is to say so \u2014 before spending a model call \u2014 and flag the answer for human review. Design the refusal path first; it is the path every other safeguard falls back to.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "An agent is a loop: the model observes some state, decides on an action, the application executes that action, and the result feeds the next observation. What separates a reliable agent from an expensive random walk is not the model \u2014 it is the engineering of the loop around it. Each pass through the loop has four parts. **Perceive**: assemble the context the model will see \u2014 the question, retrieved documents, previous tool results. **Decide**: the model chooses to answer directly or to call a tool. **Act**: the application validates the chosen tool's arguments and executes it. **Observe**: the tool result is appended to the context. The application owns three of these four steps; only the decision belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "There is a spectrum: a deterministic chain (no decisions), a tool-using loop (the model picks tools), a reflection loop (the model critiques its own draft), and multi-agent systems (models delegate to models). Each step up adds latency, cost, and failure modes. The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it. A workflow that can be a fixed pipeline should be a fixed pipeline. A loop that cannot refuse will fabricate. When retrieval returns nothing relevant, the correct behavior is to say so \u2014 before spending a model call \u2014 and flag the answer for human review. Design the refusal path first; it is the path every other safeguard falls back to.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace is the ordered record of what the system actually did: what was retrieved, which tools were called with which arguments, what the model returned. When a case fails, the trace answers the diagnostic question \u2014 was it retrieval, tool selection, instruction-following, or formatting? \u2014 in minutes. Classify each failure into one of those buckets, fix the biggest bucket first, and add a regression case so the same failure cannot return unnoticed. Baseline, change one thing, rerun, compare. Never change two things between measurements, and never report an improvement without also reporting what got worse. An honest evaluation report includes the regression it caused.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "Prefer code-based checks whenever the property is mechanical: did it cite the expected source, did it parse, did it stay under the tool budget. They are fast, free, and deterministic. LLM-as-judge \u2014 using a model to grade another model's output \u2014 earns its place for genuinely fuzzy properties like tone or coherence, but it inherits the judge's own biases and must itself be spot-checked against human labels. A common failure is an evaluator that passes everything; inspect your evaluator's false positives before trusting its pass rate.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "Parsing can fail even with a good prompt. A robust pattern is: attempt to parse; on failure, retry once with a corrective instruction (\"return only the JSON object, no prose\"); on a second failure, return a typed refusal with `needs_human_review` set to true. This keeps the failure visible and bounded instead of letting malformed output leak into downstream code. Structured output is not about making the model smarter. It is about making the boundary between probabilistic text and deterministic software explicit, validated, and testable. Every field you add to a schema is a claim you can now write a test against.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "Connecting an MCP server is granting capabilities, and the connection point is a security boundary. Practical rules: prefer read-only servers while learning; never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect. A server that can spend money or mutate production state deserves the same review as giving a new contractor production access.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace is the ordered record of what the system actually did: what was retrieved, which tools were called with which arguments, what the model returned. When a case fails, the trace answers the diagnostic question \u2014 was it retrieval, tool selection, instruction-following, or formatting? \u2014 in minutes. Classify each failure into one of those buckets, fix the biggest bucket first, and add a regression case so the same failure cannot return unnoticed. Baseline, change one thing, rerun, compare. Never change two things between measurements, and never report an improvement without also reporting what got worse. An honest evaluation report includes the regression it caused.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "Any channel that feeds text into the prompt is an injection surface. For a RAG assistant that means the corpus itself: a document edited to include instructions will have those instructions placed, verbatim, into the model's context at answer time. For an API-using agent it means specs and docs: a malicious OpenAPI description can try to redirect calls or exfiltrate credentials. For a coding assistant it means the repository: comments, commit messages, and README files are all model-visible input.",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "Any channel that feeds text into the prompt is an injection surface. For a RAG assistant that means the corpus itself: a document edited to include instructions will have those instructions placed, verbatim, into the model's context at answer time. For an API-using agent it means specs and docs: a malicious OpenAPI description can try to redirect calls or exfiltrate credentials. For a coding assistant it means the repository: comments, commit messages, and README files are all model-visible input.",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-13": {
+      "answer": "I do not know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I do not know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "There is a spectrum: a deterministic chain (no decisions), a tool-using loop (the model picks tools), a reflection loop (the model critiques its own draft), and multi-agent systems (models delegate to models). Each step up adds latency, cost, and failure modes. The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it. A workflow that can be a fixed pipeline should be a fixed pipeline. A loop that cannot refuse will fabricate. When retrieval returns nothing relevant, the correct behavior is to say so \u2014 before spending a model call \u2014 and flag the answer for human review. Design the refusal path first; it is the path every other safeguard falls back to.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    }
+  }
+}
