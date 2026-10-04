@@ -1,0 +1,117 @@
+{
+  "cohort": "2026-09",
+  "course_release": "1de8649529156c35bdeafacfbbef40726a9b0fba",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "A citation the retriever never returned is a fabrication and should be stripped and flagged.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "The first diagnostic question is: did the right passage reach the prompt? If the retrieval missed the correct passage, fix chunking, the index, or the query. If the correct passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "The refusal path should be designed first because it provides a fall-back safeguard in every other instance of failure. Designing the refusal path first ensures that the system does not fabricate answers when faced with an unresponsive retrieval or other issues, thereby maintaining integrity.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "The four parts of one iteration of an agent loop are Perceive, Decide, Act, Observe. The application owns three of these steps: Act, Observe, and the Decide part. The Decide part belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "The autonomy spectrum ranges from a deterministic chain to multi-agent systems. Each step up this spectrum adds latency, cost, and failure modes, hence the professional habit is to start at the bottom and only move up when a measured failure justifies it.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace turns a failing case into a diagnosis by identifying what part of the system failed. For example, if retrieval missed the right passage, the issue lies with chunking, the index, or the query. If the right passage was present but the answer was still wrong, the failure is in generation\u2014such as instructions, formatting, or the model ignoring context. This method allows for a quick diagnosis within minutes.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "Code-based checks are preferable when the property is mechanical, such as verifying if a citation is accurate, if text parses correctly, or if the cost stays under a tool budget. These checks are fast, free, and deterministic. Before trusting a judge model, you must inspect its false positives to ensure it is not passing everything.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-09": {
+      "answer": "Never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace records what the system actually did, such as what was retrieved, which tools were called, and what the model returned.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.2,
+      "needs_human_review": true
+    },
+    "pf-12": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "The course corpus does not explicitly mention fine-tuning a model on your own data. It focuses on using a small, version-controlled corpus for Retrieval-Augmented Generation (RAG) and using structured outputs to ensure data integrity.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.7,
+      "needs_human_review": true
+    }
+  }
+}
