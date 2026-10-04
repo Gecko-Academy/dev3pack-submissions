@@ -150,47 +150,30 @@ and you render your certificate from it.
 ## The Gecko capstone link
 
 The Gecko capstone stays in your own `my-gecko-buyer` repository: your code, your
-receipts, your refusals. What you hand in here is only **the link**, so the course
-knows which repository and which commit to judge. Due **5 October**.
+receipts, your refusals. What you hand in is only **the link**. Due **5 October**.
 
-```text
-submissions/<your-github>/gecko/
-└── submission.json   your repository and the commit you hand in
-```
+**[Hand in my Gecko capstone](https://github.com/Gecko-Academy/dev3pack-submissions/issues/new?template=gecko-capstone.yml)**:
+paste your link, press **Submit new issue**. That is all.
 
-```json
-{
-  "kind": "gecko",
-  "github": "<your-github>",
-  "repo": "https://github.com/<your-github>/my-gecko-buyer",
-  "commit": "<the full 40-character commit id>"
-}
-```
+A bot answers on the issue within a minute:
 
-**From the course folder** (writes the file and opens the pull request):
+- **Recorded**, with the commit it took: the newest one on your repository. It also
+  lists anything the judges will look for and not find (receipts, refusals, the
+  smoke report). Your row appears under **Finish line** in [TRACK.md](TRACK.md).
+- **Not recorded yet**, with what to fix: the link is somebody else's, the course
+  template, or a private repository. Fix it and **edit the issue**; the bot reads it
+  again.
+
+Push your `receipts/`, `refusals/` and `smoke-report.json` **before** you hand in.
+Pushed more later? Edit the issue (any change), and the newest commit is recorded.
+
+From a terminal, the same thing, from the course folder:
 
 ```bash
 uv run bootcamp gecko submit --repo ../my-gecko-buyer --github <your-github> --push
 ```
 
-**From the browser, no terminal:**
-
-1. In your `my-gecko-buyer` on GitHub, open **Commits** and press the copy button
-   next to the newest one. That is your 40-character `commit`.
-2. Open [create a file here](https://github.com/Gecko-Academy/dev3pack-submissions/new/main?filename=submissions/YOUR-GITHUB/gecko/submission.json&value=%7B%0A%20%20%22kind%22%3A%20%22gecko%22%2C%0A%20%20%22github%22%3A%20%22YOUR-GITHUB%22%2C%0A%20%20%22repo%22%3A%20%22https%3A//github.com/YOUR-GITHUB/my-gecko-buyer%22%2C%0A%20%20%22commit%22%3A%20%22PASTE-THE-40-CHARACTER-COMMIT%22%0A%7D%0A),
-   replace `YOUR-GITHUB` with your GitHub name in the file name **and** in the
-   file (twice), and paste your commit in place of `PASTE-THE-40-CHARACTER-COMMIT`.
-3. **Propose new file**, then **Create pull request**. GitHub makes the fork for you.
-
-CI checks that the file is alone in the folder, that `repo` is
-`https://github.com/<you>/<name>` under **your own** account (the course template
-and somebody else's buyer are refused), and that `commit` is the full id. Green
-merges automatically. Hand in again with a newer commit whenever you want: the
-latest one counts.
-
-Your row then appears under **Finish line** in [TRACK.md](TRACK.md), beside your
-final's score. Push your `receipts/`, `intents/`, `refusals/` and
-`smoke-report.json` **before** you copy the commit: the commit is what is read.
+Both end in the same file, `submissions/<your-github>/gecko/submission.json`.
 
 ## Consuming the track
 
