@@ -1,0 +1,117 @@
+{
+  "cohort": "2026-09",
+  "course_release": "52ad0db7e6dc9af53a6174c55f9d6646d441c00b",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "Chunking splits documents into passages and respects paragraph boundaries so each passage keeps a coherent idea. Retrieval indexes those passage-sized chunks, returns the relevant context, and citations identify the source used for the answer.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "Chunking splits documents into passages and respects paragraph boundaries so each passage keeps a coherent idea. Retrieval indexes those passage-sized chunks, returns the relevant context, and citations identify the source used for the answer.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "A production agent loop stops on a final answer, when a tool failed and it cannot recover from, an exhausted tool-call or token budget, a wall-clock timeout, or the same tool with the same arguments repeated. An unbounded loop is a bug.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "A production agent loop stops on a final answer, when a tool failed and it cannot recover from, an exhausted tool-call or token budget, a wall-clock timeout, or the same tool with the same arguments repeated. An unbounded loop is a bug.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "A production agent loop stops on a final answer, when a tool failed and it cannot recover from, an exhausted tool-call or token budget, a wall-clock timeout, or the same tool with the same arguments repeated. An unbounded loop is a bug.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "I do not know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-07": {
+      "answer": "A golden evaluation set includes supported questions, unsupported or not-found questions, and explicit refusal cases. Rerunnable checks measure reliability rather than charisma, while traces classify whether retrieval or generation caused a failure.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "Model output is untrusted input, so the application must validate at the boundary. It must parse JSON strictly, reject malformed JSON and unknown fields, enforce the schema, and turn a parse failure into a defined refusal.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "A tool executes an action through a callable interface. A skill provides instructions for a repeatable workflow. An MCP server exposes tools, resources, and prompts behind a protocol and distribution boundary that an MCP client can discover.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "Chunking splits documents into passages and respects paragraph boundaries so each passage keeps a coherent idea. Retrieval indexes those passage-sized chunks, returns the relevant context, and citations identify the source used for the answer.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "Chunking splits documents into passages and respects paragraph boundaries so each passage keeps a coherent idea. Retrieval indexes those passage-sized chunks, returns the relevant context, and citations identify the source used for the answer.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.85,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "I do not know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I do not know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "I do not know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    }
+  }
+}
