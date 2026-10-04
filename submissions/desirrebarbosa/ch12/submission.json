@@ -5,19 +5,18 @@
   "student": {
     "github": "desirrebarbosa"
   },
-  "submitted_at": "2026-10-04T07:11:52Z",
+  "submitted_at": "2026-10-04T07:17:08Z",
   "result": {
     "ran": true,
     "passed": [
+      "ch12-e2",
       "ch12-e1",
       "ch12-e3"
     ],
-    "failed": [
-      "ch12-e2"
-    ],
+    "failed": [],
     "not_reached": [],
     "scored": true,
-    "score": 200,
+    "score": 300,
     "max_score": 300
   },
   "note": "",
@@ -32,8 +31,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "4b9b24bf042ef93324cd49ea8b5b1360890e454a8a09327b6a1b8c166b9e7f91"
+    "notebook_sha256": "12d490149437b8ccdc2b383d9411cd9c31a21ac56edce410f6c97010f8a4c705"
   },
   "verified": null,
-  "submission_id": "sub_fd00d822554856ebc7ccc69e"
+  "submission_id": "sub_1ade81078bdde3e566800731"
 }
