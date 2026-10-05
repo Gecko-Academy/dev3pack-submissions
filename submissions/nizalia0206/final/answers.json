@@ -4,91 +4,89 @@
   "question_set_id": "private-2026-09-a",
   "answers": {
     "pf-01": {
-      "answer": "A citation the retriever never returned should be stripped and flagged, as it is a fabrication and should not be used.",
-      "citations": [
-        "rag-basics"
-      ],
-      "confidence": 1.0,
-      "needs_human_review": false
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
     },
     "pf-02": {
-      "answer": "When a RAG answer is wrong, the first diagnostic question is: did the right passage reach the prompt? If the retrieval missed the relevant passage, fix the chunking, the index, or the query. If the right passage was present but the answer was still incorrect, the failure is in generation, indicating issues with instructions, formatting, or the model ignoring context.",
+      "answer": "When a RAG system answers wrongly, the first diagnostic question is: did the right passage reach the prompt? If retrieval missed it, no amount of prompt engineering will fix the answer \u2014 fix chunking, the index, or the query instead. If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context. Keeping retrieved chunks inspectable (log them, show them) is what makes this diagnosis a two-minute check instead of a guessing game. Citations keep the system honest",
       "citations": [
         "rag-basics"
       ],
-      "confidence": 1.0,
+      "confidence": 0.6,
       "needs_human_review": false
     },
     "pf-03": {
-      "answer": "The refusal path should be designed first because it serves as the fallback safeguard for every other safeguard in the loop. When retrieval returns nothing relevant, the correct behavior is to say so and flag the answer for human review, ensuring that fabrication is avoided before spending a model call.",
+      "answer": "There is a spectrum: a deterministic chain (no decisions), a tool-using loop (the model picks tools), a reflection loop (the model critiques its own draft), and multi-agent systems (models delegate to models). Refusal is a first-class outcome A loop that cannot refuse will fabricate. When retrieval returns nothing relevant, the correct behavior is to say so \u2014 before spending a model call \u2014 and flag the answer for human review. Design the refusal path first; it is the path every other safeguard falls back to. When the budget is exhausted, the loop must stop in a defined state \u2014 typically a refusal with an explanation \u2014 rather than truncating silently.",
       "citations": [
         "agent-loops"
       ],
-      "confidence": 1.0,
+      "confidence": 0.6,
       "needs_human_review": false
     },
     "pf-04": {
-      "answer": "The four parts of one iteration are Perceive, Decide, Act, and Observe. The application owns three of these steps: Act, Observe, and all of Decide. Perceive is the only step that belongs to the model.",
+      "answer": "An agent is a loop: the model observes some state, decides on an action, the application executes that action, and the result feeds the next observation. What separates a reliable agent from an expensive random walk is not the model \u2014 it is the engineering of the loop around it. Each pass through the loop has four parts. Perceive: assemble the context the model will see \u2014 the question, retrieved documents, previous tool results. Decide: the model chooses to answer directly or to call a tool. Act: the application validates the chosen tool's arguments and executes it. Observe: the tool result is appended to the context. The application owns three of these four steps; only the decision belongs to the model. There is a spectrum: a deterministic chain (no decisions), a tool-using loop (the model picks tools), a reflection loop (the model critiques its own draft), and multi-agent systems (models delegate to models).",
       "citations": [
         "agent-loops"
       ],
-      "confidence": 1.0,
+      "confidence": 0.6,
       "needs_human_review": false
     },
     "pf-05": {
-      "answer": "The autonomy spectrum ranges from a deterministic chain with no decisions to multi-agent systems where models delegate to models, each step adding latency, cost, and failure modes. Professionals typically start at the lower end of the spectrum, using fixed pipelines, and only progress up when a measured failure justifies it.",
+      "answer": "There is a spectrum: a deterministic chain (no decisions), a tool-using loop (the model picks tools), a reflection loop (the model critiques its own draft), and multi-agent systems (models delegate to models). Each step up adds latency, cost, and failure modes. The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it. A workflow that can be a fixed pipeline should be a fixed pipeline. Every production loop carries a budget: a maximum number of tool calls, a token ceiling, or a wall-clock timeout. Stopping conditions worth implementing from day one: the model produced a final answer, the budget ran out, a tool failed unrecoverably, or the same tool was called with the same arguments twice (a loop-detection guard). Choose the least autonomy that works",
       "citations": [
         "agent-loops"
       ],
-      "confidence": 1.0,
+      "confidence": 0.6,
       "needs_human_review": false
     },
     "pf-06": {
-      "answer": "A trace turns a failing case into a fix by diagnosing which part of the process failed\u2014retrieval, tool selection, instruction-following, or formatting\u2014helping to pinpoint and address the issue quickly.",
+      "answer": "A trace is the ordered record of what the system actually did: what was retrieved, which tools were called with which arguments, what the model returned. When a case fails, the trace answers the diagnostic question \u2014 was it retrieval, tool selection, instruction-following, or formatting? \u2014 in minutes. Classify each failure into one of those buckets, fix the biggest bucket first, and add a regression case so the same failure cannot return unnoticed. Traces turn failures into diagnoses Each case pairs an input with an expected property, not necessarily an exact string: \"the answer cites document X\", \"the system refuses\", \"the JSON parses and confidence is below 0.5\".",
       "citations": [
         "evaluation-basics"
       ],
-      "confidence": 1.0,
+      "confidence": 0.6,
       "needs_human_review": false
     },
     "pf-07": {
-      "answer": "Code-based checks are preferable when the property being checked is mechanical, such as verifying a citation or ensuring parsing correctness. Before trusting a judge model, one must inspect the evaluator's false positives.",
+      "answer": "Prefer code-based checks whenever the property is mechanical: did it cite the expected source, did it parse, did it stay under the tool budget. They are fast, free, and deterministic. LLM-as-judge \u2014 using a model to grade another model's output \u2014 earns its place for genuinely fuzzy properties like tone or coherence, but it inherits the judge's own biases and must itself be spot-checked against human labels. A common failure is an evaluator that passes everything; inspect your evaluator's false positives before trusting its pass rate. Start with a small labeled set \u2014 eight to twenty cases is genuinely useful. Each case pairs an input with an expected property, not necessarily an exact string: \"the answer cites document X\", \"the system refuses\", \"the JSON parses and confidence is below 0.5\".",
       "citations": [
         "evaluation-basics"
       ],
-      "confidence": 1.0,
+      "confidence": 0.6,
       "needs_human_review": false
     },
     "pf-08": {
-      "answer": "First, attempt to parse the JSON; on failure, retry once with a corrective instruction like 'return only the JSON object, no prose'. On a second failure, return a typed refusal with `needs_human_review` set to true.",
+      "answer": "Parsing can fail even with a good prompt. A robust pattern is: attempt to parse; on failure, retry once with a corrective instruction (\"return only the JSON object, no prose\"); on a second failure, return a typed refusal with `needs_human_review` set to true. This keeps the failure visible and bounded instead of letting malformed output leak into downstream code. Structured output is not about making the model smarter. ```json { \"answer\": \"string\", \"citations\": [\"doc-id\"], \"confidence\": 0.0, \"needs_human_review\": false } ``` First, the application \u2014 not the model \u2014 is responsible for parsing and validation. Treat the model's output as untrusted input: parse it strictly, reject unknown fields, and fail loudly on malformed JSON.",
       "citations": [
         "structured-outputs"
       ],
-      "confidence": 1.0,
+      "confidence": 0.6,
       "needs_human_review": false
     },
     "pf-09": {
-      "answer": "Practical rules include preferring read-only servers while learning, never placing credentials in client configuration files that get committed, and treating everything a server returns as untrusted data, not instructions. These guidelines minimize the risk during initial interactions with unfamiliar MCP servers.",
+      "answer": "Connecting an MCP server is granting capabilities, and the connection point is a security boundary. Practical rules: prefer read-only servers while learning; never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect. Where a tool is a function an agent can call inside one application, an MCP server packages a set of tools, resources, and prompts behind a protocol boundary so that any MCP-capable client \u2014 Claude Code, Cursor, VS Code, a custom agent \u2014 can discover and use them without custom integration code. An MCP server exposes capabilities: tools (functions with JSON-schema signatures), resources (readable data), and prompts (reusable templates). An MCP client is the agent-side application that connects to servers, lists their capabilities, and routes the model's tool calls to the right server. These three are commonly confused. A tool is a callable capability with a narrow contract \u2014 it executes. A skill is packaged instructions \u2014 a folder of guidance the model loads to perform a workflow well; it does not execute anything by itself. An MCP server is a distribution boundary for tools and resources \u2014 it makes capabilities available across applications. A well-built agent system often uses all three: an MCP server provides the tools, and a skill teaches the model when and how to use them.",
       "citations": [
         "mcp-overview"
       ],
-      "confidence": 1.0,
+      "confidence": 0.6,
       "needs_human_review": false
     },
     "pf-10": {
-      "answer": "A trace records what the system actually did, including what was retrieved, which tools were called, what arguments were used, and what the model returned.",
+      "answer": "A trace is the ordered record of what the system actually did: what was retrieved, which tools were called with which arguments, what the model returned. When a case fails, the trace answers the diagnostic question \u2014 was it retrieval, tool selection, instruction-following, or formatting? \u2014 in minutes. Classify each failure into one of those buckets, fix the biggest bucket first, and add a regression case so the same failure cannot return unnoticed.",
       "citations": [
         "evaluation-basics"
       ],
-      "confidence": 1.0,
+      "confidence": 0.6,
       "needs_human_review": false
     },
     "pf-11": {
-      "answer": "Prompt injection can enter a RAG assistant through the corpus itself, where documents edited to include instructions will have those instructions placed verbatim into the model's context at answer time.",
+      "answer": "Any channel that feeds text into the prompt is an injection surface. For a RAG assistant that means the corpus itself: a document edited to include instructions will have those instructions placed, verbatim, into the model's context at answer time. For a coding assistant it means the repository: comments, commit messages, and README files are all model-visible input. Treat every ingested document, spec, and tool response as untrusted input, the way a web developer treats form fields. Design so that the worst injected text can change an answer's words but not the system's actions.",
       "citations": [
         "prompt-injection"
       ],
-      "confidence": 1.0,
+      "confidence": 0.6,
       "needs_human_review": false
     },
     "pf-12": {
@@ -110,11 +108,9 @@
       "needs_human_review": true
     },
     "pf-15": {
-      "answer": "The context does not provide specific information about fine-tuning a model on your own data. The nearest related topic is growing the RAG corpus (document-ids [rag-basics]), but it emphasizes starting small and only growing when necessary based on measured retrieval failures, not explicitly fine-tuning.",
-      "citations": [
-        "rag-basics"
-      ],
-      "confidence": 0.5,
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
       "needs_human_review": true
     }
   }
