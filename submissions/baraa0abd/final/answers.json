@@ -84,7 +84,7 @@
       "needs_human_review": false
     },
     "pf-11": {
-      "answer": "Prompt injection is the confusion of untrusted data with instructions. It can enter through retrieved documents, web pages, tool results, API specifications, repository comments, commit messages, and README files. Layered defenses mark data boundaries around retrieved content with delimiters and treat it as data rather than commands; constrain output with a strict schema and validation; bound capabilities with read-only tools and a tool-call budget to limit blast radius; keep credentials and secrets outside model context; and include an adversarial document in the evaluation set to prove the agent quotes rather than obeys embedded instructions. Every ingested document, specification, and tool response must be treated as untrusted input, and system actions must stay safe even when hostile text changes the wording of an answer.",
+      "answer": "Any channel that feeds text into the prompt is an injection surface. For a RAG assistant that means the corpus itself: a document edited to include instructions will have those instructions placed, verbatim, into the model's context at answer time. For an API-using agent it means specs and docs: a malicious OpenAPI description can try to redirect calls or exfiltrate credentials. For a coding assistant it means the repository: comments, commit messages, and README files are all model-visible input.",
       "citations": [
         "prompt-injection"
       ],
