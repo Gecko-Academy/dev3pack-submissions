@@ -1,0 +1,89 @@
+# A student opens "Hand in my Gecko capstone" with one link in it. This records
+# `submissions/<author>/gecko/submission.json` with their repository's newest
+# commit, and answers on the issue.
+#
+# WHY AN ISSUE AND NOT A PULL REQUEST. The pull-request route asked a student to
+# copy a 40-character commit, type their login three times and click through a
+# fork. An issue form is one box. GitHub already knows who opened it.
+#
+# THE ISSUE BODY IS UNTRUSTED. It reaches the script through `env`, never through
+# `${{ }}` inside `run:`, so nothing in it is ever read by the shell. The script
+# uses only a regex-matched URL from it.
+#
+# WHAT IT WRITES: one file under the author's own folder, nothing else. TRACK.md
+# is rebuilt by `collect.yml`, which this dispatches, so the two jobs never write
+# the same file and the push cannot conflict.
+name: gecko link
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: gecko-link-${{ github.event.issue.user.login }}
+  cancel-in-progress: false
+
+jobs:
+  record:
+    if: >-
+      github.repository == 'Gecko-Academy/dev3pack-submissions' &&
+      contains(github.event.issue.labels.*.name, 'gecko-capstone')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read the link and record it
+        id: record
+        env:
+          AUTHOR: ${{ github.event.issue.user.login }}
+          BODY: ${{ github.event.issue.body }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+          if python3 scripts/gecko_from_issue.py "$RUNNER_TEMP/reply.md"; then
+            echo "written=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "written=no" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit it
+        if: steps.record.outputs.written == 'yes'
+        env:
+          AUTHOR: ${{ github.event.issue.user.login }}
+        run: |
+          set -euo pipefail
+          git config user.name "dev3pack-bot"
+          git config user.email "noreply@github.com"
+          git add "submissions/$AUTHOR/gecko/submission.json"
+          if git diff --cached --quiet; then
+            echo "already recorded at this commit"
+          else
+            git commit -m "gecko: record $AUTHOR's capstone link"
+            bash scripts/push_with_retry.sh
+          fi
+
+      # A push made with this token starts no workflow, so the track would wait
+      # for the next scheduled collect. Ask for it now.
+      - name: Rebuild the track
+        if: steps.record.outputs.written == 'yes'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run collect.yml --repo "$GITHUB_REPOSITORY" -f merge=true
+
+      - name: Answer on the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          set -euo pipefail
+          gh issue comment "$NUMBER" --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/reply.md"
+          if [ "${{ steps.record.outputs.written }}" = "yes" ]; then
+            gh issue close "$NUMBER" --repo "$GITHUB_REPOSITORY" --reason completed
+          fi

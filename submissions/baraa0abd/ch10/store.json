@@ -1,0 +1,25 @@
+{
+  "store": "baraa0abd-coffee",
+  "authority": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "telegram_channel_id": "@baraa0abd",
+  "items": [
+    {
+      "name": "Espresso",
+      "price_lamports": 1000000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "name": "Latte",
+      "price_lamports": 1500000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "name": "Cold brew",
+      "price_lamports": 2000000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    }
+  ]
+}

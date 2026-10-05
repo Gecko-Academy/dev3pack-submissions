@@ -27,6 +27,7 @@ from pathlib import Path
 
 # Run as `python3 scripts/check_bundle.py`, so its own directory is on the path.
 from check_final import FINAL, final_problems
+from check_gecko import GECKO, gecko_problems
 
 #: Must match `bootcamp_agent.submission.SCHEMA` in the course repository.
 SCHEMA = "dev3pack.submission.v2"
@@ -88,6 +89,10 @@ def problems_with(directory: Path) -> list[str]:
     # request's author; no homework item can be called `final` (see ITEM).
     if directory.name == FINAL:
         return final_problems(directory)
+    # The Gecko capstone hand-in is a link to the student's own repository,
+    # routed the same way. `gecko` cannot collide with a homework item either.
+    if directory.name == GECKO:
+        return gecko_problems(directory)
     found: list[str] = []
     claim_path = directory / "submission.json"
     notebook = directory / "notebook.ipynb"
