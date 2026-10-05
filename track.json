@@ -9860,6 +9860,15 @@
       }
     },
     {
+      "github": "SaulChoque",
+      "gecko": null,
+      "final": {
+        "percent": 100,
+        "passed": true,
+        "certificate_eligible": true
+      }
+    },
+    {
       "github": "semegn19",
       "gecko": {
         "repo": "https://github.com/semegn19/my-gecko-buyer",
