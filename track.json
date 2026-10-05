@@ -5803,6 +5803,57 @@
     },
     {
       "github": "irlandakelly",
+      "item": "ch11",
+      "submitted_at": "2026-10-05T23:25:29Z",
+      "ran": true,
+      "passed": [
+        "ch11-e1",
+        "ch11-e2",
+        "ch11-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "irlandakelly",
+      "item": "ch12",
+      "submitted_at": "2026-10-05T23:32:46Z",
+      "ran": true,
+      "passed": [
+        "ch12-e2",
+        "ch12-e1",
+        "ch12-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "irlandakelly",
+      "item": "ch13",
+      "submitted_at": "2026-10-05T23:32:19Z",
+      "ran": true,
+      "passed": [],
+      "failed": [
+        "ch13-e4",
+        "ch13-e2",
+        "ch13-e1"
+      ],
+      "not_reached": [],
+      "scored": true,
+      "score": 0,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "irlandakelly",
       "item": "w01",
       "submitted_at": "2026-09-15T15:01:12Z",
       "ran": true,
