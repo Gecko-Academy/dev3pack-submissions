@@ -1,0 +1,119 @@
+{
+  "cohort": "2026-09",
+  "course_release": "81a918144aeae97db58c871c1f4e2be68cdd1bc5",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "A RAG application must validate every citation against the retrieved passages and refuse to include any citation the retriever never returned. Such citations are fabrications and must be stripped and flagged. The application must validate that only retrieved content is quoted, using delimiters to mark boundaries between untrusted input and instructions. If a citation refers to a document or passage not retrieved, it should be treated as a refusal case. The final answer must only reference content from retrieved passages, split documents into passages at paragraph boundaries. The system should use a strict output schema to prevent malformed JSON and ensure that a tool is a callable with read-only tools and a limited budget and timeout. If a tool failed, the application must not retry with the same arguments. A skill is packaged instructions, and when interacting with an MCP server, credentials out must be enforced so secrets are not exposed to the model. Adversarial document testing should confirm the model quotes rather than obeys injected instructions.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "The first diagnostic question is: did the right passage reach the prompt? If retrieval missed it, no amount of prompt engineering will fix the answer \u2014 fix chunking, the index, or the query instead. If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context. Keeping retrieved chunks inspectable (log them, show them) is what makes this diagnosis a two-minute check instead of a guessing game.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "The refusal path in an agent loop should be designed first because 'refusal is a first-class outcome' and 'a loop that cannot refuse will fabricate.' When retrieval returns nothing relevant, the correct behavior is to say so \u2014 before spending a model call \u2014 and flag the answer for human review. Design the refusal path first; it is the path every other safeguard falls back to.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "The four parts of one iteration of an agent loop are: **Perceive**: assemble the context the model will see \u2014 the question, retrieved documents, previous tool results. **Decide**: the model chooses to answer directly or to call a tool. **Act**: the application validates the chosen tool's arguments and executes it. **Observe**: the tool result is appended to the context. The application owns three of these four steps; only the decision belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "The autonomy spectrum includes: a deterministic chain (no decisions), a tool-using loop (the model picks tools), a reflection loop (the model critiques its own draft), and multi-agent systems (models delegate to models). The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it. A workflow that can be a fixed pipeline should be a fixed pipeline.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace turns a failing case into a fix by providing the ordered record of what the system actually did, including which passages were retrieved, which tools were called with the same arguments, and what the model returned. When a case fails, the trace answers whether the issue was in retrieval, tool selection, instruction-following, or formatting \u2014 in minutes. For retrieval issues, the diagnostic question is: did the right passage reach the prompt? If the right passage was not retrieved, the problem lies in splitting documents into passages, chunking, the index, or the query. If retrieved passages contain the answer but the final answer is still wrong, the failure is in generation \u2014 such as the model ignoring context, malformed JSON, or failure to follow a strict output schema. Traces allow the application to validate each step, including whether a tool failed, exceeded the budget, or timed out. Since a tool is a callable and a skill is packaged instructions, inspecting the trace helps determine if read-only tools were misused or if credentials out caused failures. By marking boundaries and using delimiters, especially at paragraph boundaries, the system can better manage untrusted input and adversarial document cases. The trace enables inspection of every item listed \u2014 including timeouts, tool calls, and formatting errors \u2014 so the biggest failure bucket can be fixed first. Regression cases are added to ensure the same arguments do not produce the same failure. For LLM-as-judge evaluations, traces help spot-check false positives. In MCP server environments, ensuring proper validation and delimiters keeps the system honest, particularly in refusal cases where the model must not execute unsafe actions.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "A code-based check is preferable whenever the property is mechanical: did it cite the expected source, did it parse, did it stay under the tool budget. Before trusting a judge, you must inspect your evaluator's false positives.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "The robust handling pattern for a model's JSON failing to parse is to first attempt to parse the output; if parsing fails, retry once with a corrective instruction such as 'return only the JSON object, no prose'; on a second failure, return a typed refusal with `needs_human_review` set to true. The application must validate all outputs, treating the model's response as untrusted input. Malformed JSON should be rejected loudly, and the system should enforce a strict output schema to prevent downstream errors. This pattern ensures failures are bounded and visible, aligning with practices for handling refusal cases and maintaining reliability in the face of adversarial document inputs or tool failures. Traces help diagnose such failures by marking boundaries and using delimiters to identify where parsing broke down.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "Practical rules: prefer read-only servers while learning; never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect. A server that can spend money or mutate production state deserves the same review as giving a new contractor production access.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace records the ordered record of what the system actually did: what was retrieved, which tools were called with which arguments, what the model returned. It answers the diagnostic question \u2014 was it retrieval, tool selection, instruction-following, or formatting? \u2014 in minutes.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "Prompt injection can enter a RAG assistant through the corpus itself: a document edited to include instructions will have those instructions placed, verbatim, into the model's context at answer time. This includes adversarial document, where untrusted input is introduced via split documents into passages, and if chunking does not mark boundaries or respect paragraph boundaries, malicious content can be injected mid-sentence. The application must validate all inputs, especially when dealing with delimiters, to prevent malformed JSON or injection through untrusted input such as comments, commit messages, and README files. Since a tool is a callable and a skill is packaged instructions, if the system uses an MCP server or read-only tools, credentials out must be protected. Without a strict output schema, timeout, budget, or handling for tool failed or same arguments, the final answer may reflect injected content. Refusal cases must be handled to avoid acting on adversarial input.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "I do not know.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "The context provided does not contain information about who teaches the bootcamp or their email address. It discusses concepts such as prompt injection, tools, skills, and MCP servers, but does not list any instructor names or contact details.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "The provided context does not contain any information about fine-tuning a model on your own data, nor does it list any retrieved passages or items related to this topic using the specified terms.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    }
+  }
+}
