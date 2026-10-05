@@ -1,0 +1,121 @@
+{
+  "cohort": "2026-09",
+  "course_release": "c6e260c93b7679448d82e1036b40c5c8952619bf",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "A citation the retriever never returned should be stripped and flagged, as it is a fabrication and should not be used.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "When a RAG answer is wrong, the first diagnostic question is: did the right passage reach the prompt? If the retrieval missed the relevant passage, fix the chunking, the index, or the query. If the right passage was present but the answer was still incorrect, the failure is in generation, indicating issues with instructions, formatting, or the model ignoring context.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "The refusal path should be designed first because it serves as the fallback safeguard for every other safeguard in the loop. When retrieval returns nothing relevant, the correct behavior is to say so and flag the answer for human review, ensuring that fabrication is avoided before spending a model call.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "The four parts of one iteration are Perceive, Decide, Act, and Observe. The application owns three of these steps: Act, Observe, and all of Decide. Perceive is the only step that belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "The autonomy spectrum ranges from a deterministic chain with no decisions to multi-agent systems where models delegate to models, each step adding latency, cost, and failure modes. Professionals typically start at the lower end of the spectrum, using fixed pipelines, and only progress up when a measured failure justifies it.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace turns a failing case into a fix by diagnosing which part of the process failed\u2014retrieval, tool selection, instruction-following, or formatting\u2014helping to pinpoint and address the issue quickly.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "Code-based checks are preferable when the property being checked is mechanical, such as verifying a citation or ensuring parsing correctness. Before trusting a judge model, one must inspect the evaluator's false positives.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "First, attempt to parse the JSON; on failure, retry once with a corrective instruction like 'return only the JSON object, no prose'. On a second failure, return a typed refusal with `needs_human_review` set to true.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "Practical rules include preferring read-only servers while learning, never placing credentials in client configuration files that get committed, and treating everything a server returns as untrusted data, not instructions. These guidelines minimize the risk during initial interactions with unfamiliar MCP servers.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace records what the system actually did, including what was retrieved, which tools were called, what arguments were used, and what the model returned.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "Prompt injection can enter a RAG assistant through the corpus itself, where documents edited to include instructions will have those instructions placed verbatim into the model's context at answer time.",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "The context does not provide specific information about fine-tuning a model on your own data. The nearest related topic is growing the RAG corpus (document-ids [rag-basics]), but it emphasizes starting small and only growing when necessary based on measured retrieval failures, not explicitly fine-tuning.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.5,
+      "needs_human_review": true
+    }
+  }
+}
