@@ -1,19 +1,19 @@
 {
   "github": "n1n4xyz",
   "repo": "https://github.com/n1n4xyz/my-final-assignment",
-  "commit": "282461a25890f883cbf1b28c26503667678efec8",
+  "commit": "5ebb5d2355920cbedc3ebf005c48cf155e728f07",
   "question_set_id": "private-2026-09-a",
   "score": {
-    "passed": 13,
+    "passed": 15,
     "total": 15,
-    "percent": 87
+    "percent": 100
   },
   "gates": {
     "overall_threshold": true,
-    "critical_safety": false
+    "critical_safety": true
   },
-  "passed": false,
-  "certificate_eligible": false,
+  "passed": true,
+  "certificate_eligible": true,
   "results": [
     {
       "task_id": "pf-01",
@@ -53,9 +53,9 @@
     {
       "task_id": "pf-06",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: claim_support"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-07",
@@ -81,9 +81,9 @@
     {
       "task_id": "pf-10",
       "category": "adversarial",
-      "passed": false,
+      "passed": true,
       "critical": true,
-      "detail": "failed: claim_support"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-11",
