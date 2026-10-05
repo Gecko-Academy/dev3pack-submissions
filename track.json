@@ -194,6 +194,25 @@
   "entries": [
     {
       "github": "250408900-maker",
+      "item": "cap01",
+      "submitted_at": "2026-10-05T07:13:18Z",
+      "ran": true,
+      "passed": [
+        "cap01-e1",
+        "cap01-e2",
+        "cap01-e3",
+        "cap01-e4",
+        "cap01-e5"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 500,
+      "max_score": 500,
+      "tier": "claimed"
+    },
+    {
+      "github": "250408900-maker",
       "item": "ch01",
       "submitted_at": "2026-09-20T08:53:44Z",
       "ran": true,
@@ -1687,6 +1706,25 @@
       "score": 100,
       "max_score": 100,
       "tier": "unverifiable"
+    },
+    {
+      "github": "MarisolArgibay",
+      "item": "cap01",
+      "submitted_at": "2026-10-05T06:12:28Z",
+      "ran": true,
+      "passed": [
+        "cap01-e1",
+        "cap01-e2",
+        "cap01-e3",
+        "cap01-e4",
+        "cap01-e5"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 500,
+      "max_score": 500,
+      "tier": "claimed"
     },
     {
       "github": "MarisolArgibay",
@@ -4847,6 +4885,25 @@
       "scored": true,
       "score": 200,
       "max_score": 700,
+      "tier": "claimed"
+    },
+    {
+      "github": "helasnoussi",
+      "item": "cap01",
+      "submitted_at": "2026-10-05T06:47:16Z",
+      "ran": true,
+      "passed": [
+        "cap01-e1",
+        "cap01-e2",
+        "cap01-e3",
+        "cap01-e4",
+        "cap01-e5"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 500,
+      "max_score": 500,
       "tier": "claimed"
     },
     {
@@ -9363,11 +9420,20 @@
         "url": "https://github.com/arr4-y/my-gecko-buyer/tree/2952f8948aaca2ab2f89713671f34ed88d72529b",
         "submitted_at": "2026-10-05T05:42:02Z"
       },
-      "final": null
+      "final": {
+        "percent": 60,
+        "passed": false,
+        "certificate_eligible": false
+      }
     },
     {
       "github": "baraa0abd",
-      "gecko": null,
+      "gecko": {
+        "repo": "https://github.com/baraa0abd/my-gecko-buyer",
+        "commit": "b5f19d82513b4e5bfce5e126546696c1ccc2656f",
+        "url": "https://github.com/baraa0abd/my-gecko-buyer/tree/b5f19d82513b4e5bfce5e126546696c1ccc2656f",
+        "submitted_at": "2026-10-05T07:59:05Z"
+      },
       "final": {
         "percent": 93,
         "passed": false,
@@ -9399,7 +9465,12 @@
     },
     {
       "github": "helasnoussi",
-      "gecko": null,
+      "gecko": {
+        "repo": "https://github.com/helasnoussi/my-gecko-buyer",
+        "commit": "92f7bfcc1e8ad000c70d0f40379cfbfbe8196802",
+        "url": "https://github.com/helasnoussi/my-gecko-buyer/tree/92f7bfcc1e8ad000c70d0f40379cfbfbe8196802",
+        "submitted_at": "2026-10-05T07:49:57Z"
+      },
       "final": {
         "percent": 87,
         "passed": true,
