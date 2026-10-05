@@ -1,0 +1,37 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch09",
+  "student": {
+    "github": "MihaelaCatan04"
+  },
+  "submitted_at": "2026-10-03T18:12:54Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch09-e1",
+      "ch09-e2"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 200,
+    "max_score": 200
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "darwin"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "50c2d4931c05a488fe2357773a3915c6e2d9e03f44fc2d5c8dcf393e39995fee"
+  },
+  "verified": null,
+  "submission_id": "sub_c90705da9a099771196786c0"
+}

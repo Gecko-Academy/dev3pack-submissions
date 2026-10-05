@@ -1,0 +1,37 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch09",
+  "student": {
+    "github": "MarisolArgibay"
+  },
+  "submitted_at": "2026-10-04T09:39:13Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch09-e1",
+      "ch09-e2"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 200,
+    "max_score": 200
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "1a04aae45b105b841a6270e4e7be12acfff2caee97946fed3805022ebf0cef5e"
+  },
+  "verified": null,
+  "submission_id": "sub_010cdb6497056f55223e1840"
+}

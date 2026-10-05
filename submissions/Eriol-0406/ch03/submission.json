@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch03",
+  "student": {
+    "github": "Eriol-0406"
+  },
+  "submitted_at": "2026-10-05T03:31:50Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch03-e1",
+      "ch03-e2",
+      "ch03-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "darwin"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "cc7883857da5223688a5a95e36fdc176f199dc93b64c86f7e72f7137af6083dd"
+  },
+  "verified": null,
+  "submission_id": "sub_c2ad0b632ef3264ce38b2f5b"
+}

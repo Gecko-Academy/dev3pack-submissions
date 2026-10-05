@@ -1,0 +1,119 @@
+{
+  "cohort": "2026-09",
+  "course_release": "1de8649529156c35bdeafacfbbef40726a9b0fba",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "A RAG application should strip and flag any citation the retriever never returned, as it is considered a fabrication. The system must verify document IDs against what was actually retrieved.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "The first diagnostic question is: 'Did the right passage reach the prompt?' If retrieval missed it, fix chunking, the index, or the query. If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "The refusal path should be designed first because it is the fundamental safeguard against fabricating answers when no relevant information is retrieved. If a loop cannot refuse, it will generate invalid responses. Designing refusal first ensures the system explicitly acknowledges lack of relevant data before expending resources, flags answers for human review, and provides a fallback for all other safeguards. This prioritizes transparency and prevents cascading failures in the loop's engineering.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "The four parts of an agent loop iteration are **Perceive**, **Decide**, **Act**, and **Observe**. The application owns **Perceive**, **Act**, and **Observe**; the **Decide** step belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "The autonomy spectrum ranges from a deterministic chain (no decisions) to tool-using loops, reflection loops, and multi-agent systems. The professional habit is to start at the lowest autonomy level (deterministic chain) and incrementally move upward only when a measured failure justifies the increased complexity, cost, and latency.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace turns a failing case into a fix by first categorizing the failure into one of four buckets: retrieval, tool selection, instruction-following, or formatting. Once diagnosed, the largest bucket is prioritized for fixing, and a regression case is added to prevent the same failure from recurring. This process transforms the failure into a targeted diagnostic and corrective action.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "Code-based checks are preferable for mechanical properties (e.g., source citation, parsing, budget adherence) as they are fast, deterministic, and free. Use an LLM-as-judge only for fuzzy properties (e.g., tone, coherence) but must be spot-checked for biases and false positives. Inspect the evaluator's false positives before trusting its pass rate.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "The robust handling pattern is: attempt to parse; on failure, retry once with a corrective instruction ('return only the JSON object, no prose'); on a second failure, return a typed refusal with `needs_human_review` set to true. This ensures failures are bounded and visible without leaking malformed output.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "When connecting to an MCP server you did not write, practical rules include: (1) prefer read-only servers while learning, (2) never place credentials in client configuration files that get committed, (3) treat everything a server returns as untrusted data, not instructions; and (4) use recorded or offline modes when available to prevent misbehaving prompts from causing real side effects. Servers that can mutate production state require the same review as granting new contractors production access.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace records the ordered record of what the system actually did: what was retrieved, which tools were called with which arguments, what the model returned. It answers diagnostic questions about failure buckets (retrieval, tool selection, instruction-following, or formatting) when a case fails.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "Prompt injection can enter a RAG assistant through its corpus, which consists of documents that may be edited to include instructions. These instructions are placed verbatim into the model's context at answer time, effectively making the corpus an injection surface. Additionally, API specs and tool responses could be vectors if malicious, but the primary focus for RAG is the corpus.",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    }
+  }
+}

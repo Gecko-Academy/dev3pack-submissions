@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch08",
+  "student": {
+    "github": "desirrebarbosa"
+  },
+  "submitted_at": "2026-10-03T15:45:49Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch08-e1",
+      "ch08-e2",
+      "ch08-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "b6eaca80bade6f1bee120b878c9f3644a6a5255336882eb1d53cc59ae188124c"
+  },
+  "verified": null,
+  "submission_id": "sub_6cd4067bc27a839df351e508"
+}

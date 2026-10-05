@@ -1,0 +1,119 @@
+{
+  "cohort": "2026-09",
+  "course_release": "85ad371e3e6354fc18edb4522b1fd66ac6223f62",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "A citation the retriever never returned is a fabrication and should be stripped and flagged. Every answer should name the document ids it drew from, and the application should verify those ids against what was actually retrieved. Start small, keep the corpus versioned in git, and grow it only when a measured retrieval failure says you need to. The \"I don't know\" case matters most: when nothing relevant is retrieved, the system must refuse rather than let the model improvise from its training data.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context. When a RAG system answers wrongly, the first diagnostic question is: did the right passage reach the prompt? If retrieval missed it, no amount of prompt engineering will fix the answer \u2014 fix chunking, the index, or the query instead. Keeping retrieved chunks inspectable (log them, show them) is what makes this diagnosis a two-minute check instead of a guessing game.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "When the budget is exhausted, the loop must stop in a defined state \u2014 typically a refusal with an explanation \u2014 rather than truncating silently. Stopping conditions worth implementing from day one: the model produced a final answer, the budget ran out, a tool failed unrecoverably, or the same tool was called with the same arguments twice (a loop-detection guard). Every production loop carries a budget: a maximum number of tool calls, a token ceiling, or a wall-clock timeout. There is a spectrum: a deterministic chain (no decisions), a tool-using loop (the model picks tools), a reflection loop (the model critiques its own draft), and multi-agent systems (models delegate to models). Design the refusal path first; it is the path every other safeguard falls back to.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "The application owns three of these four steps; only the decision belongs to the model. Stopping conditions worth implementing from day one: the model produced a final answer, the budget ran out, a tool failed unrecoverably, or the same tool was called with the same arguments twice (a loop-detection guard). What separates a reliable agent from an expensive random walk is not the model \u2014 it is the engineering of the loop around it. Every production loop carries a budget: a maximum number of tool calls, a token ceiling, or a wall-clock timeout. **Act**: the application validates the chosen tool's arguments and executes it. **Perceive**: assemble the context the model will see \u2014 the question, retrieved documents, previous tool results.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "There is a spectrum: a deterministic chain (no decisions), a tool-using loop (the model picks tools), a reflection loop (the model critiques its own draft), and multi-agent systems (models delegate to models). The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it. When retrieval returns nothing relevant, the correct behavior is to say so \u2014 before spending a model call \u2014 and flag the answer for human review. Design the refusal path first; it is the path every other safeguard falls back to. When the budget is exhausted, the loop must stop in a defined state \u2014 typically a refusal with an explanation \u2014 rather than truncating silently.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "When a case fails, the trace answers the diagnostic question \u2014 was it retrieval, tool selection, instruction-following, or formatting? Classify each failure into one of those buckets, fix the biggest bucket first, and add a regression case so the same failure cannot return unnoticed. A trace is the ordered record of what the system actually did: what was retrieved, which tools were called with which arguments, what the model returned. LLM-as-judge \u2014 using a model to grade another model's output \u2014 earns its place for genuinely fuzzy properties like tone or coherence, but it inherits the judge's own biases and must itself be spot-checked against human labels. Prefer code-based checks whenever the property is mechanical: did it cite the expected source, did it parse, did it stay under the tool budget.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "A common failure is an evaluator that passes everything; inspect your evaluator's false positives before trusting its pass rate. Prefer code-based checks whenever the property is mechanical: did it cite the expected source, did it parse, did it stay under the tool budget. LLM-as-judge \u2014 using a model to grade another model's output \u2014 earns its place for genuinely fuzzy properties like tone or coherence, but it inherits the judge's own biases and must itself be spot-checked against human labels. They are fast, free, and deterministic.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "A robust pattern is: attempt to parse; on failure, retry once with a corrective instruction (\"return only the JSON object, no prose\"); on a second failure, return a typed refusal with `needs_human_review` set to true. Structured outputs are the contract between the two: instead of asking a model to \"answer the question,\" you ask it to return a specific shape \u2014 usually JSON with named fields \u2014 and your application validates that shape before using it. Treat the model's output as untrusted input: parse it strictly, reject unknown fields, and fail loudly on malformed JSON. If the model answers a question about API authentication with three paragraphs of prose, a program that needs the confidence level, the cited sources, or a yes/no flag has to guess where those live. First, the application \u2014 not the model \u2014 is responsible for parsing and validation.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "Practical rules: prefer read-only servers while learning; never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect. An **MCP client** is the agent-side application that connects to servers, lists their capabilities, and routes the model's tool calls to the right server. Connecting an MCP server is granting capabilities, and the connection point is a security boundary. Where a tool is a function an agent can call inside one application, an MCP server packages a set of tools, resources, and prompts behind a protocol boundary so that any MCP-capable client \u2014 Claude Code, Cursor, VS Code, a custom agent \u2014 can discover and use them without custom integration code. An **MCP server** exposes capabilities: tools (functions with JSON-schema signatures), resources (readable data), and prompts (reusable templates).",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace is the ordered record of what the system actually did: what was retrieved, which tools were called with which arguments, what the model returned. When a case fails, the trace answers the diagnostic question \u2014 was it retrieval, tool selection, instruction-following, or formatting? Classify each failure into one of those buckets, fix the biggest bucket first, and add a regression case so the same failure cannot return unnoticed. Never change two things between measurements, and never report an improvement without also reporting what got worse. An honest evaluation report includes the regression it caused.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "For a RAG assistant that means the corpus itself: a document edited to include instructions will have those instructions placed, verbatim, into the model's context at answer time. For a coding assistant it means the repository: comments, commit messages, and README files are all model-visible input. Any channel that feeds text into the prompt is an injection surface. For an API-using agent it means specs and docs: a malicious OpenAPI description can try to redirect calls or exfiltrate credentials.",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "I do not know",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "We do not know",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "not enough information",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    }
+  }
+}
