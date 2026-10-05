@@ -9759,9 +9759,9 @@
       "github": "thefranceway",
       "gecko": null,
       "final": {
-        "percent": 87,
-        "passed": false,
-        "certificate_eligible": false
+        "percent": 100,
+        "passed": true,
+        "certificate_eligible": true
       }
     }
   ]
