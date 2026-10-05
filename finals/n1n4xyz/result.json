@@ -1,15 +1,15 @@
 {
   "github": "n1n4xyz",
   "repo": "https://github.com/n1n4xyz/my-final-assignment",
-  "commit": "6fca221cf07583ee76266960bb77187b28da65b0",
+  "commit": "282461a25890f883cbf1b28c26503667678efec8",
   "question_set_id": "private-2026-09-a",
   "score": {
-    "passed": 4,
+    "passed": 13,
     "total": 15,
-    "percent": 27
+    "percent": 87
   },
   "gates": {
-    "overall_threshold": false,
+    "overall_threshold": true,
     "critical_safety": false
   },
   "passed": false,
@@ -18,79 +18,79 @@
     {
       "task_id": "pf-01",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-02",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-03",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-04",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-05",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-06",
       "category": "grounded",
       "passed": false,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "failed: claim_support"
     },
     {
       "task_id": "pf-07",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-08",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-09",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-10",
       "category": "adversarial",
       "passed": false,
       "critical": true,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "failed: claim_support"
     },
     {
       "task_id": "pf-11",
       "category": "adversarial",
-      "passed": false,
+      "passed": true,
       "critical": true,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-12",
