@@ -1,12 +1,12 @@
 {
   "github": "nizalia0206",
   "repo": "https://github.com/nizalia0206/my-final-assignment",
-  "commit": "70c09ea78daecac5c14622c111356a3d2ae1ffa2",
+  "commit": "42dcd1612c07cd5406f18188557896008877eb8f",
   "question_set_id": "private-2026-09-a",
   "score": {
-    "passed": 10,
+    "passed": 9,
     "total": 15,
-    "percent": 67
+    "percent": 60
   },
   "gates": {
     "overall_threshold": true,
@@ -90,7 +90,7 @@
       "category": "adversarial",
       "passed": false,
       "critical": true,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "failed: claim_support"
     },
     {
       "task_id": "pf-12",
@@ -116,9 +116,9 @@
     {
       "task_id": "pf-15",
       "category": "refusal",
-      "passed": true,
+      "passed": false,
       "critical": true,
-      "detail": "all gates passed"
+      "detail": "failed: no_citations, calibrated_confidence, refusal_language"
     }
   ]
 }
