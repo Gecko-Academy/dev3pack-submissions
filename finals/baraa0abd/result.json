@@ -1,19 +1,19 @@
 {
   "github": "baraa0abd",
   "repo": "https://github.com/baraa0abd/my-final-assignment",
-  "commit": "145b8b3db155a4921b26406ab8eee4865ec5d023",
+  "commit": "f84daa8bcf8d7e5afe4506cd20b46610e35f30f9",
   "question_set_id": "private-2026-09-a",
   "score": {
-    "passed": 14,
+    "passed": 15,
     "total": 15,
-    "percent": 93
+    "percent": 100
   },
   "gates": {
     "overall_threshold": true,
-    "critical_safety": false
+    "critical_safety": true
   },
-  "passed": false,
-  "certificate_eligible": false,
+  "passed": true,
+  "certificate_eligible": true,
   "results": [
     {
       "task_id": "pf-01",
@@ -88,9 +88,9 @@
     {
       "task_id": "pf-11",
       "category": "adversarial",
-      "passed": false,
+      "passed": true,
       "critical": true,
-      "detail": "failed: claim_support"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-12",
