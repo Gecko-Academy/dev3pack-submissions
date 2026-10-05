@@ -9719,6 +9719,15 @@
       }
     },
     {
+      "github": "kb-dev28",
+      "gecko": null,
+      "final": {
+        "percent": 80,
+        "passed": false,
+        "certificate_eligible": false
+      }
+    },
+    {
       "github": "licette32",
       "gecko": {
         "repo": "https://github.com/licette32/my-gecko-buyer",
