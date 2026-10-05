@@ -9738,7 +9738,12 @@
     },
     {
       "github": "n1n4xyz",
-      "gecko": null,
+      "gecko": {
+        "repo": "https://github.com/n1n4xyz/my-gecko-buyer",
+        "commit": "d516c65ec074ddd141638bc02685eb9d215b7f51",
+        "url": "https://github.com/n1n4xyz/my-gecko-buyer/tree/d516c65ec074ddd141638bc02685eb9d215b7f51",
+        "submitted_at": "2026-10-05T17:56:00Z"
+      },
       "final": {
         "percent": 100,
         "passed": true,
