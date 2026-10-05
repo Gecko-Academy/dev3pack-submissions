@@ -3456,6 +3456,21 @@
       "tier": "claimed"
     },
     {
+      "github": "altamiranokimberly",
+      "item": "ch01",
+      "submitted_at": "2026-10-05T21:20:38Z",
+      "ran": true,
+      "passed": [
+        "ch01-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "unverifiable"
+    },
+    {
       "github": "apeaircreative",
       "item": "ch01",
       "submitted_at": "2026-09-17T21:16:29Z",
@@ -3953,6 +3968,25 @@
       "scored": true,
       "score": 100,
       "max_score": 100,
+      "tier": "claimed"
+    },
+    {
+      "github": "bahatijacklee",
+      "item": "cap01",
+      "submitted_at": "2026-10-05T21:18:31Z",
+      "ran": true,
+      "passed": [
+        "cap01-e1",
+        "cap01-e2",
+        "cap01-e3",
+        "cap01-e4",
+        "cap01-e5"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 500,
+      "max_score": 500,
       "tier": "claimed"
     },
     {
