@@ -9580,7 +9580,11 @@
         "url": "https://github.com/rehna-jp/Dev3Pack-Gecko-Capstone-Project/tree/00a68b1580d9b1591b5d84579eec76e0f5916151",
         "submitted_at": "2026-10-05T11:29:20Z"
       },
-      "final": null
+      "final": {
+        "percent": 73,
+        "passed": false,
+        "certificate_eligible": false
+      }
     },
     {
       "github": "semegn19",
