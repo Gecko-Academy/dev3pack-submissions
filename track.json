@@ -9599,6 +9599,15 @@
         "passed": true,
         "certificate_eligible": true
       }
+    },
+    {
+      "github": "thefranceway",
+      "gecko": null,
+      "final": {
+        "percent": 73,
+        "passed": false,
+        "certificate_eligible": false
+      }
     }
   ]
 }
