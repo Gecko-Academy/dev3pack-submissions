@@ -4,7 +4,7 @@
   "question_set_id": "private-2026-09-a",
   "answers": {
     "pf-01": {
-      "answer": "A RAG application must validate every citation against the retrieved passages and refuse to include any citation the retriever never returned. Such citations are fabrications and must be stripped and flagged. The application must validate that only retrieved content is quoted, using delimiters to mark boundaries between untrusted input and instructions. If a citation refers to a document or passage not retrieved, it should be treated as a refusal case. The final answer must only reference content from retrieved passages, split documents into passages at paragraph boundaries. The system should use a strict output schema to prevent malformed JSON and ensure that a tool is a callable with read-only tools and a limited budget and timeout. If a tool failed, the application must not retry with the same arguments. A skill is packaged instructions, and when interacting with an MCP server, credentials out must be enforced so secrets are not exposed to the model. Adversarial document testing should confirm the model quotes rather than obeys injected instructions.",
+      "answer": "A RAG application must validate every citation against the retrieved passages and treat any citation the retriever never returned as a fabrication. The application must validate that only retrieved content is referenced, using delimiters to mark boundaries between untrusted input and instructions. If a citation refers to content not retrieved \u2014 such as from an adversarial document or due to a tool failed response \u2014 it must be stripped and flagged as a refusal case. The final answer should only include information from retrieved and validated passages, ensuring the model does not quote or act on untrusted input. A strict output schema helps prevent issues like malformed JSON, and the application must ensure a tool is a callable with read-only tools to limit the blast radius. When a tool failed occurs, even with the same arguments, the system should respect the budget and timeout constraints. A skill is packaged instructions, and if the MCP server returns data, the application must validate it before use. Split documents into passages at paragraph boundaries to improve precision. Credentials out of the model's reach prevents leakage. In all cases, the application must validate the trace to ensure integrity.",
       "citations": [
         "rag-basics"
       ],
@@ -20,7 +20,7 @@
       "needs_human_review": false
     },
     "pf-03": {
-      "answer": "The refusal path in an agent loop should be designed first because 'refusal is a first-class outcome' and 'a loop that cannot refuse will fabricate.' When retrieval returns nothing relevant, the correct behavior is to say so \u2014 before spending a model call \u2014 and flag the answer for human review. Design the refusal path first; it is the path every other safeguard falls back to.",
+      "answer": "The refusal path in an agent loop should be designed first because 'refusal is a first-class outcome' and 'a loop that cannot refuse will fabricate.' The correct behavior when retrieval returns nothing relevant is to 'say so \u2014 before spending a model call \u2014 and flag the answer for human review.' Additionally, 'design the refusal path first; it is the path every other safeguard falls back to.'",
       "citations": [
         "agent-loops"
       ],
@@ -44,7 +44,7 @@
       "needs_human_review": false
     },
     "pf-06": {
-      "answer": "A trace turns a failing case into a fix by providing the ordered record of what the system actually did, including which passages were retrieved, which tools were called with the same arguments, and what the model returned. When a case fails, the trace answers whether the issue was in retrieval, tool selection, instruction-following, or formatting \u2014 in minutes. For retrieval issues, the diagnostic question is: did the right passage reach the prompt? If the right passage was not retrieved, the problem lies in splitting documents into passages, chunking, the index, or the query. If retrieved passages contain the answer but the final answer is still wrong, the failure is in generation \u2014 such as the model ignoring context, malformed JSON, or failure to follow a strict output schema. Traces allow the application to validate each step, including whether a tool failed, exceeded the budget, or timed out. Since a tool is a callable and a skill is packaged instructions, inspecting the trace helps determine if read-only tools were misused or if credentials out caused failures. By marking boundaries and using delimiters, especially at paragraph boundaries, the system can better manage untrusted input and adversarial document cases. The trace enables inspection of every item listed \u2014 including timeouts, tool calls, and formatting errors \u2014 so the biggest failure bucket can be fixed first. Regression cases are added to ensure the same arguments do not produce the same failure. For LLM-as-judge evaluations, traces help spot-check false positives. In MCP server environments, ensuring proper validation and delimiters keeps the system honest, particularly in refusal cases where the model must not execute unsafe actions.",
+      "answer": "A trace turns a failing case into a fix by providing an ordered record of what the system actually did, including which passages were retrieved, which tools were called with what arguments, and what the model returned. When a case fails, the trace answers the diagnostic question\u2014was the failure due to retrieval, tool selection, instruction-following, or formatting?\u2014in minutes. If the right passage was not retrieved, the issue is in retrieval: the system may need better chunking, improved indexing, or query rewriting. Since the application must validate untrusted input, it should mark boundaries and use delimiters to split documents into passages at paragraph boundaries. If the right passage was present but the final answer was still wrong, the failure is in generation\u2014perhaps due to poor instructions, a malformed JSON output, or the model ignoring context. Traces also reveal if a tool failed, exceeded the budget or timeout, or was called with the same arguments repeatedly. A tool is a callable, and a skill is packaged instructions; both should be read-only tools with credentials out. In cases involving an MCP server, strict output schema must be enforced. By inspecting logs of retrieved passages and system behavior, teams can classify failures, fix the biggest bucket first, and add regression cases to prevent recurrence. This process ensures the system does not silently fail, especially in refusal cases or when processing adversarial document inputs.",
       "citations": [
         "evaluation-basics"
       ],
@@ -52,7 +52,7 @@
       "needs_human_review": false
     },
     "pf-07": {
-      "answer": "A code-based check is preferable whenever the property is mechanical: did it cite the expected source, did it parse, did it stay under the tool budget. Before trusting a judge, you must inspect your evaluator's false positives.",
+      "answer": "A code-based check is preferable whenever the property is mechanical: for example, to check if it cited the expected source, did it parse, or did it stay under the tool budget. Before trusting a model as a judge, you must inspect your evaluator's false positives.",
       "citations": [
         "evaluation-basics"
       ],
@@ -60,15 +60,15 @@
       "needs_human_review": false
     },
     "pf-08": {
-      "answer": "The robust handling pattern for a model's JSON failing to parse is to first attempt to parse the output; if parsing fails, retry once with a corrective instruction such as 'return only the JSON object, no prose'; on a second failure, return a typed refusal with `needs_human_review` set to true. The application must validate all outputs, treating the model's response as untrusted input. Malformed JSON should be rejected loudly, and the system should enforce a strict output schema to prevent downstream errors. This pattern ensures failures are bounded and visible, aligning with practices for handling refusal cases and maintaining reliability in the face of adversarial document inputs or tool failures. Traces help diagnose such failures by marking boundaries and using delimiters to identify where parsing broke down.",
+      "answer": "The robust handling pattern for a model's JSON failing to parse is to first attempt to parse the output; if parsing fails, retry once with a corrective instruction such as 'return only the JSON object, no prose'; on a second failure, return a typed refusal with `needs_human_review` set to true. The application must validate the output strictly, treating the model's response as untrusted input. Malformed JSON should be rejected, and the final answer must conform to a strict output schema. This approach ensures failures are bounded and visible, preventing malformed output from leaking into downstream code.",
       "citations": [
         "structured-outputs"
       ],
-      "confidence": 0.95,
+      "confidence": 1.0,
       "needs_human_review": false
     },
     "pf-09": {
-      "answer": "Practical rules: prefer read-only servers while learning; never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect. A server that can spend money or mutate production state deserves the same review as giving a new contractor production access.",
+      "answer": "Practical rules: prefer read-only servers while learning; never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect.",
       "citations": [
         "mcp-overview"
       ],
@@ -84,15 +84,15 @@
       "needs_human_review": false
     },
     "pf-11": {
-      "answer": "Prompt injection can enter a RAG assistant through the corpus itself: a document edited to include instructions will have those instructions placed, verbatim, into the model's context at answer time. This includes adversarial document, where untrusted input is introduced via split documents into passages, and if chunking does not mark boundaries or respect paragraph boundaries, malicious content can be injected mid-sentence. The application must validate all inputs, especially when dealing with delimiters, to prevent malformed JSON or injection through untrusted input such as comments, commit messages, and README files. Since a tool is a callable and a skill is packaged instructions, if the system uses an MCP server or read-only tools, credentials out must be protected. Without a strict output schema, timeout, budget, or handling for tool failed or same arguments, the final answer may reflect injected content. Refusal cases must be handled to avoid acting on adversarial input.",
+      "answer": "Prompt injection can enter a RAG assistant through the corpus itself, as 'a document edited to include instructions will have those instructions placed, verbatim, into the model's context at answer time.' This means that any part of the corpus \u2014 including adversarial document \u2014 is a potential injection surface. The retrieved passages state that 'any channel that feeds text into the prompt is an injection surface,' and for a RAG assistant, this specifically means the corpus. No other items from the provided list (e.g., split documents into passages, paragraph boundaries, the application must validate, untrusted input, malformed JSON, final answer, budget, timeout, tool failed, same arguments, a tool is a callable, a skill is packaged instructions, MCP server, mark boundaries, delimiters, strict output schema, read-only tools, credentials out, refusal cases) are mentioned in the context as entry points for prompt injection.",
       "citations": [
-        "rag-basics"
+        "prompt-injection"
       ],
       "confidence": 0.95,
       "needs_human_review": false
     },
     "pf-12": {
-      "answer": "I do not know.",
+      "answer": "I don't know based on the provided corpus.",
       "citations": [],
       "confidence": 0.0,
       "needs_human_review": true
@@ -104,13 +104,13 @@
       "needs_human_review": true
     },
     "pf-14": {
-      "answer": "The context provided does not contain information about who teaches the bootcamp or their email address. It discusses concepts such as prompt injection, tools, skills, and MCP servers, but does not list any instructor names or contact details.",
+      "answer": "I don't know based on the provided corpus.",
       "citations": [],
       "confidence": 0.0,
       "needs_human_review": true
     },
     "pf-15": {
-      "answer": "The provided context does not contain any information about fine-tuning a model on your own data, nor does it list any retrieved passages or items related to this topic using the specified terms.",
+      "answer": "I don't know based on the provided corpus.",
       "citations": [],
       "confidence": 0.0,
       "needs_human_review": true
