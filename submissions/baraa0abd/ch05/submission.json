@@ -5,7 +5,7 @@
   "student": {
     "github": "baraa0abd"
   },
-  "submitted_at": "2026-09-21T18:08:19Z",
+  "submitted_at": "2026-10-04T12:08:36Z",
   "result": {
     "ran": true,
     "passed": [
@@ -30,8 +30,9 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "61fed1be594b02033022bda77bf919ee3fa781459e798ae1b1f24919a605b78d"
+    "notebook_sha256": "61fed1be594b02033022bda77bf919ee3fa781459e798ae1b1f24919a605b78d",
+    "challenge_sha256": "e4d40df1e9070da7e11d35d7c42b9ee4d6998cd696bf460bf6b264a97bf19bec"
   },
   "verified": null,
-  "submission_id": "sub_32e83a903a591c4c717a7517"
+  "submission_id": "sub_44eaa63fb02414c3b7be3a90"
 }

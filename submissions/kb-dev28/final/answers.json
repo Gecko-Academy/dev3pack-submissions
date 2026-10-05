@@ -1,0 +1,119 @@
+{
+  "cohort": "2026-09",
+  "course_release": "81a918144aeae97db58c871c1f4e2be68cdd1bc5",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "A RAG application must validate every citation against the retrieved passages and treat any citation the retriever never returned as a fabrication. The application must validate that only retrieved content is referenced, using delimiters to mark boundaries between untrusted input and instructions. If a citation refers to content not retrieved \u2014 such as from an adversarial document or due to a tool failed response \u2014 it must be stripped and flagged as a refusal case. The final answer should only include information from retrieved and validated passages, ensuring the model does not quote or act on untrusted input. A strict output schema helps prevent issues like malformed JSON, and the application must ensure a tool is a callable with read-only tools to limit the blast radius. When a tool failed occurs, even with the same arguments, the system should respect the budget and timeout constraints. A skill is packaged instructions, and if the MCP server returns data, the application must validate it before use. Split documents into passages at paragraph boundaries to improve precision. Credentials out of the model's reach prevents leakage. In all cases, the application must validate the trace to ensure integrity.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "The first diagnostic question is: did the right passage reach the prompt? If retrieval missed it, no amount of prompt engineering will fix the answer \u2014 fix chunking, the index, or the query instead. If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context. Keeping retrieved chunks inspectable (log them, show them) is what makes this diagnosis a two-minute check instead of a guessing game.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "The refusal path in an agent loop should be designed first because 'refusal is a first-class outcome' and 'a loop that cannot refuse will fabricate.' The correct behavior when retrieval returns nothing relevant is to 'say so \u2014 before spending a model call \u2014 and flag the answer for human review.' Additionally, 'design the refusal path first; it is the path every other safeguard falls back to.'",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "The four parts of one iteration of an agent loop are: **Perceive**: assemble the context the model will see \u2014 the question, retrieved documents, previous tool results. **Decide**: the model chooses to answer directly or to call a tool. **Act**: the application validates the chosen tool's arguments and executes it. **Observe**: the tool result is appended to the context. The application owns three of these four steps; only the decision belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "The autonomy spectrum includes: a deterministic chain (no decisions), a tool-using loop (the model picks tools), a reflection loop (the model critiques its own draft), and multi-agent systems (models delegate to models). The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it. A workflow that can be a fixed pipeline should be a fixed pipeline.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace turns a failing case into a fix by providing an ordered record of what the system actually did, including which passages were retrieved, which tools were called with what arguments, and what the model returned. When a case fails, the trace answers the diagnostic question\u2014was the failure due to retrieval, tool selection, instruction-following, or formatting?\u2014in minutes. If the right passage was not retrieved, the issue is in retrieval: the system may need better chunking, improved indexing, or query rewriting. Since the application must validate untrusted input, it should mark boundaries and use delimiters to split documents into passages at paragraph boundaries. If the right passage was present but the final answer was still wrong, the failure is in generation\u2014perhaps due to poor instructions, a malformed JSON output, or the model ignoring context. Traces also reveal if a tool failed, exceeded the budget or timeout, or was called with the same arguments repeatedly. A tool is a callable, and a skill is packaged instructions; both should be read-only tools with credentials out. In cases involving an MCP server, strict output schema must be enforced. By inspecting logs of retrieved passages and system behavior, teams can classify failures, fix the biggest bucket first, and add regression cases to prevent recurrence. This process ensures the system does not silently fail, especially in refusal cases or when processing adversarial document inputs.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "A code-based check is preferable whenever the property is mechanical: for example, to check if it cited the expected source, did it parse, or did it stay under the tool budget. Before trusting a model as a judge, you must inspect your evaluator's false positives.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "The robust handling pattern for a model's JSON failing to parse is to first attempt to parse the output; if parsing fails, retry once with a corrective instruction such as 'return only the JSON object, no prose'; on a second failure, return a typed refusal with `needs_human_review` set to true. The application must validate the output strictly, treating the model's response as untrusted input. Malformed JSON should be rejected, and the final answer must conform to a strict output schema. This approach ensures failures are bounded and visible, preventing malformed output from leaking into downstream code.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "Practical rules: prefer read-only servers while learning; never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace records the ordered record of what the system actually did: what was retrieved, which tools were called with which arguments, what the model returned. It answers the diagnostic question \u2014 was it retrieval, tool selection, instruction-following, or formatting? \u2014 in minutes.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "Prompt injection can enter a RAG assistant through the corpus itself, as 'a document edited to include instructions will have those instructions placed, verbatim, into the model's context at answer time.' This means that any part of the corpus \u2014 including adversarial document \u2014 is a potential injection surface. The retrieved passages state that 'any channel that feeds text into the prompt is an injection surface,' and for a RAG assistant, this specifically means the corpus. No other items from the provided list (e.g., split documents into passages, paragraph boundaries, the application must validate, untrusted input, malformed JSON, final answer, budget, timeout, tool failed, same arguments, a tool is a callable, a skill is packaged instructions, MCP server, mark boundaries, delimiters, strict output schema, read-only tools, credentials out, refusal cases) are mentioned in the context as entry points for prompt injection.",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    }
+  }
+}

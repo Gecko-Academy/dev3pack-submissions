@@ -27,6 +27,7 @@ This repository is only the hand-in.
 - [What CI does not check](#what-ci-does-not-check)
 - [If CI refuses your submission](#if-ci-refuses-your-submission)
 - [The final assignment](#the-final-assignment)
+- [The Gecko capstone link](#the-gecko-capstone-link)
 - [Consuming the track](#consuming-the-track)
 - [Test data](#test-data)
 - [A note for whoever merges](#a-note-for-whoever-merges)
@@ -145,6 +146,34 @@ Two gates decide a pass, and the second is the one that matters: 30% of
 questions, and **every** question marked critical. Refusing everything reaches
 the first and fails the second. Above both, the course issues a signed receipt
 and you render your certificate from it.
+
+## The Gecko capstone link
+
+The Gecko capstone stays in your own `my-gecko-buyer` repository: your code, your
+receipts, your refusals. What you hand in is only **the link**. Due **5 October**.
+
+**[Hand in my Gecko capstone](https://github.com/Gecko-Academy/dev3pack-submissions/issues/new?template=gecko-capstone.yml)**:
+paste your link, press **Submit new issue**. That is all.
+
+A bot answers on the issue within a minute:
+
+- **Recorded**, with the commit it took: the newest one on your repository. It also
+  lists anything the judges will look for and not find (receipts, refusals, the
+  smoke report). Your row appears under **Finish line** in [TRACK.md](TRACK.md).
+- **Not recorded yet**, with what to fix: the link is somebody else's, the course
+  template, or a private repository. Fix it and **edit the issue**; the bot reads it
+  again.
+
+Push your `receipts/`, `refusals/` and `smoke-report.json` **before** you hand in.
+Pushed more later? Edit the issue (any change), and the newest commit is recorded.
+
+From a terminal, the same thing, from the course folder:
+
+```bash
+uv run bootcamp gecko submit --repo ../my-gecko-buyer --github <your-github> --push
+```
+
+Both end in the same file, `submissions/<your-github>/gecko/submission.json`.
 
 ## Consuming the track
 

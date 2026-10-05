@@ -1,0 +1,119 @@
+{
+  "cohort": "2026-09",
+  "course_release": "d4e854e3ac7dced502d1195624dcc8e8891a5053",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "When a RAG application receives a citation from a retriever that never returned, it should not use that citation. Instead, it should check the document corpus for relevant passages manually or by inspection to identify the correct source documents if the application finds the right answer still wrong after ensuring the right passage was present.\n\nSource [rag-basics]:\n## Citations keep the system honest\n\nEvery answer should name the document ids it drew from, and the application\nshould verify those ids against what was actually retrieved. A citation the\nretriever never returned is a fabrication and should be stripped and flagged.\nThe \"I don't know\" case matters most: when nothing relevant is retrieved, the\nsystem must refuse rather than let the model improvise from its training data.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "The first diagnostic question is 'Did the right passage reach the prompt?'. If retrieval missed it, fixing the chunking, the index, or the query is suggested. If the right passage was present but the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context.\n\nSource [rag-basics]:\n## Retrieval failure vs generation failure\n\nWhen a RAG system answers wrongly, the first diagnostic question is: did the\nright passage reach the prompt? If retrieval missed it, no amount of prompt\nengineering will fix the answer \u2014 fix chunking, the index, or the query instead.\nIf the right passage was present and the answer still went wrong, the failure is\nin generation: instructions, formatting, or the model ignoring context. Keeping\nretrieved chunks inspectable (log them, show them) is what makes this diagnosis a\ntwo-minute check instead of a guessing game.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "A refusal path should be designed first in the agent loop because a loop that cannot refuse will fabricate. Rather than spending a model call to generate fabricated information, it is better to immediately say so and flag the answer for human review. Designing the refusal path first ensures that unreliable or fabricated outputs are identified early in the workflow.\n\nSource [agent-loops]:\n## Refusal is a first-class outcome\n\nA loop that cannot refuse will fabricate. When retrieval returns nothing relevant,\nthe correct behavior is to say so \u2014 before spending a model call \u2014 and flag the\nanswer for human review. Design the refusal path first; it is the path every other\nsafeguard falls back to.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.9,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "Each pass through the loop has four parts: **Perceive**: assemble the context the model will see \u2014 the question, retrieved documents, previous tool results; **Decide**: the model chooses to answer directly or to call a tool; **Act**: the application validates the chosen tool's arguments and executes it; **Observe**: the tool result is appended to the context. The application owns three of these four steps; only the decision belongs to the model.\n\nSource [agent-loops]:\n## The anatomy of one iteration\n\nEach pass through the loop has four parts. **Perceive**: assemble the context the\nmodel will see \u2014 the question, retrieved documents, previous tool results.\n**Decide**: the model chooses to answer directly or to call a tool. **Act**: the\napplication validates the chosen tool's arguments and executes it. **Observe**: the\ntool result is appended to the context. The application owns three of these four\nsteps; only the decision belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "The autonomy spectrum in this context refers to the different levels of decision-making capability: deterministic chains (no decisions), tool-using loops, reflection loops, and multi-agent systems where each step up represents adding more autonomy. The professional habit is to start from the bottom of the spectrum (deterministic chain) and move upwards only when a measurable failure warrants it. This approach helps prevent overstepping the necessary autonomy and maintaining a robust system with appropriate safeguards.\n\nSource [agent-loops]:\n## Choose the least autonomy that works\n\nThere is a spectrum: a deterministic chain (no decisions), a tool-using loop (the\nmodel picks tools), a reflection loop (the model critiques its own draft), and\nmulti-agent systems (models delegate to models). Each step up adds latency, cost,\nand failure modes. The professional habit is to start at the bottom of the\nspectrum and move up only when a measured failure justifies it. A workflow that\ncan be a fixed pipeline should be a fixed pipeline.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace turns a failing case into a diagnosis by providing an ordered record of what the system actually did. This record allows identifying which part\u2014retrieval, tool selection, instruction-following, or formatting\u2014was responsible for the failure. Once identified, the biggest bucket can be fixed first. Additionally, a regression case should be added to ensure the same failure cannot occur unnoticed.\n\nSource [evaluation-basics]:\n## Traces turn failures into diagnoses\n\nA trace is the ordered record of what the system actually did: what was\nretrieved, which tools were called with which arguments, what the model\nreturned. When a case fails, the trace answers the diagnostic question \u2014 was it\nretrieval, tool selection, instruction-following, or formatting? \u2014 in minutes.\nClassify each failure into one of those buckets, fix the biggest bucket first,\nand add a regression case so the same failure cannot return unnoticed.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "Code-based checks are preferable whenever a property is mechanical, such as whether a system correctly cites the expected source or parses a JSON input. Before trusting a model as a judge, one must inspect the judge's false positives, as LLMs inherit biases and must be compared against human labels to avoid inheriting these biases.\n\nSource [evaluation-basics]:\n## Code checks vs LLM-as-judge\n\nPrefer code-based checks whenever the property is mechanical: did it cite the\nexpected source, did it parse, did it stay under the tool budget. They are fast,\nfree, and deterministic. LLM-as-judge \u2014 using a model to grade another model's\noutput \u2014 earns its place for genuinely fuzzy properties like tone or coherence,\nbut it inherits the judge's own biases and must itself be spot-checked against\nhuman labels. A common failure is an evaluator that passes everything; inspect\nyour evaluator's false positives before trusting its pass rate.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "on a second failure, return a typed refusal with `needs_human_review` set to true\n\nSource [structured-outputs]:\n## Handling failure\n\nParsing can fail even with a good prompt. A robust pattern is: attempt to parse;\non failure, retry once with a corrective instruction (\"return only the JSON\nobject, no prose\"); on a second failure, return a typed refusal with\n`needs_human_review` set to true. This keeps the failure visible and bounded\ninstead of letting malformed output leak into downstream code.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "When connecting to an MCP server you did not write, the following practical rules apply: prefer read-only servers while learning, never place credentials in client configuration files that get committed, treat everything the server returns as untrusted data, not instructions, and use recorded or offline modes when they exist to prevent a misbehaving prompt from causing a real side effect.\n\nSource [mcp-overview]:\n## Trust and safety at the boundary\n\nConnecting an MCP server is granting capabilities, and the connection point is a\nsecurity boundary. Practical rules: prefer read-only servers while learning;\nnever place credentials in client configuration files that get committed;\ntreat everything a server returns as untrusted data, not instructions; and use\nrecorded or offline modes when they exist, so a misbehaving prompt cannot cause\na real side effect. A server that can spend money or mutate production state\ndeserves the same review as giving a new contractor production access.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace records the ordered sequence of actions the system performs, including what was retrieved, which tools were called with their arguments, and what a model returned. In the event of a case failure, a trace can help identify whether the issue lies with retrieval, tool selection, instruction-following, or formatting.\n\nSource [evaluation-basics]:\n## Traces turn failures into diagnoses\n\nA trace is the ordered record of what the system actually did: what was\nretrieved, which tools were called with which arguments, what the model\nreturned. When a case fails, the trace answers the diagnostic question \u2014 was it\nretrieval, tool selection, instruction-following, or formatting? \u2014 in minutes.\nClassify each failure into one of those buckets, fix the biggest bucket first,\nand add a regression case so the same failure cannot return unnoticed.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "Prompt injection can enter a RAG (Retrieval-Augmented Generation) assistant through the corpus itself, where instructions might be placed verbatim into the model's context at answer time.\n\nSource [prompt-injection]:\n## Where it enters\n\nAny channel that feeds text into the prompt is an injection surface. For a RAG\nassistant that means the corpus itself: a document edited to include\ninstructions will have those instructions placed, verbatim, into the model's\ncontext at answer time. For an API-using agent it means specs and docs: a\nmalicious OpenAPI description can try to redirect calls or exfiltrate\ncredentials. For a coding assistant it means the repository: comments, commit\nmessages, and README files are all model-visible input.",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    }
+  }
+}
