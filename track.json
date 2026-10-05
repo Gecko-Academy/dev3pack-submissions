@@ -7226,6 +7226,38 @@
       "tier": "claimed"
     },
     {
+      "github": "lovelymahor",
+      "item": "ch13",
+      "submitted_at": "2026-10-05T16:02:33Z",
+      "ran": true,
+      "passed": [
+        "ch13-e4",
+        "ch13-e2",
+        "ch13-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "lovelymahor",
+      "item": "ch14",
+      "submitted_at": "2026-10-05T16:29:02Z",
+      "ran": true,
+      "passed": [
+        "ch14-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "claimed"
+    },
+    {
       "github": "med-bc",
       "item": "ch01",
       "submitted_at": "2026-09-15T23:33:31Z",
@@ -9556,7 +9588,12 @@
     },
     {
       "github": "apeaircreative",
-      "gecko": null,
+      "gecko": {
+        "repo": "https://github.com/apeaircreative/my-gecko-buyer",
+        "commit": "f4f18fef104e2345305daa75ee3dfb7239bffb3c",
+        "url": "https://github.com/apeaircreative/my-gecko-buyer/tree/f4f18fef104e2345305daa75ee3dfb7239bffb3c",
+        "submitted_at": "2026-10-05T17:05:48Z"
+      },
       "final": {
         "percent": 80,
         "passed": true,
@@ -9700,6 +9737,29 @@
       }
     },
     {
+      "github": "n1n4xyz",
+      "gecko": {
+        "repo": "https://github.com/n1n4xyz/my-gecko-buyer",
+        "commit": "e291090421bc246cacc4ea79b09f90b12baa0cce",
+        "url": "https://github.com/n1n4xyz/my-gecko-buyer/tree/e291090421bc246cacc4ea79b09f90b12baa0cce",
+        "submitted_at": "2026-10-05T18:10:20Z"
+      },
+      "final": {
+        "percent": 100,
+        "passed": true,
+        "certificate_eligible": true
+      }
+    },
+    {
+      "github": "navy0110",
+      "gecko": null,
+      "final": {
+        "percent": 67,
+        "passed": false,
+        "certificate_eligible": false
+      }
+    },
+    {
       "github": "nizalia0206",
       "gecko": {
         "repo": "https://github.com/nizalia0206/my-gecko-buyer",
@@ -9708,7 +9768,7 @@
         "submitted_at": "2026-10-04T08:11:20Z"
       },
       "final": {
-        "percent": 67,
+        "percent": 60,
         "passed": false,
         "certificate_eligible": false
       }
@@ -9757,7 +9817,12 @@
     },
     {
       "github": "thefranceway",
-      "gecko": null,
+      "gecko": {
+        "repo": "https://github.com/thefranceway/my-gecko-buyer",
+        "commit": "6e4170ec00eab662c75319933558c8be3ee139ec",
+        "url": "https://github.com/thefranceway/my-gecko-buyer/tree/6e4170ec00eab662c75319933558c8be3ee139ec",
+        "submitted_at": "2026-10-05T18:54:21Z"
+      },
       "final": {
         "percent": 100,
         "passed": true,

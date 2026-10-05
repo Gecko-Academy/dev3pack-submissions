@@ -52,7 +52,7 @@ nothing has been submitted yet, which is not the same as a zero.
 | kb-dev28 | 100/100 | 400/400 | 300/300 | 300/300 | 500/700 | 300/300 | 300/300 | 300/300 | 200/200 | 700/700 | 300/300 | 300/300 | 300/300 | 100/100 | 500/500 | 4900/5100 |
 | leticiaalmeida-prod | 100/100 | 400/400 | 300/300 | 300/300 | 200/700 |  |  |  |  |  |  |  |  |  |  | 1300/1800 |
 | licette32 | 100/100 | 400/400 | 300/300 | 300/300 | 700/700 | 300/300 | 300/300 | 300/300 | 200/200 | 700/700 | 300/300 | 300/300 | 300/300 | 100/100 | 500/500 | 5100/5100 |
-| lovelymahor | 100/100 | 400/400 | 300/300 | 300/300 | 200/700 | 300/300 | 300/300 | 300/300 | 200/200 | 700/700 | 300/300 | 300/300 |  |  |  | 3700/4200 |
+| lovelymahor | 100/100 | 400/400 | 300/300 | 300/300 | 200/700 | 300/300 | 300/300 | 300/300 | 200/200 | 700/700 | 300/300 | 300/300 | 300/300 | 100/100 |  | 4100/4600 |
 | med-bc | 100/100 | 400/400 | 300/300 | 300/300 | 200/700 |  |  |  |  |  |  |  |  |  |  | 1300/1800 |
 | n1n4xyz | 100/100 | 400/400 | 300/300 | 300/300 | 700/700 | 300/300 | 300/300 | 300/300 | 200/200 | 700/700 | 300/300 | 300/300 | 300/300 | 100/100 | 500/500 | 5100/5100 |
 | navy0110 | 100/100 | 400/400 | 300/300 | 300/300 | 200/700 | 300/300 | 300/300 | 300/300 | 200/200 | 700/700 | 300/300 | 300/300 | 300/300 | 100/100 | 500/500 | 4600/5100 |
@@ -139,7 +139,7 @@ own `my-gecko-buyer`, at the commit you handed in) and the final submission
 |---|---|---|---|
 | 250408900-maker | [813dce0](https://github.com/250408900-maker/my-gecko-buyer/tree/813dce0800e4b18c2c20b431996d1326b961833d) | 100% | eligible |
 | Abduovv |  | 80% | eligible |
-| apeaircreative |  | 80% | eligible |
+| apeaircreative | [f4f18fe](https://github.com/apeaircreative/my-gecko-buyer/tree/f4f18fef104e2345305daa75ee3dfb7239bffb3c) | 80% | eligible |
 | arr4-y | [2952f89](https://github.com/arr4-y/my-gecko-buyer/tree/2952f8948aaca2ab2f89713671f34ed88d72529b) | 100% | eligible |
 | baraa0abd | [b5f19d8](https://github.com/baraa0abd/my-gecko-buyer/tree/b5f19d82513b4e5bfce5e126546696c1ccc2656f) | 100% | eligible |
 | desirrebarbosa | [552449f](https://github.com/desirrebarbosa/my-gecko-buyer/tree/552449f8ef22267b07928857a17a37e5b96532aa) | 93% | eligible |
@@ -151,8 +151,10 @@ own `my-gecko-buyer`, at the commit you handed in) and the final submission
 | Messibre | [c9669e3](https://github.com/Messibre/my-gecko-buyer/tree/c9669e3b25292184fd6108a3db44eedca48e4094) |  |  |
 | Mialy333 | [cc5a09c](https://github.com/Mialy333/my-gecko-buyer/tree/cc5a09c70c948e467ab2bd763a5156b2783d4867) | 100% | eligible |
 | MihaelaCatan04 | [c932b33](https://github.com/MihaelaCatan04/my-gecko-buyer/tree/c932b338b77c766daa7716b788b79d99f32c98f6) | 93% | eligible |
-| nizalia0206 | [ed4705c](https://github.com/nizalia0206/my-gecko-buyer/tree/ed4705cd0ce5f6c3c32389f28a0bb346f823b1cb) | 67% | not yet |
+| n1n4xyz | [e291090](https://github.com/n1n4xyz/my-gecko-buyer/tree/e291090421bc246cacc4ea79b09f90b12baa0cce) | 100% | eligible |
+| navy0110 |  | 67% | not yet |
+| nizalia0206 | [ed4705c](https://github.com/nizalia0206/my-gecko-buyer/tree/ed4705cd0ce5f6c3c32389f28a0bb346f823b1cb) | 60% | not yet |
 | paolacrispin | [88da95b](https://github.com/paolacrispin/my-gecko-buyer/tree/88da95ba7c57eeb68394a58f195522219bc17f7a) | 80% | eligible |
 | rehna-jp | [00a68b1](https://github.com/rehna-jp/Dev3Pack-Gecko-Capstone-Project/tree/00a68b1580d9b1591b5d84579eec76e0f5916151) | 100% | eligible |
 | semegn19 | [05ae15f](https://github.com/semegn19/my-gecko-buyer/tree/05ae15f9078be3d1529c1e80f5999d3abcc5f7a5) | 100% | eligible |
-| thefranceway |  | 100% | eligible |
+| thefranceway | [6e4170e](https://github.com/thefranceway/my-gecko-buyer/tree/6e4170ec00eab662c75319933558c8be3ee139ec) | 100% | eligible |

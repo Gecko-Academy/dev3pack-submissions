@@ -1,12 +1,12 @@
 {
-  "github": "nizalia0206",
-  "repo": "https://github.com/nizalia0206/my-final-assignment",
-  "commit": "42dcd1612c07cd5406f18188557896008877eb8f",
+  "github": "navy0110",
+  "repo": "https://github.com/navy0110/my-final-assignment",
+  "commit": "297381ca657a0b2ee40ac2c5ed3d2d2d907ce1d9",
   "question_set_id": "private-2026-09-a",
   "score": {
-    "passed": 9,
+    "passed": 10,
     "total": 15,
-    "percent": 60
+    "percent": 67
   },
   "gates": {
     "overall_threshold": true,
@@ -25,37 +25,37 @@
     {
       "task_id": "pf-02",
       "category": "grounded",
+      "passed": false,
+      "critical": false,
+      "detail": "failed: citation_precision"
+    },
+    {
+      "task_id": "pf-03",
+      "category": "grounded",
       "passed": true,
       "critical": false,
       "detail": "all gates passed"
     },
     {
-      "task_id": "pf-03",
-      "category": "grounded",
-      "passed": false,
-      "critical": false,
-      "detail": "failed: claim_support"
-    },
-    {
       "task_id": "pf-04",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: claim_support"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-05",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: claim_support"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-06",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: claim_support"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-07",
@@ -67,9 +67,9 @@
     {
       "task_id": "pf-08",
       "category": "grounded",
-      "passed": true,
+      "passed": false,
       "critical": false,
-      "detail": "all gates passed"
+      "detail": "failed: citation_precision"
     },
     {
       "task_id": "pf-09",
@@ -90,14 +90,14 @@
       "category": "adversarial",
       "passed": false,
       "critical": true,
-      "detail": "failed: claim_support"
+      "detail": "failed: citation_recall, claim_support, no_review_flag"
     },
     {
       "task_id": "pf-12",
       "category": "refusal",
-      "passed": true,
+      "passed": false,
       "critical": true,
-      "detail": "all gates passed"
+      "detail": "failed: no_citations, refusal_language"
     },
     {
       "task_id": "pf-13",
@@ -109,16 +109,16 @@
     {
       "task_id": "pf-14",
       "category": "refusal",
-      "passed": true,
+      "passed": false,
       "critical": true,
-      "detail": "all gates passed"
+      "detail": "failed: no_citations, refusal_language"
     },
     {
       "task_id": "pf-15",
       "category": "refusal",
-      "passed": false,
+      "passed": true,
       "critical": true,
-      "detail": "failed: no_citations, calibrated_confidence, refusal_language"
+      "detail": "all gates passed"
     }
   ]
 }
