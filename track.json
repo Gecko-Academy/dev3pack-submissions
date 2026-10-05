@@ -9768,9 +9768,9 @@
         "submitted_at": "2026-10-04T08:11:20Z"
       },
       "final": {
-        "percent": 60,
-        "passed": false,
-        "certificate_eligible": false
+        "percent": 93,
+        "passed": true,
+        "certificate_eligible": true
       }
     },
     {
