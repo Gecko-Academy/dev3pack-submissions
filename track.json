@@ -5854,6 +5854,21 @@
     },
     {
       "github": "irlandakelly",
+      "item": "ch14",
+      "submitted_at": "2026-10-05T23:38:39Z",
+      "ran": true,
+      "passed": [
+        "ch14-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "claimed"
+    },
+    {
+      "github": "irlandakelly",
       "item": "w01",
       "submitted_at": "2026-09-15T15:01:12Z",
       "ran": true,
