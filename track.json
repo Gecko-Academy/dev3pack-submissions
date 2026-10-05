@@ -9428,7 +9428,12 @@
     },
     {
       "github": "baraa0abd",
-      "gecko": null,
+      "gecko": {
+        "repo": "https://github.com/baraa0abd/my-gecko-buyer",
+        "commit": "b5f19d82513b4e5bfce5e126546696c1ccc2656f",
+        "url": "https://github.com/baraa0abd/my-gecko-buyer/tree/b5f19d82513b4e5bfce5e126546696c1ccc2656f",
+        "submitted_at": "2026-10-05T07:59:05Z"
+      },
       "final": {
         "percent": 93,
         "passed": false,
