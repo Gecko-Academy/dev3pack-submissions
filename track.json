@@ -9732,6 +9732,15 @@
       }
     },
     {
+      "github": "n1n4xyz",
+      "gecko": null,
+      "final": {
+        "percent": 60,
+        "passed": true,
+        "certificate_eligible": true
+      }
+    },
+    {
       "github": "navy0110",
       "gecko": null,
       "final": {
