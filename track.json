@@ -9817,7 +9817,12 @@
     },
     {
       "github": "thefranceway",
-      "gecko": null,
+      "gecko": {
+        "repo": "https://github.com/thefranceway/my-gecko-buyer",
+        "commit": "6e4170ec00eab662c75319933558c8be3ee139ec",
+        "url": "https://github.com/thefranceway/my-gecko-buyer/tree/6e4170ec00eab662c75319933558c8be3ee139ec",
+        "submitted_at": "2026-10-05T18:54:21Z"
+      },
       "final": {
         "percent": 100,
         "passed": true,
