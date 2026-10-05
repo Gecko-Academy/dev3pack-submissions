@@ -5,18 +5,18 @@
   "student": {
     "github": "irlandakelly"
   },
-  "submitted_at": "2026-10-05T23:32:19Z",
+  "submitted_at": "2026-10-05T23:38:34Z",
   "result": {
     "ran": true,
-    "passed": [],
-    "failed": [
+    "passed": [
       "ch13-e4",
       "ch13-e2",
       "ch13-e1"
     ],
+    "failed": [],
     "not_reached": [],
     "scored": true,
-    "score": 0,
+    "score": 300,
     "max_score": 300
   },
   "note": "",
@@ -31,8 +31,8 @@
   },
   "evidence": {
     "notebook": "notebook.ipynb",
-    "notebook_sha256": "ad1db4bcb6c6c8887492f8598eb032e0857659eb62bbd19e954a677403c965b8"
+    "notebook_sha256": "d965b6fa4f0850d8767c24ab383e691c2f6447686bcf360bff76f2173ca8cc28"
   },
   "verified": null,
-  "submission_id": "sub_2445e9d62826d74572b7dcb1"
+  "submission_id": "sub_26d6fa874e28ba0e7b4ae5aa"
 }
