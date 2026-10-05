@@ -151,7 +151,7 @@ own `my-gecko-buyer`, at the commit you handed in) and the final submission
 | Messibre | [c9669e3](https://github.com/Messibre/my-gecko-buyer/tree/c9669e3b25292184fd6108a3db44eedca48e4094) |  |  |
 | Mialy333 | [cc5a09c](https://github.com/Mialy333/my-gecko-buyer/tree/cc5a09c70c948e467ab2bd763a5156b2783d4867) | 100% | eligible |
 | MihaelaCatan04 | [c932b33](https://github.com/MihaelaCatan04/my-gecko-buyer/tree/c932b338b77c766daa7716b788b79d99f32c98f6) | 93% | eligible |
-| n1n4xyz |  | 27% | not yet |
+| n1n4xyz |  | 87% | not yet |
 | navy0110 |  | 67% | not yet |
 | nizalia0206 | [ed4705c](https://github.com/nizalia0206/my-gecko-buyer/tree/ed4705cd0ce5f6c3c32389f28a0bb346f823b1cb) | 60% | not yet |
 | paolacrispin | [88da95b](https://github.com/paolacrispin/my-gecko-buyer/tree/88da95ba7c57eeb68394a58f195522219bc17f7a) | 80% | eligible |
