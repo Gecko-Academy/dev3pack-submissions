@@ -1,0 +1,123 @@
+{
+  "cohort": "2026-09",
+  "course_release": "81a918144aeae97db58c871c1f4e2be68cdd1bc5",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "Every answer should name the document ids it drew from, and the application\nshould verify those ids against what was actually retrieved. A citation the\nretriever never returned is a fabrication and should be stripped and flagged.\nThe \"I don't know\" case matters most: when nothing relevant is retrieved, the\nsystem must refuse rather than let the model improvise from its training data.\n\n## Small corpus, high leverage\n\nMost of RAG's value appears with a corpus of five documents, not five million.\nStart small, keep the corpus versioned in git, and grow it only when a measured\nretrieval failure says you need to.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "When a RAG system answers wrongly, the first diagnostic question is: did the\nright passage reach the prompt? If retrieval missed it, no amount of prompt\nengineering will fix the answer \u2014 fix chunking, the index, or the query instead.\nIf the right passage was present and the answer still went wrong, the failure is\nin generation: instructions, formatting, or the model ignoring context. Keeping\nretrieved chunks inspectable (log them, show them) is what makes this diagnosis a\ntwo-minute check instead of a guessing game.\n\n## Citations keep the system honest",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "There is a spectrum: a deterministic chain (no decisions), a tool-using loop (the\nmodel picks tools), a reflection loop (the model critiques its own draft), and\nmulti-agent systems (models delegate to models). Each step up adds latency, cost,\nand failure modes. The professional habit is to start at the bottom of the\nspectrum and move up only when a measured failure justifies it. A workflow that\ncan be a fixed pipeline should be a fixed pipeline.\n\n## Refusal is a first-class outcome\n\nA loop that cannot refuse will fabricate. When retrieval returns nothing relevant,\nthe correct behavior is to say so \u2014 before spending a model call \u2014 and flag the\nanswer for human review. Design the refusal path first; it is the path every other\nsafeguard falls back to.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "# Agent Loops\n\nAn agent is a loop: the model observes some state, decides on an action, the\napplication executes that action, and the result feeds the next observation. What\nseparates a reliable agent from an expensive random walk is not the model \u2014 it is\nthe engineering of the loop around it.\n\n## The anatomy of one iteration\n\nEach pass through the loop has four parts. **Perceive**: assemble the context the\nmodel will see \u2014 the question, retrieved documents, previous tool results.\n**Decide**: the model chooses to answer directly or to call a tool. **Act**: the\napplication validates the chosen tool's arguments and executes it. **Observe**: the\ntool result is appended to the context. The application owns three of these four\nsteps; only the decision belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "There is a spectrum: a deterministic chain (no decisions), a tool-using loop (the\nmodel picks tools), a reflection loop (the model critiques its own draft), and\nmulti-agent systems (models delegate to models). Each step up adds latency, cost,\nand failure modes. The professional habit is to start at the bottom of the\nspectrum and move up only when a measured failure justifies it. A workflow that\ncan be a fixed pipeline should be a fixed pipeline.\n\n## Refusal is a first-class outcome\n\nA loop that cannot refuse will fabricate. When retrieval returns nothing relevant,\nthe correct behavior is to say so \u2014 before spending a model call \u2014 and flag the\nanswer for human review. Design the refusal path first; it is the path every other\nsafeguard falls back to.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace is the ordered record of what the system actually did: what was\nretrieved, which tools were called with which arguments, what the model\nreturned. When a case fails, the trace answers the diagnostic question \u2014 was it\nretrieval, tool selection, instruction-following, or formatting? \u2014 in minutes.\nClassify each failure into one of those buckets, fix the biggest bucket first,\nand add a regression case so the same failure cannot return unnoticed.\n\n## The loop\n\nBaseline, change one thing, rerun, compare. Never change two things between\nmeasurements, and never report an improvement without also reporting what got\nworse. An honest evaluation report includes the regression it caused.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "The application validates structured outputs because model output is untrusted input. The application must validate the result before using it, so malformed JSON or unknown fields cannot be silently consumed by the program.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "The application validates structured outputs because model output is untrusted input. The application must validate the result before using it, so malformed JSON or unknown fields cannot be silently consumed by the program.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "Connecting an MCP server is granting capabilities, and the connection point is a\nsecurity boundary. Practical rules: prefer read-only servers while learning;\nnever place credentials in client configuration files that get committed;\ntreat everything a server returns as untrusted data, not instructions; and use\nrecorded or offline modes when they exist, so a misbehaving prompt cannot cause\na real side effect. A server that can spend money or mutate production state\ndeserves the same review as giving a new contractor production access.\n\n## Why it matters for this course",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace is the ordered record of what the system actually did: what was\nretrieved, which tools were called with which arguments, what the model\nreturned. When a case fails, the trace answers the diagnostic question \u2014 was it\nretrieval, tool selection, instruction-following, or formatting? \u2014 in minutes.\nClassify each failure into one of those buckets, fix the biggest bucket first,\nand add a regression case so the same failure cannot return unnoticed.\n\n## The loop\n\nBaseline, change one thing, rerun, compare. Never change two things between\nmeasurements, and never report an improvement without also reporting what got\nworse. An honest evaluation report includes the regression it caused.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "Any channel that feeds text into the prompt is an injection surface. For a RAG\nassistant that means the corpus itself: a document edited to include\ninstructions will have those instructions placed, verbatim, into the model's\ncontext at answer time. For an API-using agent it means specs and docs: a\nmalicious OpenAPI description can try to redirect calls or exfiltrate\ncredentials. For a coding assistant it means the repository: comments, commit\nmessages, and README files are all model-visible input.\n\n## Defenses that actually help",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "Any channel that feeds text into the prompt is an injection surface. For a RAG\nassistant that means the corpus itself: a document edited to include\ninstructions will have those instructions placed, verbatim, into the model's\ncontext at answer time. For an API-using agent it means specs and docs: a\nmalicious OpenAPI description can try to redirect calls or exfiltrate\ncredentials. For a coding assistant it means the repository: comments, commit\nmessages, and README files are all model-visible input.\n\n## Defenses that actually help",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "The application validates structured outputs because model output is untrusted input. The application must validate the result before using it, so malformed JSON or unknown fields cannot be silently consumed by the program.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 0.8,
+      "needs_human_review": false
+    }
+  }
+}
