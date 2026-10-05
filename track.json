@@ -3422,6 +3422,21 @@
       "tier": "claimed"
     },
     {
+      "github": "Welu2",
+      "item": "ch14",
+      "submitted_at": "2026-10-05T13:24:01Z",
+      "ran": true,
+      "passed": [
+        "ch14-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "claimed"
+    },
+    {
       "github": "apeaircreative",
       "item": "ch01",
       "submitted_at": "2026-09-17T21:16:29Z",
