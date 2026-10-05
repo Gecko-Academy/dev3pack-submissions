@@ -23,6 +23,11 @@ permissions:
 
 jobs:
   demo:
+    # ONLY ON THE REAL REPOSITORY. A learner's fork carries this file too, and
+    # with Actions enabled it runs there -- on schedule and on every push --
+    # and a pull request opened from that fork's `main` then drags the bot's
+    # commits along. Pull request 125 was exactly that.
+    if: github.repository == 'Gecko-Academy/dev3pack-submissions'
     name: test data
     runs-on: ubuntu-latest
     steps:

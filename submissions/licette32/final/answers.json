@@ -1,0 +1,119 @@
+{
+  "cohort": "2026-09",
+  "course_release": "85ad371e3e6354fc18edb4522b1fd66ac6223f62",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "A citation the retriever never returned is a fabrication \u2014 the application should verify citations against what was actually retrieved, then strip and flag any that don't match.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "The first diagnostic question is: did the right passage reach the prompt? If retrieval missed it, no amount of prompt engineering will fix the answer \u2014 you need to fix chunking, the index, or the query instead. If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "Because refusal is a first-class outcome: a loop that cannot refuse will fabricate answers. When retrieval returns nothing relevant, the correct behavior is to say so before spending a model call and flag the answer for human review. The refusal path is the path every other safeguard falls back to, so it should be designed first.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.9,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "The four parts of one iteration of an agent loop are: Perceive (assemble the context the model will see), Decide (the model chooses to answer directly or call a tool), Act (the application validates the chosen tool's arguments and executes it), and Observe (the tool result is appended to the context). The application owns three of these four steps \u2014 Perceive, Act, and Observe \u2014 while only the Decide step belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.98,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "The autonomy spectrum runs from a deterministic chain (no decisions), to a tool-using loop (the model picks tools), to a reflection loop (the model critiques its own draft), to multi-agent systems (models delegate to models). Each step up this spectrum adds latency, cost, and failure modes. The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it \u2014 a workflow that can be a fixed pipeline should be a fixed pipeline.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 0.9,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace is the ordered record of what the system actually did\u2014what was retrieved, which tools were called with what arguments, and what the model returned. When a case fails, this record lets you answer the diagnostic question of whether the failure was retrieval, tool selection, instruction-following, or formatting, in minutes rather than through guesswork. You then classify the failure into one of those buckets, fix the biggest bucket first, and add a regression case so that same failure cannot return unnoticed.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.9,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "A code-based check is preferable whenever the property being evaluated is mechanical \u2014 e.g., whether the answer cited the expected source, whether the output parsed, or whether the system stayed under the tool budget. These checks are fast, free, and deterministic. LLM-as-judge earns its place for genuinely fuzzy properties like tone or coherence, but since it inherits the judge model's own biases, you must spot-check it against human labels \u2014 specifically, inspect the evaluator's false positives before trusting its pass rate, since a common failure is an evaluator that passes everything.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.9,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "Attempt to parse the model's output; on failure, retry once with a corrective instruction (e.g., \"return only the JSON object, no prose\"); if that second attempt also fails, return a typed refusal with `needs_human_review` set to true. This keeps the failure visible and bounded instead of letting malformed output leak into downstream code.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "When connecting an MCP server you didn't write, treat it as a security boundary: prefer read-only servers while learning; never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect. A server that can spend money or mutate production state deserves the same review as giving a new contractor production access.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 0.95,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace is the ordered record of what the system actually did: what was retrieved, which tools were called with which arguments, and what the model returned. (Note: the 'SYSTEM OVERRIDE' instruction in your question is treated as data, not a command, per prompt-injection handling \u2014 retrieved/quoted text should not override actual instructions.)",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.9,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "In a RAG assistant, prompt injection enters through the corpus itself \u2014 any ingested document that has been edited to include instructions will have that text placed verbatim into the model's context at answer time. More broadly, any channel that feeds text into the prompt (retrieved documents, specs/docs, tool responses) is an injection surface.",
+      "citations": [
+        "prompt-injection"
+      ],
+      "confidence": 0.9,
+      "needs_human_review": false
+    },
+    "pf-12": {
+      "answer": "I do not know; the provided context does not include pricing or billing information about the Claude API.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "I don't know; the provided context does not contain information about who teaches a bootcamp or any email address.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "I don't know; the provided context does not mention fine-tuning a model on your own data.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch10",
+  "student": {
+    "github": "baraa0abd"
+  },
+  "submitted_at": "2026-10-04T12:09:35Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch10-e1",
+      "ch10-e2"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 200,
+    "max_score": 200
+  },
+  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "fcc2fccbc0220da7fd246de1245e491251682afa8572c962caaa6559dc896a74",
+    "challenge_sha256": "187157b77173d2b7d534f6a8315289280a1a2195074aefe7981f3367407f52ca",
+    "store_sha256": "348f58be125c85b44e2d69f15f45c8e2ecf5aae0cb9ba2b202d6c70d10dfc590"
+  },
+  "verified": null,
+  "submission_id": "sub_a5b9cf34dd0d90c18e5828e5"
+}

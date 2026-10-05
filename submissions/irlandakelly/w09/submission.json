@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "w09",
+  "student": {
+    "github": "irlandakelly"
+  },
+  "submitted_at": "2026-09-15T23:11:57Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "w09-e1",
+      "w09-e2",
+      "w09-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": false,
+    "score": null,
+    "max_score": null
+  },
+  "note": "week 0 is handed in as a record of the work, and is not marked",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.14",
+    "platform": "darwin"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "84bae07c1ea92e2067c6f3cb9c807e7bac7107bd6b777796af484423c0dbed12"
+  },
+  "verified": null,
+  "submission_id": "sub_de332426c1ea2a70331cbe37"
+}
