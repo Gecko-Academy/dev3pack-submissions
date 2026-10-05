@@ -1,0 +1,125 @@
+{
+  "cohort": "2026-09",
+  "course_release": "81a918144aeae97db58c871c1f4e2be68cdd1bc5",
+  "question_set_id": "private-2026-09-a",
+  "answers": {
+    "pf-01": {
+      "answer": "A RAG application should strip and flag a citation the retriever never returned. This is because such a citation is a fabrication and should not be trusted. The application should verify the citations against what was actually retrieved to ensure the system is honest.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-02": {
+      "answer": "The first diagnostic question when a RAG system answers wrongly is: did the right passage reach the prompt? If retrieval missed it, no amount of prompt engineering will fix the answer \u2014 fix chunking, the index, or the query instead. If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context. Keeping retrieved chunks inspectable (log them, show them) is what makes this diagnosis a two-minute check instead of a guessing game.",
+      "citations": [
+        "agent-loops",
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-03": {
+      "answer": "The refusal path in an agent loop should be designed first because it serves as a safeguard against the agent's potential to fabricate answers. By designing the refusal path first, the system can ensure that it does not produce fabricated responses when the model cannot provide a valid answer. This is crucial for maintaining the integrity and reliability of the system. The refusal path allows the system to acknowledge when it does not have a valid response, which is a first-class outcome. It is the path every other safeguard falls back to, ensuring that the system does not produce misleading or incorrect information. The refusal path is designed to be a robust defense mechanism, ensuring that the system does not produce answers that it cannot substantiate, thus maintaining the trust and reliability of the system.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-04": {
+      "answer": "Each pass through the loop has four parts. **Perceive**: assemble the context the model will see \u2014 the question, retrieved documents, previous tool results. **Decide**: the model chooses to answer directly or to call a tool. **Act**: the application validates the chosen tool's arguments and executes it. **Observe**: the tool result is appended to the context. The application owns three of these four steps; only the decision belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-05": {
+      "answer": "The autonomy spectrum in agent loops ranges from a deterministic chain (no decisions), to a tool-using loop (the model picks tools), to a reflection loop (the model critiques its own draft), and finally to multi-agent systems (models delegate to models). The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it. A workflow that can be a fixed pipeline should be a fixed pipeline. The autonomy spectrum adds latency, cost, and failure modes, and the professional approach is to start with the least autonomy that works.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-06": {
+      "answer": "A trace turns a failing case into a fix by providing a detailed record of the system's actions, allowing for precise diagnosis of where the failure occurred. Specifically, a trace records the ordered sequence of actions taken by the system, including what was retrieved, which tools were called with which arguments, and what the model returned. When a case fails, the trace answers the diagnostic question: was it retrieval, tool selection, instruction-following, or formatting? By classifying each failure into one of these buckets, the root cause of the failure can be identified. The trace then guides the fix by pointing out the specific area that needs improvement. For instance, if the trace indicates that retrieval failed to find the correct passage, the chunking or indexing process can be adjusted to ensure that relevant passages are correctly identified and retrieved. Conversely, if the trace shows that the model's instruction-following was incorrect, the instructions or the model's understanding of the task can be refined. Adding a regression case ensures that the same failure does not recur unnoticed, thus maintaining the integrity and reliability of the evaluation process.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-07": {
+      "answer": "A code-based check is preferable to using a model as a judge when the property is mechanical, meaning the property can be verified by a fixed set of steps or conditions. For example, checking if a model cited the expected source, parsed a JSON correctly, or stayed within a tool budget. You must inspect your evaluator's false positives before trusting its pass rate. This involves identifying cases where the model incorrectly flagged a case as passing, and then verifying these cases manually to ensure the model is not falsely identifying them as passing.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 0.9,
+      "needs_human_review": false
+    },
+    "pf-08": {
+      "answer": "The robust handling pattern for a model's JSON failing to parse is to attempt to parse the output; if it fails, retry once with a corrective instruction to return only the JSON object; if it still fails, return a typed refusal with `needs_human_review` set to true. This ensures the failure is visible and bounded, preventing malformed output from leaking into downstream code.",
+      "citations": [
+        "evaluation-basics",
+        "structured-outputs"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-09": {
+      "answer": "When connecting to an MCP server you did not write, the following practical rules apply: prefer read-only servers while learning, never place credentials in client configuration files that get committed, treat everything a server returns as untrusted data, not instructions, and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect. These rules are designed to ensure security and safety at the boundary of the connection, similar to how a contractor would be reviewed for access to a production environment.\n\nSource excerpt [mcp-overview]:\nThese three are commonly confused. A **tool** is a callable capability with a\nnarrow contract \u2014 it executes. A **skill** is packaged instructions \u2014 a folder\nof guidance the model loads to perform a workflow well; it does not execute\nanything by itself. An **MCP server** is a distribution boundary for tools and\nresources \u2014 it makes capabilities available across applications. A well-built\nagent system often uses all three: an MCP server provides the tools, and a skill\nteaches the model when and how to use them.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-10": {
+      "answer": "A trace records the ordered sequence of actions taken by a system, including what was retrieved, which tools were called with which arguments, and what the model returned. It is a record of the system's execution, allowing for the diagnosis of failures by identifying whether the issue lies in retrieval, tool selection, instruction-following, or formatting. For example, a retrieval failure would show the specific chunks of text that were not found, while a tool selection failure would detail which tool was called and with what arguments. The trace is a diagnostic tool that helps pinpoint where a system failed, enabling targeted fixes and ensuring the system's reliability.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
+    },
+    "pf-11": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-12": {
+      "answer": "The provided context does not contain any information regarding Anthropic's charges for Claude API calls or any other pricing details. The documents focus on the Model Context Protocol (MCP), RAG (Retrieval-Augmented Generation) basics, and the concept of prompt injection, but do not mention any pricing information.",
+      "citations": [
+        "mcp-overview",
+        "prompt-injection",
+        "rag-basics"
+      ],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-13": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-14": {
+      "answer": "The bootcamp is taught by the capstone assistant, whose email address is not provided in the given context.",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 0.0,
+      "needs_human_review": true
+    },
+    "pf-15": {
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
+    }
+  }
+}
