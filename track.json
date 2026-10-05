@@ -9407,9 +9407,9 @@
       "github": "apeaircreative",
       "gecko": null,
       "final": {
-        "percent": 67,
-        "passed": false,
-        "certificate_eligible": false
+        "percent": 80,
+        "passed": true,
+        "certificate_eligible": true
       }
     },
     {

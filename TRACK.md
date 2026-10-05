@@ -139,7 +139,7 @@ own `my-gecko-buyer`, at the commit you handed in) and the final submission
 |---|---|---|---|
 | 250408900-maker | [813dce0](https://github.com/250408900-maker/my-gecko-buyer/tree/813dce0800e4b18c2c20b431996d1326b961833d) | 100% | eligible |
 | Abduovv |  | 80% | eligible |
-| apeaircreative |  | 67% | not yet |
+| apeaircreative |  | 80% | eligible |
 | arr4-y | [2952f89](https://github.com/arr4-y/my-gecko-buyer/tree/2952f8948aaca2ab2f89713671f34ed88d72529b) | 100% | eligible |
 | baraa0abd | [b5f19d8](https://github.com/baraa0abd/my-gecko-buyer/tree/b5f19d82513b4e5bfce5e126546696c1ccc2656f) | 93% | not yet |
 | desirrebarbosa | [552449f](https://github.com/desirrebarbosa/my-gecko-buyer/tree/552449f8ef22267b07928857a17a37e5b96532aa) | 93% | eligible |
