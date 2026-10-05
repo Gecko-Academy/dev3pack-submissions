@@ -9732,6 +9732,15 @@
       }
     },
     {
+      "github": "navy0110",
+      "gecko": null,
+      "final": {
+        "percent": 67,
+        "passed": false,
+        "certificate_eligible": false
+      }
+    },
+    {
       "github": "nizalia0206",
       "gecko": {
         "repo": "https://github.com/nizalia0206/my-gecko-buyer",
