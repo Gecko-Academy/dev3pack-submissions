@@ -12,7 +12,7 @@
       "needs_human_review": false
     },
     "pf-02": {
-      "answer": "The first diagnostic question is: did the right passage reach the prompt? If retrieval missed the right passage, fix chunking, the index, or the query. If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context.",
+      "answer": "The first diagnostic question is: did the right passage reach the prompt? If retrieval missed it, no amount of prompt engineering will fix the answer \u2014 fix chunking, the index, or the query instead. If the right passage was present and the answer still went wrong, the failure is in generation: instructions, formatting, or the model ignoring context.",
       "citations": [
         "rag-basics"
       ],
@@ -20,7 +20,7 @@
       "needs_human_review": false
     },
     "pf-03": {
-      "answer": "The refusal path should be designed first because it serves as the fallback for every other safeguard. By designing it first, you ensure that the system has a clear and correct behavior when it encounters situations where it cannot proceed or find the necessary information, rather than risking the system fabricating an answer that may lead to further issues. This practice helps maintain the integrity and reliability of the system.",
+      "answer": "A loop that cannot refuse will fabricate. When retrieval returns nothing relevant, the correct behavior is to say so \u2014 before spending a model call \u2014 and flag the answer for human review. Design the refusal path first; it is the path every other safeguard falls back to.",
       "citations": [
         "agent-loops"
       ],
@@ -28,7 +28,7 @@
       "needs_human_review": false
     },
     "pf-04": {
-      "answer": "The four parts of one iteration of an agent loop are: **Perceive**, **Decide**, **Act**, and **Observe**. The application owns **Decide**, and the other three steps belong to the model.",
+      "answer": "The four parts of one iteration of an agent loop are: **Perceive**, **Decide**, **Act**, **Observe**. The application owns three of these steps: **Perceive** (partially, in assembling context), **Act**, and **Observe**; only the **Decide** step belongs to the model.",
       "citations": [
         "agent-loops"
       ],
@@ -36,7 +36,7 @@
       "needs_human_review": false
     },
     "pf-05": {
-      "answer": "The autonomy spectrum starts at the bottom with a deterministic chain (no decisions) and gradually increases as the model picks tools, then critiques its own draft, and finally involves multi-agent systems where models delegate to models. The professional habit is to start at the bottom of the spectrum where a workflow can be a fixed pipeline and only move up when a measured failure justifies it.",
+      "answer": "The autonomy spectrum ranges from a deterministic chain (no decisions) to multi-agent systems (models delegate to models). The professional habit is to start at the bottom of the spectrum and move up only when a measured failure justifies it.",
       "citations": [
         "agent-loops"
       ],
@@ -44,7 +44,7 @@
       "needs_human_review": false
     },
     "pf-06": {
-      "answer": "A trace turns a failing case into a diagnosis by answering the diagnostic question \u2014 was it retrieval, tool selection, instruction-following, or formatting? \u2014 in minutes.",
+      "answer": "Traces turn failing cases into diagnoses by answering the diagnostic question \u2014 whether the failure was due to retrieval, tool selection, instruction-following, or formatting. Once diagnosed, the biggest bucket can be fixed, and a regression case can be added to ensure the same issue doesn't reoccur.",
       "citations": [
         "evaluation-basics"
       ],
@@ -52,7 +52,7 @@
       "needs_human_review": false
     },
     "pf-07": {
-      "answer": "Code-based checks are preferable when the property being evaluated is mechanical, such as checking if something cited the expected source, parsed correctly, or stayed under a tool budget. Before trusting a model as a judge, you must inspect its false positives, as common failures include evaluators that pass everything.",
+      "answer": "Code-based checks are preferable to using a model as a judge when the property is mechanical, such as verifying if a citation cites the expected source, if a text parses correctly, or if it stays under a tool budget. Such checks are fast, free, and deterministic. Before trusting a judge, you must inspect the evaluator\u2019s false positives to ensure its reliability.",
       "citations": [
         "evaluation-basics"
       ],
@@ -60,7 +60,7 @@
       "needs_human_review": false
     },
     "pf-08": {
-      "answer": "A robust handling pattern is: attempt to parse; on failure, retry once with a corrective instruction (return only the JSON object, no prose); on a second failure, return a typed refusal with `needs_human_review` set to true. This keeps the failure visible and bounded instead of letting malformed output leak into downstream code.",
+      "answer": "On failure, retry once with a corrective instruction (\"return only the JSON object, no prose\"); on a second failure, return a typed refusal with `needs_human_review` set to true.",
       "citations": [
         "structured-outputs"
       ],
@@ -68,7 +68,7 @@
       "needs_human_review": false
     },
     "pf-09": {
-      "answer": "When connecting to an MCP server you did not write, practical rules include: prefer read-only servers while learning; never place credentials in client configuration files that get committed; treat everything a server returns as untrusted data, not instructions; and use recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect.",
+      "answer": "Practical rules for connecting to an MCP server include preferring read-only servers while learning; never placing credentials in client configuration files that get committed; treating everything a server returns as untrusted data, not instructions; and using recorded or offline modes when they exist, so a misbehaving prompt cannot cause a real side effect.",
       "citations": [
         "mcp-overview"
       ],
@@ -84,7 +84,7 @@
       "needs_human_review": false
     },
     "pf-11": {
-      "answer": "A RAG assistant is vulnerable to prompt injection through its corpus, which can include documents edited to include instructions, specs and docs in OpenAPI descriptions that can redirect calls or exfiltrate credentials, and repository contents like comments, commit messages, and README files that are model-visible input.",
+      "answer": "The corpus itself can be an injection surface for prompt injection in a RAG assistant.",
       "citations": [
         "prompt-injection"
       ],
@@ -110,12 +110,10 @@
       "needs_human_review": true
     },
     "pf-15": {
-      "answer": "The course corpus does not discuss fine-tuning a model on your own data.",
-      "citations": [
-        "rag-basics"
-      ],
-      "confidence": 1.0,
-      "needs_human_review": false
+      "answer": "I don't know based on the provided corpus.",
+      "citations": [],
+      "confidence": 0.0,
+      "needs_human_review": true
     }
   }
 }
