@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch10",
+  "student": {
+    "github": "Mialy333"
+  },
+  "submitted_at": "2026-10-03T14:46:11Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch10-e1",
+      "ch10-e2"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 200,
+    "max_score": 200
+  },
+  "note": "assistant-driven, so it cannot be re-run; the marks rest on the evidence you saved",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "darwin"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "07c54571572cf03c9576e6c974b073b92db1fb8ec9d70f6b3ed34ca6d27bd7c4",
+    "store_sha256": "e13e22c3791cda7f1c44478970694242f15fac9e0b2dcfc31c49709c51ef2b57"
+  },
+  "verified": null,
+  "submission_id": "sub_00d0959221c970a3f22e472c"
+}

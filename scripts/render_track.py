@@ -32,12 +32,14 @@ from pathlib import Path
 
 # Run as `python3 scripts/render_track.py`, so its own directory is on the path.
 from check_bundle import CHALLENGE_NOTEBOOK, MAX_NOTEBOOK_BYTES
+from check_gecko import GECKO, gecko_problems
 
 ROOT = Path(__file__).resolve().parent.parent
 ITEMS = ROOT / "items.json"
 SUBMISSIONS = ROOT / "submissions"
 MARKDOWN = ROOT / "TRACK.md"
 JSON_OUT = ROOT / "track.json"
+FINALS = ROOT / "finals"
 
 SCHEMA = "dev3pack.track.v1"
 #: Must match `bootcamp_agent.submission.SCHEMA`, like `check_bundle.py`.
@@ -219,6 +221,9 @@ def read_tree() -> tuple[list[dict], list[str]]:
         # `problems` tells a consumer the whole document is partial.
         if item_id == "final":
             continue
+        # Nor is a Gecko capstone hand-in: it is a link, read by `read_finish_line`.
+        if item_id == GECKO:
+            continue
 
         if not LOGIN.match(student):
             problems.append(f"{where}: {student!r} is not a GitHub login")
@@ -266,7 +271,53 @@ def read_tree() -> tuple[list[dict], list[str]]:
     return entries, problems
 
 
-def render_json(entries: list[dict], problems: list[str], items: list[dict]) -> str:
+def read_finish_line() -> list[dict]:
+    """One row per student who handed in either deliverable: the Gecko capstone
+    link and the final's scored result, side by side.
+
+    Nothing here is a grade. The capstone row says which repository and commit
+    was handed in; the final row repeats what `finals.yml` recorded. A link that
+    fails its own check is left out rather than shown, as the PR check refused it.
+    """
+    rows: dict[str, dict] = {}
+
+    def row(student: str) -> dict:
+        return rows.setdefault(student, {"github": student, "gecko": None, "final": None})
+
+    for claim_path in sorted(SUBMISSIONS.glob(f"*/{GECKO}/submission.json")):
+        student = claim_path.parent.parent.name
+        if not LOGIN.match(student) or gecko_problems(claim_path.parent):
+            continue
+        claim = json.loads(claim_path.read_text(encoding="utf-8"))
+        row(student)["gecko"] = {
+            "repo": claim["repo"],
+            "commit": claim["commit"],
+            "url": f"{claim['repo']}/tree/{claim['commit']}",
+            "submitted_at": claim.get("submitted_at"),
+        }
+    for result_path in sorted(FINALS.glob("*/result.json")):
+        student = result_path.parent.name
+        if not LOGIN.match(student):
+            continue
+        try:
+            result = json.loads(result_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        score = result.get("score") or {}
+        row(student)["final"] = {
+            "percent": score.get("percent"),
+            "passed": bool(result.get("passed")),
+            "certificate_eligible": bool(result.get("certificate_eligible")),
+        }
+    return [rows[student] for student in sorted(rows, key=str.lower)]
+
+
+def render_json(
+    entries: list[dict],
+    problems: list[str],
+    items: list[dict],
+    finish: list[dict] | None = None,
+) -> str:
     payload = {
         "schema": SCHEMA,
         "items": [
@@ -282,10 +333,17 @@ def render_json(entries: list[dict], problems: list[str], items: list[dict]) -> 
         "entries": sorted(entries, key=lambda e: (e["github"], e["item"])),
         "problems": problems,
     }
+    if finish is not None:
+        payload["finish_line"] = finish
     return json.dumps(payload, indent=2) + "\n"
 
 
-def render_markdown(entries: list[dict], problems: list[str], items: list[dict]) -> str:
+def render_markdown(
+    entries: list[dict],
+    problems: list[str],
+    items: list[dict],
+    finish: list[dict] | None = None,
+) -> str:
     students = sorted({entry["github"] for entry in entries})
     by_key = {(entry["github"], entry["item"]): entry for entry in entries}
     graded = [item for item in items if item["kind"] != "unit"]
@@ -329,6 +387,26 @@ def render_markdown(entries: list[dict], problems: list[str], items: list[dict])
         done = [item["id"] for item in units if (student, item["id"]) in by_key]
         lines.append(f"| {student} | {len(done)}/{len(units)} |")
 
+    if finish is not None:
+        lines += [
+            "",
+            "## Finish line",
+            "",
+            "The two deliverables due on 5 October: the Gecko capstone (a link to your",
+            "own `my-gecko-buyer`, at the commit you handed in) and the final submission",
+            "(scored on the private questions). An empty cell means not handed in yet.",
+            "",
+            "| Student | Gecko capstone | Final | Certificate |",
+            "|---|---|---|---|",
+        ]
+        for row in finish:
+            gecko = row["gecko"]
+            final = row["final"]
+            link = f"[{gecko['commit'][:7]}]({gecko['url']})" if gecko else ""
+            score = f"{final['percent']}%" if final and final["percent"] is not None else ""
+            eligible = ("eligible" if final["certificate_eligible"] else "not yet") if final else ""
+            lines.append(f"| {row['github']} | {link} | {score} | {eligible} |")
+
     if problems:
         lines += ["", "## Problems", ""]
         lines += [f"- {problem}" for problem in problems]
@@ -343,9 +421,10 @@ def main(argv: list[str] | None = None) -> int:
 
     items = load_items()
     entries, problems = read_tree()
+    finish = read_finish_line()
     files = {
-        JSON_OUT: render_json(entries, problems, items),
-        MARKDOWN: render_markdown(entries, problems, items),
+        JSON_OUT: render_json(entries, problems, items, finish),
+        MARKDOWN: render_markdown(entries, problems, items, finish),
     }
     if args.check:
         stale = [p.name for p, text in files.items() if not p.is_file() or p.read_text() != text]
