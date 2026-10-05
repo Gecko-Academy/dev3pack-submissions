@@ -9573,6 +9573,16 @@
       }
     },
     {
+      "github": "rehna-jp",
+      "gecko": {
+        "repo": "https://github.com/rehna-jp/Dev3Pack-Gecko-Capstone-Project",
+        "commit": "00a68b1580d9b1591b5d84579eec76e0f5916151",
+        "url": "https://github.com/rehna-jp/Dev3Pack-Gecko-Capstone-Project/tree/00a68b1580d9b1591b5d84579eec76e0f5916151",
+        "submitted_at": "2026-10-05T11:29:20Z"
+      },
+      "final": null
+    },
+    {
       "github": "semegn19",
       "gecko": {
         "repo": "https://github.com/semegn19/my-gecko-buyer",
