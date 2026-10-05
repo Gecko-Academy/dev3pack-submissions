@@ -5838,17 +5838,17 @@
     {
       "github": "irlandakelly",
       "item": "ch13",
-      "submitted_at": "2026-10-05T23:32:19Z",
+      "submitted_at": "2026-10-05T23:38:34Z",
       "ran": true,
-      "passed": [],
-      "failed": [
+      "passed": [
         "ch13-e4",
         "ch13-e2",
         "ch13-e1"
       ],
+      "failed": [],
       "not_reached": [],
       "scored": true,
-      "score": 0,
+      "score": 300,
       "max_score": 300,
       "tier": "claimed"
     },
