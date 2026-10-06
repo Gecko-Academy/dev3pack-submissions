@@ -354,6 +354,18 @@ def main(argv: list[str] | None = None) -> int:
 
     failed = False
     for directory in directories:
+        # A bundle is exactly submissions/<you>/<item>. A folder one level deeper
+        # passed the item's own rules and merged where nothing reads it: a final
+        # uploaded as submissions/<you>/final/<you>/final/ was never scored (5 Oct).
+        parts = directory.as_posix().rstrip("/").split("/")
+        root = len(parts) - 1 - parts[::-1].index("submissions") if "submissions" in parts else -1
+        if root < 0 or len(parts) - root != 3:
+            failed = True
+            print(
+                f"::error::{directory}: files must sit exactly at submissions/<you>/<item>/, "
+                "for example submissions/octocat/final/answers.json. Move them up to that folder."
+            )
+            continue
         found = problems_with(directory)
         if found:
             failed = True

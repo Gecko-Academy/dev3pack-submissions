@@ -87,7 +87,7 @@ jobs:
           # `|| true` belongs on the grep, which exits 1 when a push touches no
           # final, and NEVER on the diff: swallowing git's failure is what let
           # this job report success while scoring nobody.
-          git diff --name-only --diff-filter=AM "$range" > changed.txt
+          git diff --name-only --no-renames --diff-filter=AM "$range" > changed.txt
           # Either file names a final to score; both map to its answers.json, once.
           { grep -E '^submissions/[^/]+/final/(answers|submission)\.json$' changed.txt || true; } \
             | sed -E 's#/[^/]+\.json$#/answers.json#' | sort -u > finals.txt

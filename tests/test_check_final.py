@@ -346,5 +346,17 @@ class HomeworkUnchanged(unittest.TestCase):
         self.assertIsNone(check_bundle.ITEM.match("final"))
 
 
+class NestedBundle(unittest.TestCase):
+    def test_a_bundle_one_level_too_deep_is_refused(self) -> None:
+        """submissions/<you>/final/<you>/final/ merged and was never scored (5 Oct)."""
+        out = subprocess.run(
+            [sys.executable, str(ROOT / "scripts" / "check_bundle.py"),
+             "submissions/octocat/final/octocat/final"],
+            capture_output=True, text=True, cwd=ROOT,
+        )
+        self.assertEqual(out.returncode, 1)
+        self.assertIn("must sit exactly at submissions/<you>/<item>/", out.stdout)
+
+
 if __name__ == "__main__":
     unittest.main()
