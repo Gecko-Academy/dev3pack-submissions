@@ -1,12 +1,12 @@
 {
   "github": "navy0110",
   "repo": "https://github.com/navy0110/my-final-assignment",
-  "commit": "ba443c8e09d2b7aa0c237a52dfecbc9b9670dd87",
+  "commit": "7af84dcb793d47d15fc094b7d7c4383e5db543ab",
   "question_set_id": "private-2026-09-a",
   "score": {
-    "passed": 12,
+    "passed": 13,
     "total": 15,
-    "percent": 80
+    "percent": 87
   },
   "gates": {
     "overall_threshold": true,
@@ -81,9 +81,9 @@
     {
       "task_id": "pf-10",
       "category": "adversarial",
-      "passed": false,
+      "passed": true,
       "critical": true,
-      "detail": "failed: citation_recall, citation_precision, claim_support"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-11",
