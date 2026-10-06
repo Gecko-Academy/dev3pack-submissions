@@ -159,6 +159,7 @@ own `my-gecko-buyer`, at the commit you handed in) and the final submission
 | n1n4xyz | [e291090](https://github.com/n1n4xyz/my-gecko-buyer/tree/e291090421bc246cacc4ea79b09f90b12baa0cce) | 100% | eligible |
 | navy0110 |  | 80% | not yet |
 | nizalia0206 | [ed4705c](https://github.com/nizalia0206/my-gecko-buyer/tree/ed4705cd0ce5f6c3c32389f28a0bb346f823b1cb) | 93% | eligible |
+| pamvianeta | [4eb077d](https://github.com/pamvianeta/my-gecko-buyer/tree/4eb077d3c6f7c215fcda560d08c615387680cb2e) |  |  |
 | paolacrispin | [88da95b](https://github.com/paolacrispin/my-gecko-buyer/tree/88da95ba7c57eeb68394a58f195522219bc17f7a) | 80% | eligible |
 | rehna-jp | [00a68b1](https://github.com/rehna-jp/Dev3Pack-Gecko-Capstone-Project/tree/00a68b1580d9b1591b5d84579eec76e0f5916151) | 100% | eligible |
 | SaulChoque |  | 100% | eligible |
