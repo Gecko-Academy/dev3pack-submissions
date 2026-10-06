@@ -9857,7 +9857,11 @@
         "url": "https://github.com/Insia-8/Dev3Pack-Gecko-Capstone-Project/tree/30721217c4db947097c26e6efbcd391deb35bac7",
         "submitted_at": "2026-10-04T20:28:06Z"
       },
-      "final": null
+      "final": {
+        "percent": 73,
+        "passed": false,
+        "certificate_eligible": false
+      }
     },
     {
       "github": "irlandakelly",
