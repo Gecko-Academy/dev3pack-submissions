@@ -9913,7 +9913,11 @@
         "url": "https://github.com/MarisolArgibay/my-gecko-buyer/tree/c82290bf8d60532f90528f3540ccd7c3c43f7c4d",
         "submitted_at": "2026-10-05T21:57:14Z"
       },
-      "final": null
+      "final": {
+        "percent": 27,
+        "passed": false,
+        "certificate_eligible": false
+      }
     },
     {
       "github": "Messibre",
