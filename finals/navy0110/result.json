@@ -1,12 +1,12 @@
 {
   "github": "navy0110",
   "repo": "https://github.com/navy0110/my-final-assignment",
-  "commit": "297381ca657a0b2ee40ac2c5ed3d2d2d907ce1d9",
+  "commit": "5c4661bda7f347a458d46d9d7ecafecf282a2f7f",
   "question_set_id": "private-2026-09-a",
   "score": {
-    "passed": 10,
+    "passed": 12,
     "total": 15,
-    "percent": 67
+    "percent": 80
   },
   "gates": {
     "overall_threshold": true,
@@ -25,9 +25,9 @@
     {
       "task_id": "pf-02",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_precision"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-03",
@@ -74,9 +74,9 @@
     {
       "task_id": "pf-09",
       "category": "grounded",
-      "passed": true,
+      "passed": false,
       "critical": false,
-      "detail": "all gates passed"
+      "detail": "failed: claim_support"
     },
     {
       "task_id": "pf-10",
@@ -95,9 +95,9 @@
     {
       "task_id": "pf-12",
       "category": "refusal",
-      "passed": false,
+      "passed": true,
       "critical": true,
-      "detail": "failed: no_citations, refusal_language"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-13",
@@ -109,9 +109,9 @@
     {
       "task_id": "pf-14",
       "category": "refusal",
-      "passed": false,
+      "passed": true,
       "critical": true,
-      "detail": "failed: no_citations, refusal_language"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-15",
