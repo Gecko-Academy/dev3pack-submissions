@@ -1,76 +1,94 @@
 {
   "cohort": "2026-09",
-  "course_release": "81a918144aeae97db58c871c1f4e2be68cdd1bc5",
+  "course_release": "8c4726f6a64b67f9acff43d270e1553f9da5d548",
   "question_set_id": "private-2026-09-a",
   "answers": {
     "pf-01": {
-      "answer": "I do not know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "It should strip the fabricated citation and flag it.\n\nSource [rag-basics]: Every answer should name the document ids it drew from, and the application\nshould verify those ids against what was actually retrieved. A citation the\nretriever never returned is a fabrication and should be stripped and flagged.\nThe \"I don't know\" case matters most: when nothing relevant is retrieved, the\nsystem must refuse rather than let the model improvise from its training data.\n\n## Small corpus, high leverage\n\nMost of RAG's value appears with a corpus of five documents, not five million.\nStart small, keep the corpus versioned in git, and grow it only when a measured\nretrieval failure says you need to.",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-02": {
-      "answer": "I do not know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "First ask: did the right passage reach the prompt? If not, fix retrieval\u2014chunking, the index, or the query. If it did, fix generation: the instructions, formatting, or the model\u2019s use of the context.\n\nSource [rag-basics]: When a RAG system answers wrongly, the first diagnostic question is: did the\nright passage reach the prompt? If retrieval missed it, no amount of prompt\nengineering will fix the answer \u2014 fix chunking, the index, or the query instead.\nIf the right passage was present and the answer still went wrong, the failure is\nin generation: instructions, formatting, or the model ignoring context. Keeping\nretrieved chunks inspectable (log them, show them) is what makes this diagnosis a\ntwo-minute check instead of a guessing game.\n\n## Citations keep the system honest",
+      "citations": [
+        "rag-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-03": {
-      "answer": "I do not know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "The refusal path should be designed first because, when retrieval finds nothing relevant, the agent needs a defined way to say so rather than fabricate. It should refuse before spending another model call and flag the answer for human review; other safeguards can fall back to this path.\n\nSource [agent-loops]: There is a spectrum: a deterministic chain (no decisions), a tool-using loop (the\nmodel picks tools), a reflection loop (the model critiques its own draft), and\nmulti-agent systems (models delegate to models). Each step up adds latency, cost,\nand failure modes. The professional habit is to start at the bottom of the\nspectrum and move up only when a measured failure justifies it. A workflow that\ncan be a fixed pipeline should be a fixed pipeline.\n\n## Refusal is a first-class outcome\n\nA loop that cannot refuse will fabricate. When retrieval returns nothing relevant,\nthe correct behavior is to say so \u2014 before spending a model call \u2014 and flag the\nanswer for human review. Design the refusal path first; it is the path every other\nsafeguard falls back to.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-04": {
-      "answer": "I do not know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "The four parts are perceive, decide, act, and observe. The application owns perceive, act, and observe; the model makes the decision.\n\nSource [agent-loops]: # Agent Loops\n\nAn agent is a loop: the model observes some state, decides on an action, the\napplication executes that action, and the result feeds the next observation. What\nseparates a reliable agent from an expensive random walk is not the model \u2014 it is\nthe engineering of the loop around it.\n\n## The anatomy of one iteration\n\nEach pass through the loop has four parts. **Perceive**: assemble the context the\nmodel will see \u2014 the question, retrieved documents, previous tool results.\n**Decide**: the model chooses to answer directly or to call a tool. **Act**: the\napplication validates the chosen tool's arguments and executes it. **Observe**: the\ntool result is appended to the context. The application owns three of these four\nsteps; only the decision belongs to the model.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-05": {
-      "answer": "I do not know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "The autonomy spectrum runs from a deterministic chain with no decisions, to a tool-using loop where the model chooses tools, to a reflection loop where it critiques its draft, and then to multi-agent systems where models delegate to models. Start with the least autonomous approach; move up only when a measured failure justifies it. If a workflow can be a fixed pipeline, keep it a fixed pipeline.\n\nSource [agent-loops]: There is a spectrum: a deterministic chain (no decisions), a tool-using loop (the\nmodel picks tools), a reflection loop (the model critiques its own draft), and\nmulti-agent systems (models delegate to models). Each step up adds latency, cost,\nand failure modes. The professional habit is to start at the bottom of the\nspectrum and move up only when a measured failure justifies it. A workflow that\ncan be a fixed pipeline should be a fixed pipeline.\n\n## Refusal is a first-class outcome\n\nA loop that cannot refuse will fabricate. When retrieval returns nothing relevant,\nthe correct behavior is to say so \u2014 before spending a model call \u2014 and flag the\nanswer for human review. Design the refusal path first; it is the path every other\nsafeguard falls back to.",
+      "citations": [
+        "agent-loops"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-06": {
-      "answer": "I do not know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "A trace shows what the system actually did\u2014what it retrieved, which tools it called and with what arguments, and what it returned. Use it to identify whether the failure was in retrieval, tool selection, instruction-following, or formatting; fix the biggest failure bucket first, then add a regression case so the same failure is caught if it returns.\n\nSource [evaluation-basics]: A trace is the ordered record of what the system actually did: what was\nretrieved, which tools were called with which arguments, what the model\nreturned. When a case fails, the trace answers the diagnostic question \u2014 was it\nretrieval, tool selection, instruction-following, or formatting? \u2014 in minutes.\nClassify each failure into one of those buckets, fix the biggest bucket first,\nand add a regression case so the same failure cannot return unnoticed.\n\n## The loop\n\nBaseline, change one thing, rerun, compare. Never change two things between\nmeasurements, and never report an improvement without also reporting what got\nworse. An honest evaluation report includes the regression it caused.",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-07": {
-      "answer": "I do not know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "Prefer code-based checks when the property is mechanical, such as whether the output cites the expected source, parses correctly, or stays within a tool budget. Use an LLM judge for genuinely fuzzy properties like tone or coherence. Before trusting a judge, spot-check it against human labels and inspect its false positives, especially to ensure it is not passing everything.\n\nSource [evaluation-basics]: Prefer code-based checks whenever the property is mechanical: did it cite the\nexpected source, did it parse, did it stay under the tool budget. They are fast,\nfree, and deterministic. LLM-as-judge \u2014 using a model to grade another model's\noutput \u2014 earns its place for genuinely fuzzy properties like tone or coherence,\nbut it inherits the judge's own biases and must itself be spot-checked against\nhuman labels. A common failure is an evaluator that passes everything; inspect\nyour evaluator's false positives before trusting its pass rate.\n\n## Traces turn failures into diagnoses",
+      "citations": [
+        "evaluation-basics"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-08": {
-      "answer": "I do not know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "Attempt to parse the JSON. If parsing fails, retry once with a corrective instruction to return only the JSON object and no prose. If the second attempt also fails, return a typed refusal with needs_human_review set to true.\n\nSource [structured-outputs]: Parsing can fail even with a good prompt. A robust pattern is: attempt to parse;\non failure, retry once with a corrective instruction (\"return only the JSON\nobject, no prose\"); on a second failure, return a typed refusal with\n`needs_human_review` set to true. This keeps the failure visible and bounded\ninstead of letting malformed output leak into downstream code.\n\n## What to remember\n\nStructured output is not about making the model smarter. It is about making the\nboundary between probabilistic text and deterministic software explicit,\nvalidated, and testable. Every field you add to a schema is a claim you can now\nwrite a test against.",
+      "citations": [
+        "structured-outputs"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-09": {
-      "answer": "I do not know based on the provided corpus.",
-      "citations": [],
-      "confidence": 0.0,
-      "needs_human_review": true
+      "answer": "Treat the connection as a security boundary: prefer read-only servers while learning, never put credentials in committed client configuration, treat server responses as untrusted data rather than instructions, and use recorded or offline modes when available to avoid real side effects. Review a server that can spend money or mutate production state as carefully as a contractor receiving production access.\n\nSource [mcp-overview]: Connecting an MCP server is granting capabilities, and the connection point is a\nsecurity boundary. Practical rules: prefer read-only servers while learning;\nnever place credentials in client configuration files that get committed;\ntreat everything a server returns as untrusted data, not instructions; and use\nrecorded or offline modes when they exist, so a misbehaving prompt cannot cause\na real side effect. A server that can spend money or mutate production state\ndeserves the same review as giving a new contractor production access.\n\n## Why it matters for this course",
+      "citations": [
+        "mcp-overview"
+      ],
+      "confidence": 1.0,
+      "needs_human_review": false
     },
     "pf-10": {
-      "answer": "I do not know based on the provided corpus.",
+      "answer": "I don't know based on the provided corpus.",
       "citations": [],
       "confidence": 0.0,
       "needs_human_review": true
     },
     "pf-11": {
-      "answer": "I do not know based on the provided corpus.",
+      "answer": "I don't know based on the provided corpus.",
       "citations": [],
       "confidence": 0.0,
       "needs_human_review": true
     },
     "pf-12": {
-      "answer": "I do not know based on the provided corpus.",
+      "answer": "I don't know based on the provided corpus.",
       "citations": [],
       "confidence": 0.0,
       "needs_human_review": true
@@ -82,13 +100,13 @@
       "needs_human_review": true
     },
     "pf-14": {
-      "answer": "I do not know based on the provided corpus.",
+      "answer": "I don't know based on the provided corpus.",
       "citations": [],
       "confidence": 0.0,
       "needs_human_review": true
     },
     "pf-15": {
-      "answer": "I do not know based on the provided corpus.",
+      "answer": "I don't know based on the provided corpus.",
       "citations": [],
       "confidence": 0.0,
       "needs_human_review": true
