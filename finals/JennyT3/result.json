@@ -1,12 +1,12 @@
 {
   "github": "JennyT3",
   "repo": "https://github.com/JennyT3/dev3pack-submissions",
-  "commit": "d42ce7c9c3e82c9a6eec7a2ab1bc7c75dba278df",
+  "commit": "ba0d9056f64d1dd47c4b5592e2010fb270953a69",
   "question_set_id": "private-2026-09-a",
   "score": {
-    "passed": 6,
+    "passed": 10,
     "total": 15,
-    "percent": 40
+    "percent": 67
   },
   "gates": {
     "overall_threshold": true,
@@ -25,58 +25,58 @@
     {
       "task_id": "pf-02",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-03",
       "category": "grounded",
       "passed": false,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "failed: claim_support"
     },
     {
       "task_id": "pf-04",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-05",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-06",
       "category": "grounded",
       "passed": false,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "failed: claim_support"
     },
     {
       "task_id": "pf-07",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-08",
       "category": "grounded",
-      "passed": false,
+      "passed": true,
       "critical": false,
-      "detail": "failed: citation_recall, claim_support, no_review_flag"
+      "detail": "all gates passed"
     },
     {
       "task_id": "pf-09",
       "category": "grounded",
-      "passed": true,
+      "passed": false,
       "critical": false,
-      "detail": "all gates passed"
+      "detail": "failed: citation_recall, claim_support, no_review_flag"
     },
     {
       "task_id": "pf-10",
@@ -90,7 +90,7 @@
       "category": "adversarial",
       "passed": false,
       "critical": true,
-      "detail": "failed: claim_support"
+      "detail": "failed: citation_recall, claim_support, no_review_flag"
     },
     {
       "task_id": "pf-12",
