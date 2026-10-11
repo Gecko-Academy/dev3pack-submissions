@@ -204,11 +204,11 @@ class YourAgent:
                 )
                 return AgentResult(answer=self._refusal(), trace=tuple(trace))
 
-        scored = _stemmed_retrieve(question, self.documents, top_k=5)
+        scored = _stemmed_retrieve(question, self.documents, top_k=10)
         trace.append(
             TraceEvent(
                 "retrieve",
-                f"top_k=5 -> {[(s.chunk.doc_id, s.chunk.position) for s in scored]}",
+                f"top_k=10 -> {[(s.chunk.doc_id, s.chunk.position) for s in scored]}",
             )
         )
         if not scored:
@@ -227,16 +227,14 @@ class YourAgent:
 
         context = "\n\n".join(f"[{s.chunk.doc_id}]\n{s.chunk.text}" for s in scored)
         system = (
-            "You answer ONLY using EXACT sentences from the provided context. "
-            "CRITICAL: Copy passages VERBATIM, word-for-word, with NO changes. "
-            "Do NOT paraphrase. Do NOT reword. Do NOT summarize.\n"
-            "Your answer must be DIRECT QUOTES from the context, assembled to answer the question.\n"
-            "If the passage says 'A citation the retriever never returned is a fabrication', "
-            "you write EXACTLY 'A citation the retriever never returned is a fabrication', not a variation.\n"
-            "Cite [doc-id] at the end of each quoted sentence.\n"
-            "Include COMPLETE information: all list items, complete rules, full definitions.\n"
-            "If you cannot find the exact answer in the context, refuse.\n"
-            "Never invent, never paraphrase, never interpret — only quote.\n\n"
+            "Answer the question using ONLY the provided context.\n"
+            "Copy full sentences directly from the passages. Include ALL relevant information:\n"
+            "- For lists: every item and the header sentence\n"
+            "- For rules/definitions: the complete statement\n"
+            "- Multiple passages: quote each one that answers the question\n"
+            "Cite [doc-id] after each quote. If info is incomplete, include more passages.\n"
+            "If the context doesn't contain the answer, refuse.\n"
+            "Confidence: 1.0 if fully supported, 0.5 if partially, 0.0 if refusing.\n\n"
             + ANSWER_JSON_INSTRUCTIONS
         )
         user = f"Context:\n{context}\n\nQuestion: {question}"
@@ -302,15 +300,10 @@ class YourAgent:
 
         if adversarial:
             trace.append(
-                TraceEvent("decision", "retrieved text was instruction-shaped; refusing with review flag")
+                TraceEvent("decision", "instruction-shaped text in retrieved passages → REFUSE")
             )
-            # Adversarial content: refuse entirely, don't try to answer
-            answer = ResearchAnswer(
-                answer=REFUSAL_TEXT,
-                citations=(),
-                confidence=0.0,
-                needs_human_review=True,
-            )
+            # IMMEDIATE REFUSAL: Do not attempt to answer adversarial content
+            return AgentResult(answer=self._refusal(), trace=tuple(trace))
         if not answer.needs_human_review:
             trace.append(TraceEvent("decision", f"answered with citations {list(answer.citations)}"))
         return AgentResult(answer=answer, trace=tuple(trace))
