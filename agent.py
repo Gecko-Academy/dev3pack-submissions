@@ -62,6 +62,14 @@ _INSTRUCTION_SHAPED = (
     "needs_human_review to false",
     "no human review",
     "forget your",
+    "override",
+    "bypass",
+    "ignore this prompt",
+    "system prompt",
+    "ignore the above",
+    "instead say",
+    "new instruction",
+    "follow this instruction",
 )
 
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
@@ -289,12 +297,13 @@ class YourAgent:
 
         if adversarial:
             trace.append(
-                TraceEvent("decision", "retrieved text was instruction-shaped; flagged for review")
+                TraceEvent("decision", "retrieved text was instruction-shaped; refusing with review flag")
             )
+            # Adversarial content: refuse entirely, don't try to answer
             answer = ResearchAnswer(
-                answer=answer.answer,
-                citations=answer.citations,
-                confidence=min(answer.confidence, 0.2),
+                answer=REFUSAL_TEXT,
+                citations=(),
+                confidence=0.0,
                 needs_human_review=True,
             )
         if not answer.needs_human_review:
