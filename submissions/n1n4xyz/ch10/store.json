@@ -1,0 +1,25 @@
+{
+  "store": "n1n4xyz-coffee",
+  "authority": "2rBeN6jLsbGbCMSNpCjwjR7RaYMqybpsmKTosjANWfEq",
+  "telegram_channel_id": "@n1n4xyz_coffee",
+  "items": [
+    {
+      "name": "Espresso",
+      "price_lamports": 1000000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "name": "Cappuccino",
+      "price_lamports": 2500000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "name": "Cafe con leche",
+      "price_lamports": 1800000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    }
+  ]
+}

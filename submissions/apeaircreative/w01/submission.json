@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "w01",
+  "student": {
+    "github": "apeaircreative"
+  },
+  "submitted_at": "2026-09-19T18:02:56Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "w01-e1",
+      "w01-e2",
+      "w01-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": false,
+    "score": null,
+    "max_score": null
+  },
+  "note": "week 0 is handed in as a record of the work, and is not marked",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "linux"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "655face46bd43faa2bfb6b3c8465e1659b30ed74d29fc9d545d6a1de5c7ef845"
+  },
+  "verified": null,
+  "submission_id": "sub_72ffa64c35f4fba31fe5e402"
+}

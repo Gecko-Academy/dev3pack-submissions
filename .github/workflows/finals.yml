@@ -1,0 +1,171 @@
+# Post a merged final assignment's ANSWERS to the course API, and record the
+# score it returns.
+#
+# WHY THIS JOB MAY HOLD A SECRET WHEN THE PULL-REQUEST JOB MAY NOT. This runs on
+# content already on main: merged by a person, or merged by `collect.yml` after
+# the pull-request check passed it through `scripts/check_final.py`. It never
+# executes anything a learner wrote: it reads two JSON files and posts one. The
+# pull-request job, by contrast, sees unmerged content from a fork, so it holds
+# nothing — and `verify.yml` fails the build if anybody ever adds
+# `pull_request_target`, which would hand this token to exactly that content.
+#
+# WHAT TRAVELS: the answers a learner's agent produced on their own machine.
+# Not their notebook, not their code. The API grades and discards them.
+name: finals
+
+on:
+  push:
+    branches: [main]
+    paths: ["submissions/*/final/answers.json"]
+  # A MERGE BY `collect.yml` NEVER REACHES THE TRIGGER ABOVE. GitHub starts no
+  # workflow for a push made with `GITHUB_TOKEN`, and that is the token collect
+  # merges with, so an auto-merged final would sit on main and never be scored.
+  # Collect dispatches this instead, naming the range its merges covered;
+  # `workflow_dispatch` is the one event that token may start.
+  workflow_dispatch:
+    inputs:
+      before:
+        description: "main before the merges (40-hex)"
+        type: string
+        required: true
+      after:
+        description: "main after the merges (40-hex)"
+        type: string
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: finals
+  cancel-in-progress: false
+
+jobs:
+  score:
+    # ONLY ON THE REAL REPOSITORY. A learner's fork carries this file too, and
+    # with Actions enabled it runs there -- on schedule and on every push --
+    # and a pull request opened from that fork's `main` then drags the bot's
+    # commits along. Pull request 125 was exactly that.
+    if: github.repository == 'Gecko-Academy/dev3pack-submissions'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # FULL HISTORY, and this is not optional. `actions/checkout` clones one
+      # commit by default, so neither `github.event.before` nor `HEAD^` exists
+      # in the working copy and the diff below cannot be computed. On
+      # 2026-09-10 that made this job green while it scored nothing at all.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Which finals arrived in this push
+        id: changed
+        env:
+          BEFORE: ${{ inputs.before || github.event.before }}
+          AFTER: ${{ inputs.after || github.sha }}
+        run: |
+          set -euo pipefail
+          # Both reach `git` as arguments, and a dispatch takes them as typed.
+          # Anything but a full commit id is refused before git sees it.
+          for sha in "$BEFORE" "$AFTER"; do
+            if ! [[ "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+              echo "::error::not a commit id: $sha"
+              exit 1
+            fi
+          done
+          # A first push to a branch has no usable `before`; fall back to the
+          # commit itself rather than scoring the whole repository.
+          if git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            range="$BEFORE..$AFTER"
+          else
+            range="$AFTER^..$AFTER"
+          fi
+          # `|| true` belongs on the grep, which exits 1 when a push touches no
+          # final, and NEVER on the diff: swallowing git's failure is what let
+          # this job report success while scoring nobody.
+          git diff --name-only --diff-filter=AM "$range" > changed.txt
+          grep -E '^submissions/[^/]+/final/answers\.json$' changed.txt > finals.txt || true
+          echo "count=$(wc -l < finals.txt)" >> "$GITHUB_OUTPUT"
+          cat finals.txt
+
+      - name: Score each one and record what came back
+        if: steps.changed.outputs.count != '0'
+        env:
+          API: ${{ vars.DEV3PACK_API_BASE }}
+          KEY: ${{ secrets.DEV3PACK_SERVER_KEY }}
+        run: |
+          set -euo pipefail
+          # Scores everybody in the list, recording nothing for a learner whose
+          # request failed and carrying on. `failed.txt` names them, and the
+          # last step of this job turns it red. See scripts/finals_score.sh.
+          bash scripts/finals_score.sh finals.txt
+
+      - name: Commit the results
+        id: record
+        if: steps.changed.outputs.count != '0'
+        run: |
+          set -euo pipefail
+          git config user.name "dev3pack-bot"
+          git config user.email "noreply@github.com"
+          git add finals/
+          if git diff --cached --quiet; then
+            echo "nothing new to record"
+            echo "recorded=no" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "finals: record scores for this push"
+            # Rebases and retries when collect pushed first. See the script.
+            bash scripts/push_with_retry.sh
+            echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            echo "recorded=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      # AFTER THE PUSH, and the same reasoning as `collect.yml`: the body names
+      # a commit, so announcing one that is not public yet is a broken pointer.
+      #
+      # `continue-on-error` for the same reason too. A subscriber being down
+      # must not turn a scored cohort into a red build, because the score is
+      # already recorded and the API is its record either way.
+      #
+      # WHAT TRAVELS: the score, both gates, and whether a certificate may be
+      # issued. NOT the per-case verdicts, which stay in the repository. The
+      # course tells partners it never sends per-question results.
+      - name: Tell the subscriber a final was scored
+        if: steps.record.outputs.recorded == 'yes'
+        continue-on-error: true
+        env:
+          # The gateway. Once the two below are deleted from this repository,
+          # these are the only way out and the subscriber's credential lives
+          # only on the app. See `hand_to_gateway` in scripts/notify.py.
+          DEV3PACK_API_BASE: ${{ vars.DEV3PACK_API_BASE }}
+          DEV3PACK_SERVER_KEY: ${{ secrets.DEV3PACK_SERVER_KEY }}
+          DEV3PACK_WEBHOOK_URL: ${{ vars.DEV3PACK_WEBHOOK_URL }}
+          DEV3PACK_WEBHOOK_SECRET: ${{ secrets.DEV3PACK_WEBHOOK_SECRET }}
+        run: |
+          set -euo pipefail
+          # The cohort comes from the answers themselves, the same place the
+          # scoring step took it from. Defaulting it here instead would point a
+          # subscriber at the wrong cohort's URL the first time one differs.
+          #
+          # ONLY FROM LEARNERS WHO WERE SCORED. The list of arrivals can hold a
+          # file that failed because it could not be read, and reading it again
+          # here would fail the announcement for everybody who succeeded.
+          cohort="$(sed -E 's#^finals/([^/]+)/result\.json$#submissions/\1/final/answers.json#' scored.txt \
+            | xargs jq -r '.cohort // "2026-09"' | sort -u | head -1)"
+          echo "cohort: $cohort"
+          python3 scripts/notify.py \
+            --finals scored.txt \
+            --cohort "$cohort" \
+            --commit "${{ steps.record.outputs.commit }}"
+
+      # LAST, so a failure cannot stop anybody else being recorded or announced.
+      # Everyone scored is already committed, pushed and notified by now; this
+      # only makes sure a learner who was NOT scored turns the run red, by name.
+      - name: Fail if any final was not scored
+        if: steps.changed.outputs.count != '0'
+        run: |
+          set -euo pipefail
+          if [ -s failed.txt ]; then
+            echo "::error::not scored, and nothing recorded for: $(paste -sd, failed.txt)"
+            exit 1
+          fi
+          echo "every final in this range was scored"

@@ -1,0 +1,31 @@
+{
+  "store": "Mialy333-coffee",
+  "authority": "HHjZYz6dffsjCtspupc8xWSw3fXcNK7Raaug6XAZSpGo",
+  "telegram_channel_id": "@mialyr",
+  "items": [
+    {
+      "name": "Espresso",
+      "price_lamports": 1000000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "name": "Matcha",
+      "price_lamports": 11000000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "name": "Chai Latte",
+      "price_lamports": 6000000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "name": "Ube Latte",
+      "price_lamports": 8500000,
+      "decimals": 6,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    }
+  ]
+}

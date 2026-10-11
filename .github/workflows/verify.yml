@@ -1,0 +1,97 @@
+# What CI can enforce on a pull request from a fork, and nothing it cannot.
+#
+# READ THIS BEFORE ADDING A SECRET TO THIS WORKFLOW.
+#
+# GitHub does not pass secrets to a workflow triggered by `pull_request` from a
+# fork, and gives it a read-only token. That is deliberate, and it exists for
+# exactly our situation: verification means EXECUTING THE STUDENT'S NOTEBOOK,
+# which is arbitrary code we did not write.
+#
+# So the rule this file lives by: the job that runs a submitted notebook must
+# never hold a secret or a write token. Switching this to `pull_request_target`
+# would hand it both. Do not do it.
+#
+# THE CHANGED FILES COME FROM THE API, NOT FROM GIT. A fork pull request is
+# checked out as a merge ref whose base may have moved since the pull request
+# was opened, and `git diff base...HEAD` then fails outright rather than
+# returning nothing. Asking the API removes that whole class of failure: it
+# answers the question we actually have, which is "what does this pull request
+# change", and it needs only the read-only token.
+
+name: check submissions
+
+on:
+  pull_request:
+    paths: ["submissions/**"]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  check:
+    name: submissions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: What this pull request changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh api "repos/$REPO/pulls/$NUMBER/files" --paginate --jq '.[].filename' > changed.txt
+          echo "changed files:"; sed 's/^/  /' changed.txt
+
+      - name: A pull request may only touch its author's folder
+        env:
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+          stray=$(grep -v "^submissions/$AUTHOR/" changed.txt || true)
+          if [ -n "$stray" ]; then
+            echo "::error::a pull request may only touch submissions/$AUTHOR/"
+            echo "$stray" | sed 's/^/  /'
+            exit 1
+          fi
+          echo "ok: every changed file is under submissions/$AUTHOR/"
+
+      - name: The bundle is the shape a submission has to be
+        run: |
+          # A WITHDRAWAL IS NOT A MALFORMED SUBMISSION. A pull request that
+          # deletes a bundle still lists those paths as changed, and handing the
+          # checker a directory that no longer exists made it answer
+          # `no submission.json` and fail the build. Nobody could take work back:
+          # collect merges only what this check passed, so a withdrawal could
+          # never merge, and the failure named a missing file rather than the
+          # reason.
+          #
+          # THIS WEAKENS NOTHING. The folder rule above has already run across
+          # EVERY changed path, deletions included, so a pull request still
+          # cannot touch somebody else's folder whether it writes or deletes.
+          dirs=$(xargs -r -n1 dirname < changed.txt | sort -u)
+          present=""
+          for dir in $dirs; do
+            if [ -d "$dir" ]; then
+              present="$present $dir"
+            else
+              echo "withdrawn: $dir"
+            fi
+          done
+          if [ -z "$present" ]; then
+            echo "nothing to check: this pull request only withdraws work"
+            exit 0
+          fi
+          python3 scripts/check_bundle.py $present
+
+      - name: No workflow here may run untrusted code with a token
+        run: |
+          # Matches the TRIGGER, not the word: this file explains why the trigger
+          # is forbidden, so a plain grep finds its own comment and fails itself.
+          if grep -rlE "^[[:space:]]*pull_request_target:" .github/workflows/; then
+            echo "::error::pull_request_target hands a secret and a write token to submitted code"
+            exit 1
+          fi
+          echo "ok: no workflow is triggered by pull_request_target"

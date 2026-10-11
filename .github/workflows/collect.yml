@@ -1,0 +1,172 @@
+# Merge every submission that passed its checks, and rebuild the track.
+#
+# WHY THIS JOB MAY HOLD A WRITE TOKEN when the pull-request check may not: it
+# runs on a schedule from `main`, on reviewed code. It never checks out a fork,
+# never executes a submitted notebook, and only ever parses JSON. The check that
+# DOES see unmerged content from a fork holds nothing at all, and `verify.yml`
+# fails the build if anybody adds `pull_request_target`.
+name: collect
+
+on:
+  # A MERGE BY HAND MUST STILL REBUILD THE TRACK. Merging a submission without
+  # this puts the files on `main` while `track.json` keeps saying the work is
+  # not there, and nobody watching is told. It looks like nothing happened,
+  # because the merge itself looks completely normal.
+  #
+  # THIS CANNOT LOOP. GitHub does not start a workflow for a push made with
+  # `GITHUB_TOKEN`, so neither this job's own track commit nor a merge it
+  # performed can re-trigger it. What reaches here is a push by a person.
+  push:
+    branches: [main]
+    paths: ["submissions/**"]
+  # THE CHECK FINISHING IS THE SIGNAL, and the cron below is only the backstop.
+  # A green pull request used to wait for the schedule, and GitHub does not run a
+  # quiet repository's cron every half hour: on 2026-09-17 the runs came five
+  # hours apart, so six accepted submissions sat unmerged all afternoon.
+  #
+  # WHY THIS MAY HOLD A WRITE TOKEN when `verify.yml` may not. A `workflow_run`
+  # job runs this file as it stands on the default branch, in this repository,
+  # and never checks out the fork -- so no submitted code executes here.
+  # `collect.py` reads the API and merges what has already passed. The job that
+  # DOES run a learner's notebook still holds nothing at all.
+  workflow_run:
+    workflows: ["check submissions"]
+    types: [completed]
+  schedule:
+    # Every half hour is what this asks for. It is NOT what GitHub delivers on a
+    # quiet repository: on 2026-09-11 the scheduled runs were two to five hours
+    # apart. The push trigger above is what makes a merge prompt; this remains
+    # the safety net that catches a pull request whose checks went green after
+    # the last run. Cron is UTC.
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      merge:
+        description: "Actually merge (unchecked = dry run)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  # Only to start `finals.yml` for the finals this run merged. See the step
+  # "Score the finals this run merged" for why a merge cannot start it itself.
+  actions: write
+
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    # ONLY ON THE REAL REPOSITORY. A learner's fork carries this file too, and
+    # with Actions enabled it runs there -- on schedule and on every push --
+    # and a pull request opened from that fork's `main` then drags the bot's
+    # commits along. Pull request 125 was exactly that.
+    if: github.repository == 'Gecko-Academy/dev3pack-submissions'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      # Where main stood before this run merged anything: the start of the
+      # range handed to `finals.yml` below.
+      - name: Remember where main started
+        id: start
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Merge what passed, and rebuild the track
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # A scheduled run, a push and a finished check always merge. A manual
+          # run merges only when asked, so it can show what WOULD happen.
+          MERGE: ${{ (github.event_name == 'schedule' || github.event_name == 'push' || github.event_name == 'workflow_run') && 'yes' || inputs.merge && 'yes' || '' }}
+        run: |
+          if [ -n "$MERGE" ]; then
+            python3 scripts/collect.py --merge
+          else
+            python3 scripts/collect.py
+          fi
+
+      - name: Commit the track if it changed
+        id: track
+        run: |
+          git config user.name "dev3pack-bot"
+          git config user.email "noreply@github.com"
+          git add TRACK.md track.json
+          if git diff --cached --quiet; then
+            echo "the track is unchanged"
+            echo "changed=no" >> "$GITHUB_OUTPUT"
+          else
+            # Read the commit being replaced BEFORE committing: it is what the
+            # notification below diffs against to say whose score moved.
+            echo "previous=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            git commit -m "track: after the latest merges"
+            # finals.yml pushes to main too, unordered with this. A refused push
+            # used to fail the run and leave the track stale until the next one.
+            bash scripts/push_with_retry.sh
+            echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            echo "changed=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      # A FINAL MERGED HERE WOULD OTHERWISE NEVER BE SCORED. These merges are
+      # pushes made with `GITHUB_TOKEN`, and GitHub starts no workflow for
+      # those, so the push trigger in `finals.yml` never fires for them. A
+      # `workflow_dispatch` is the one event this token may start. It names the
+      # range these merges covered, and finals scores exactly the answers
+      # files that range added or changed.
+      #
+      # AFTER THE TRACK PUSH, because finals pushes to main too, and two jobs
+      # pushing at once is how one of them is refused as non-fast-forward.
+      #
+      # EVEN IF THE TRACK STEP FAILED. The merges already happened, and a final
+      # that is on main but never scored is found by nobody.
+      - name: Score the finals this run merged
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BEFORE: ${{ steps.start.outputs.sha }}
+        run: |
+          set -euo pipefail
+          # origin/main, not HEAD: a track commit whose push failed exists only
+          # here, and finals could not find it.
+          after="$(git rev-parse origin/main)"
+          if [ "$BEFORE" = "$after" ]; then
+            echo "main did not move; no final to score"
+            exit 0
+          fi
+          # `|| true` on the grep alone, which exits 1 when nothing matches.
+          git diff --name-only --diff-filter=AM "$BEFORE..$after" > merged.txt
+          finals="$(grep -cE '^submissions/[^/]+/final/answers\.json$' merged.txt || true)"
+          if [ "$finals" = "0" ]; then
+            echo "no final among this run's merges"
+            exit 0
+          fi
+          echo "$finals final(s) merged; starting finals.yml for $BEFORE..$after"
+          gh workflow run finals.yml --repo "$REPO" --ref main \
+            -f before="$BEFORE" -f after="$after"
+
+      # AFTER THE PUSH, NEVER BEFORE. The body names a commit and a raw URL
+      # built from it, so announcing an unpushed commit gives the subscriber a
+      # URL that 404s.
+      #
+      # `continue-on-error` is the whole point of this step's design: a
+      # subscriber being down is not a reason to make a cohort's merges look
+      # broken. The step goes red, the run stays green, and the two failures
+      # stay told apart.
+      - name: Tell the subscriber the track moved
+        if: steps.track.outputs.changed == 'yes'
+        continue-on-error: true
+        env:
+          # The gateway. Once the two below are deleted from this repository,
+          # these are the only way out and the subscriber's credential lives
+          # only on the app. See `hand_to_gateway` in scripts/notify.py.
+          DEV3PACK_API_BASE: ${{ vars.DEV3PACK_API_BASE }}
+          DEV3PACK_SERVER_KEY: ${{ secrets.DEV3PACK_SERVER_KEY }}
+          DEV3PACK_WEBHOOK_URL: ${{ vars.DEV3PACK_WEBHOOK_URL }}
+          DEV3PACK_WEBHOOK_SECRET: ${{ secrets.DEV3PACK_WEBHOOK_SECRET }}
+        run: |
+          python3 scripts/notify.py \
+            --previous "${{ steps.track.outputs.previous }}" \
+            --commit "${{ steps.track.outputs.commit }}"

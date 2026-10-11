@@ -1,0 +1,36 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch14",
+  "student": {
+    "github": "250408900-maker"
+  },
+  "submitted_at": "2026-09-29T15:08:46Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch14-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 100,
+    "max_score": 100
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "7d5debca679ac9f3e40cc1d2d5ba0a9df6f1fee6b615bc0d81a35e90ce5751d4"
+  },
+  "verified": null,
+  "submission_id": "sub_d7e589d5e2cafd4276e156c4"
+}
