@@ -150,7 +150,7 @@ own `my-gecko-buyer`, at the commit you handed in) and the final submission
 | Insia-8 | [3072121](https://github.com/Insia-8/Dev3Pack-Gecko-Capstone-Project/tree/30721217c4db947097c26e6efbcd391deb35bac7) | 73% | not yet |
 | irlandakelly |  | 93% | eligible |
 | JemimahEkong | [d5c71de](https://github.com/JemimahEkong/my-gecko-buyer/tree/d5c71dec2522441b51a2879ee693c561f67994a5) | 27% | not yet |
-| JennyT3 |  | 87% | not yet |
+| JennyT3 |  | 40% | not yet |
 | kb-dev28 | [2189bd7](https://github.com/kb-dev28/my-gecko-buyer/tree/2189bd760bd337f0f32c7861c3dde128fbbc7dbd) | 100% | eligible |
 | licette32 | [3bd10df](https://github.com/licette32/my-gecko-buyer/tree/3bd10dfed7acefb4ae3fed935399053375e588c4) | 100% | eligible |
 | lovelymahor | [a0d682e](https://github.com/lovelymahor/my-gecko-buyer/tree/a0d682ed88042829401647e0e90eba7b7dd050c5) |  |  |
