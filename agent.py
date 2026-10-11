@@ -195,8 +195,9 @@ class YourAgent:
             trace.append(
                 TraceEvent("retrieve", f"corpus vocabulary coverage {covered}/{len(query_tokens)} = {coverage:.2f}")
             )
-            # Only refuse if coverage is VERY low (< 0.2). Don't be too aggressive.
-            if coverage < 0.2:
+            # Refuse if coverage is too low. 0.4 balances between rejecting
+            # under-supported questions and not over-rejecting valid ones.
+            if coverage < 0.4:
                 trace.append(
                     TraceEvent(
                         "decision",
