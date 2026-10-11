@@ -385,11 +385,7 @@ class YourAgent:
     ) -> tuple[str, ...]:
         """Doc ids cited whose retrieved passages share NO content words with the answer.
 
-        A citation is a promise that the document supports the claim. When the
-        answer shares NOTHING with ANY retrieved passage of that document, the
-        citation is decorative and dropped. But if there's ANY content word overlap,
-        the citation is kept — the model's choice to cite is trusted over strict
-        token matching, which can fail on synonyms, paraphrase, or technical terms.
+        Only drop citations that have zero overlap with their source text.
         """
         answer_tokens = set(_stemmed_tokens(answer.answer))
         if not answer_tokens:
@@ -399,18 +395,18 @@ class YourAgent:
         for s in scored:
             text_by_id[s.chunk.doc_id] = text_by_id.get(s.chunk.doc_id, "") + " " + s.chunk.text
 
-        # Only drop citations that have ZERO overlap with their source text.
-        # If there's any token match, trust the model's judgment to cite.
         unsupported = []
         for c in answer.citations:
             source_text = text_by_id.get(c, "")
             if not source_text:
                 unsupported.append(c)
                 continue
+
             source_tokens = set(_stemmed_tokens(source_text))
             if source_tokens and not (source_tokens & answer_tokens):
                 # Zero overlap: the citation is purely decorative
                 unsupported.append(c)
+
         return tuple(unsupported)
 
     @staticmethod
