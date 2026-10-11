@@ -1442,6 +1442,38 @@
       "tier": "claimed"
     },
     {
+      "github": "JennyT3",
+      "item": "ch13",
+      "submitted_at": "2026-10-11T18:03:07Z",
+      "ran": true,
+      "passed": [
+        "ch13-e4",
+        "ch13-e2",
+        "ch13-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "JennyT3",
+      "item": "ch14",
+      "submitted_at": "2026-10-11T18:03:09Z",
+      "ran": true,
+      "passed": [
+        "ch14-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 100,
+      "max_score": 100,
+      "tier": "claimed"
+    },
+    {
       "github": "JuliaGastellu",
       "item": "cap01",
       "submitted_at": "2026-10-02T12:43:35Z",
