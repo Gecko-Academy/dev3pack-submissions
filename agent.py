@@ -125,7 +125,7 @@ def _as_ids(citations: tuple[str, ...]) -> tuple[str, ...]:
 
 
 def _stemmed_retrieve(
-    query: str, documents: Sequence[Document], top_k: int = 5
+    query: str, documents: Sequence[Document], top_k: int = 8
 ) -> list[ScoredChunk]:
     """Retrieve by stemmed token overlap, weighted by inverse document frequency.
 
@@ -218,12 +218,16 @@ class YourAgent:
             return AgentResult(answer=self._refusal(), trace=tuple(trace))
 
         retrieved_ids = {s.chunk.doc_id for s in scored}
-        adversarial = self._instruction_shaped_context(scored)
+        # Check for adversarial content in both question AND retrieved passages
+        question_adversarial = any(phrase in question.lower() for phrase in _INSTRUCTION_SHAPED)
+        context_adversarial = self._instruction_shaped_context(scored)
+        adversarial = question_adversarial or context_adversarial
+
         if adversarial:
             trace.append(
                 TraceEvent(
                     "decision",
-                    "instruction-shaped text found in retrieved passages; answer will be flagged",
+                    f"adversarial detected ({'in question' if question_adversarial else 'in context'}); answer will be flagged",
                 )
             )
 
