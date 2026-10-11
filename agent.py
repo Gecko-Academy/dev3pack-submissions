@@ -258,10 +258,17 @@ class YourAgent:
         if answer is None:
             return AgentResult(answer=self._refusal(), trace=tuple(trace))
 
+        # Be conservative with confidence: reduce if citations are minimal
+        confidence = answer.confidence
+        if len(answer.citations) == 0:
+            confidence = 0.0
+        elif len(answer.citations) == 1:
+            confidence = min(confidence, 0.8)
+
         answer = ResearchAnswer(
             answer=answer.answer,
             citations=_as_ids(answer.citations),
-            confidence=answer.confidence,
+            confidence=confidence,
             needs_human_review=answer.needs_human_review,
         )
 
