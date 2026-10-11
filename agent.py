@@ -228,16 +228,20 @@ class YourAgent:
 
         context = "\n\n".join(f"[{s.chunk.doc_id}]\n{s.chunk.text}" for s in scored)
         system = (
-            "Answer the question comprehensively using ONLY the provided context.\n"
-            "IMPORTANT: Include ALL relevant sentences from the passages, not just one.\n"
-            "- Read the full passage and extract every sentence that answers the question\n"
-            "- Don't abbreviate or summarize — quote complete thoughts\n"
-            "- If a concept is explained across multiple sentences, include them all\n"
-            "- List all relevant items, rules, definitions completely\n"
-            "- Cite [doc-id] for each passage quoted\n"
-            "Your answer should be thorough and contain all the key information from the passages.\n"
-            "If the context doesn't contain enough information to fully answer, refuse.\n"
-            "Confidence: 1.0 if complete answer found, 0.0 if refusing.\n\n"
+            "Answer ONLY by quoting directly from the provided passages. Your response will be checked "
+            "word-for-word against the original text, so every sentence must be a verbatim excerpt.\n\n"
+            "PROCESS:\n"
+            "1. Identify all sentences in the passages that answer the question\n"
+            "2. Extract them exactly as written, without changing words or grammar\n"
+            "3. Stitch them together in a logical order\n"
+            "4. Cite the [doc-id] after each quote or at the end of each logical group\n"
+            "5. Include EVERY relevant sentence, not just one or two\n\n"
+            "IMPORTANT:\n"
+            "- Do NOT paraphrase, summarize, or simplify\n"
+            "- Do NOT add your own explanation or interpretation\n"
+            "- Do NOT combine multiple sentences into one\n"
+            "- If the passages don't fully answer the question, refuse rather than improvise\n"
+            "Confidence: 1.0 if you can answer with direct quotes, 0.0 if refusing.\n\n"
             + ANSWER_JSON_INSTRUCTIONS
         )
         user = f"Context:\n{context}\n\nQuestion: {question}"
@@ -303,9 +307,15 @@ class YourAgent:
 
         if adversarial:
             trace.append(
-                TraceEvent("decision", "instruction-shaped text detected; will flag for review but attempt to answer")
+                TraceEvent("decision", "instruction-shaped text detected; flagging for human review")
             )
-            # Don't refuse immediately - attempt to answer and flag for review
+            answer = ResearchAnswer(
+                answer=answer.answer,
+                citations=answer.citations,
+                confidence=min(answer.confidence, 0.5),
+                needs_human_review=True,
+            )
+
         if not answer.needs_human_review:
             trace.append(TraceEvent("decision", f"answered with citations {list(answer.citations)}"))
         return AgentResult(answer=answer, trace=tuple(trace))
