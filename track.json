@@ -2927,6 +2927,23 @@
       "tier": "claimed"
     },
     {
+      "github": "MominaSafdarr",
+      "item": "ch13",
+      "submitted_at": "2026-10-25T13:25:27Z",
+      "ran": true,
+      "passed": [
+        "ch13-e4",
+        "ch13-e2",
+        "ch13-e1"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
       "github": "Ryjen1",
       "item": "ch01",
       "submitted_at": "2026-09-21T08:01:37Z",
