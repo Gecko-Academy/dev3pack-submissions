@@ -2861,6 +2861,22 @@
       "tier": "claimed"
     },
     {
+      "github": "MominaSafdarr",
+      "item": "ch09",
+      "submitted_at": "2026-10-25T13:24:55Z",
+      "ran": true,
+      "passed": [
+        "ch09-e1",
+        "ch09-e2"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 200,
+      "max_score": 200,
+      "tier": "claimed"
+    },
+    {
       "github": "Ryjen1",
       "item": "ch01",
       "submitted_at": "2026-09-21T08:01:37Z",
