@@ -1,0 +1,38 @@
+{
+  "schema": "dev3pack.submission.v2",
+  "cohort": "2026-09",
+  "chapter": "ch11",
+  "student": {
+    "github": "MominaSafdarr"
+  },
+  "submitted_at": "2026-10-25T13:25:08Z",
+  "result": {
+    "ran": true,
+    "passed": [
+      "ch11-e1",
+      "ch11-e2",
+      "ch11-e3"
+    ],
+    "failed": [],
+    "not_reached": [],
+    "scored": true,
+    "score": 300,
+    "max_score": 300
+  },
+  "note": "",
+  "help": {
+    "hinted": 0,
+    "revealed": 0,
+    "cost": 0
+  },
+  "environment": {
+    "python": "3.11.16",
+    "platform": "windows"
+  },
+  "evidence": {
+    "notebook": "notebook.ipynb",
+    "notebook_sha256": "0c2877874663c52cc8444811f294bd188f94cd3217a58449dad037af8db0950a"
+  },
+  "verified": null,
+  "submission_id": "sub_e11b287787f471c757111af7"
+}
