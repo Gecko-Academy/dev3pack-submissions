@@ -2862,6 +2862,23 @@
     },
     {
       "github": "MominaSafdarr",
+      "item": "ch08",
+      "submitted_at": "2026-10-25T13:24:42Z",
+      "ran": true,
+      "passed": [
+        "ch08-e1",
+        "ch08-e2",
+        "ch08-e3"
+      ],
+      "failed": [],
+      "not_reached": [],
+      "scored": true,
+      "score": 300,
+      "max_score": 300,
+      "tier": "claimed"
+    },
+    {
+      "github": "MominaSafdarr",
       "item": "ch09",
       "submitted_at": "2026-10-25T13:24:55Z",
       "ran": true,
